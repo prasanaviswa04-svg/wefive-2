@@ -85,15 +85,6 @@
       background: #9C2421;
     }
 
-    /* Hide standard cursor on desktop */
-    @media (min-width: 768px) {
-      body {
-        cursor: none;
-      }
-      a, button, input, select, textarea, .clickable {
-        cursor: none !important;
-      }
-    }
 
     /* Outlined Editorial Buttons */
     .btn-editorial {
@@ -141,9 +132,6 @@
   <!-- Viewport Art Frame (Locked border frame) -->
   <div class="fixed inset-4 md:inset-6 pointer-events-none border border-brand-accent/15 z-40"></div>
 
-  <!-- Custom Cursor -->
-  <div class="custom-cursor fixed top-0 left-0 w-6 h-6 -mt-3 -ml-3 rounded-full border border-brand-accent pointer-events-none z-50 transition-transform duration-200 ease-out hidden md:block select-none opacity-80"></div>
-  <div class="custom-cursor-dot fixed top-0 left-0 w-1.5 h-1.5 -mt-0.75 -ml-0.75 bg-brand-accent rounded-full pointer-events-none z-50 hidden md:block select-none"></div>
 
   <!-- Loading Screen Overlay -->
   <div id="loader" class="fixed inset-0 bg-brand-bg z-[100] flex flex-col justify-center items-center pointer-events-none">
@@ -919,47 +907,6 @@
       }, 1000);
     });
 
-    // Custom Cursor tracking (Desktop Only)
-    const cursor = document.querySelector('.custom-cursor');
-    const cursorDot = document.querySelector('.custom-cursor-dot');
-    
-    if (window.innerWidth >= 768) {
-      document.addEventListener('mousemove', (e) => {
-        gsap.to(cursor, {
-          x: e.clientX,
-          y: e.clientY,
-          duration: 0.15,
-          ease: "power2.out"
-        });
-        gsap.to(cursorDot, {
-          x: e.clientX,
-          y: e.clientY,
-          duration: 0.05,
-          ease: "power2.out"
-        });
-      });
-
-      // Hover scale effects on interactive elements
-      const clickables = document.querySelectorAll('a, button, input, .clickable, form');
-      clickables.forEach(el => {
-        el.addEventListener('mouseenter', () => {
-          gsap.to(cursor, {
-            scale: 1.5,
-            backgroundColor: "rgba(179, 40, 36, 0.05)",
-            borderColor: "#B32824",
-            duration: 0.25
-          });
-        });
-        el.addEventListener('mouseleave', () => {
-          gsap.to(cursor, {
-            scale: 1,
-            backgroundColor: "transparent",
-            borderColor: "#B32824",
-            duration: 0.25
-          });
-        });
-      });
-    }
 
     // Lenis Smooth Scroll Configuration
     const lenis = new Lenis({
@@ -989,16 +936,16 @@
       gsap.set(".horizontal-inner", { width: "1000vw", height: "100%" });
       gsap.set(".panel", { width: "100vw", height: "100vh" });
 
-      // Core Horizontal Pin Tween
+      // Core Horizontal Pin Tween (mathematically exact viewport width increments to align properly)
       let horizontalTween = gsap.to(".horizontal-inner", {
-        x: () => -(document.querySelector(".horizontal-inner").scrollWidth - window.innerWidth),
+        x: () => -(window.innerWidth * (panels.length - 1)),
         ease: "none",
         scrollTrigger: {
           trigger: ".horizontal-outer",
           pin: true,
           scrub: 1.2, // Smooth scrubbing linking to scrollbar
           start: "top top",
-          end: () => "+=" + (document.querySelector(".horizontal-inner").scrollWidth - window.innerWidth),
+          end: () => "+=" + (window.innerWidth * (panels.length - 1)),
           invalidateOnRefresh: true,
         }
       });
