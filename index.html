@@ -44,7 +44,7 @@
         extend: {
           colors: {
             brand: {
-              bg: '#F3ECD0',      // Warm Pale Yellow
+              bg: '#FCF6DD',      // Zesty Lemon, softened with cream/white
               accent: '#B32824',  // Deep Crimson Red
               accentMuted: '#9C2421',
               text: '#1C1917',    // Warm Charcoal
@@ -164,7 +164,7 @@
     }
   </style>
 </head>
-<body class="bg-brand-bg text-brand-text font-sans selection:bg-brand-accent selection:text-brand-bg overflow-x-hidden antialiased">
+<body class="bg-brand-bg text-brand-text font-sans selection:bg-brand-accent selection:text-brand-bg overflow-x-hidden antialiased" style="background-image: linear-gradient(160deg, #FFFEF5 0%, #FCF6DD 35%, #F5EFC9 70%, #EDE6A8 100%);">
 
   <!-- Grainy Paper Texture Overlay -->
   <div class="fixed inset-0 pointer-events-none z-50 opacity-[0.04] mix-blend-multiply" style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.8%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E');"></div>
@@ -200,10 +200,10 @@
       <!-- PHASE A: VERTICAL SCROLLING (TOP) -->
 
       <!-- Section 1: Hero Section -->
-      <section id="hero" class="hero-sec w-full h-screen relative overflow-hidden bg-white flex flex-col items-center justify-center">
+      <section id="hero" class="hero-sec w-full h-screen relative overflow-hidden bg-brand-bg flex flex-col items-center justify-center">
 
         <!-- Centered Photo Carousel: full-bleed left/right, white space above/below -->
-        <div class="relative w-full h-[64vh] sm:h-[72vh] md:h-[80vh] overflow-hidden">
+        <div class="relative w-full h-[64vh] sm:h-[72vh] md:h-[80vh] overflow-hidden border-y-2 border-brand-text">
           <div class="hero-slide active" style="background-image: url('assets/skyline_architecture.jpg');"></div>
           <div class="hero-slide" style="background-image: url('assets/cinematic_film.jpg');"></div>
           <div class="hero-slide" style="background-image: url('assets/retro_architecture.jpg');"></div>
