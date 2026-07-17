@@ -1136,28 +1136,14 @@
         height: 0,
       };
 
+      // CONFIGS FOR PEEPS SIZE (Scaled to fit the footer container correctly)
+      const peepScale = 0.45;
+
       // TWEEN FACTORIES
       const resetPeep = ({ stage, peep }) => {
         const direction = Math.random() > 0.5 ? 1 : -1;
-        
-        // Random relative depth between 0 (back) and 1 (front)
-        const depth = Math.random(); 
-        
-        // Map depth to scale: back (0.13) to front (0.22) for a realistic sense of scale
-        peep.peepScale = gsap.utils.mapRange(0, 1, 0.13, 0.22, depth);
-        
-        // Re-scale width and height based on individual scale
-        peep.width = peep.rect[2] * peep.peepScale;
-        peep.height = peep.rect[3] * peep.peepScale;
-        
-        // Set opacity based on depth (fainter in back, stronger in front for visual atmospheric perspective)
-        peep.opacity = gsap.utils.mapRange(0, 1, 0.35, 0.85, depth);
-        
-        // Vertical positioning: back lanes are higher up, front lanes are lower down
-        const minY = stage.height - peep.height - 45;
-        const maxY = stage.height - peep.height + 25;
-        const startY = gsap.utils.mapRange(0, 1, minY, maxY, depth);
-        
+        const offsetY = (100 - 250 * gsap.parseEase("power2.in")(Math.random())) * peepScale;
+        const startY = stage.height - peep.height + offsetY;
         let startX;
         let endX;
 
@@ -1167,6 +1153,7 @@
           peep.scaleX = 1;
         } else {
           startX = stage.width + peep.width;
+          // Set endX to -peep.width to ensure characters walk completely off-screen rather than popping out at 0
           endX = -peep.width;
           peep.scaleX = -1;
         }
@@ -1184,19 +1171,11 @@
 
       const normalWalk = ({ peep, props }) => {
         const { startX, startY, endX } = props;
-        
-        // Speed is proportional to depth: people in front walk faster, people in back walk slower
-        // Map scale (0.13 to 0.22) to duration (26s down to 16s)
-        const walkSpeedFactor = gsap.utils.mapRange(0.13, 0.22, 26, 16, peep.peepScale);
-        const xDuration = walkSpeedFactor * randomRange(0.9, 1.15);
-        
-        // Stride cadence is slightly randomized around human walking speed (bounce every 500-650ms)
-        const yDuration = randomRange(0.5, 0.65); 
-        
-        // Bounce height is also proportional to their scale
-        const bounceHeight = 3.5 * peep.peepScale;
+        const xDuration = 10;
+        const yDuration = 0.25;
 
         const tl = gsap.timeline();
+        tl.timeScale(randomRange(0.5, 1.5));
         tl.to(
           peep,
           {
@@ -1212,7 +1191,7 @@
             duration: yDuration,
             repeat: xDuration / yDuration,
             yoyo: true,
-            y: startY - bounceHeight,
+            y: startY - (10 * peepScale),
           },
           0
         );
@@ -1235,17 +1214,14 @@
           anchorY: 0,
           scaleX: 1,
           walk: null,
-          peepScale: 0.20,
-          opacity: 0.7,
           setRect(rect) {
             peep.rect = rect;
-            peep.width = rect[2] * peep.peepScale;
-            peep.height = rect[3] * peep.peepScale;
+            peep.width = rect[2] * peepScale;
+            peep.height = rect[3] * peepScale;
             peep.drawArgs = [peep.image, ...rect, 0, 0, peep.width, peep.height];
           },
           render(ctx) {
             ctx.save();
-            ctx.globalAlpha = peep.opacity;
             ctx.translate(peep.x, peep.y);
             ctx.scale(peep.scaleX, 1);
             ctx.drawImage(
@@ -1295,11 +1271,8 @@
         }
       };
 
-      const maxCrowdSize = 15; // Moderate density for elegant breathing room
-
       const initCrowd = () => {
-        const count = Math.min(availablePeeps.length, maxCrowdSize);
-        for (let i = 0; i < count; i++) {
+        while (availablePeeps.length) {
           const peep = addPeepToCrowd();
           if (peep && peep.walk) {
             peep.walk.progress(Math.random());
