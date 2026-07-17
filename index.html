@@ -827,7 +827,7 @@
       <!-- PHASE C: UNPINNED VERTICAL RELEASE (BOTTOM) -->
 
       <!-- Section 4: Footer Section -->
-      <footer id="footer" class="footer-sec w-full bg-brand-bg border-t border-brand-accent/25 py-16 px-6 md:py-24 md:px-12 relative z-10">
+      <footer id="footer" class="footer-sec w-full bg-brand-bg border-t border-brand-accent/25 py-16 px-6 md:py-24 md:px-12 relative z-10 overflow-hidden">
         <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 items-start">
           
           <!-- Column 1: Studio Description & Logo -->
@@ -890,6 +890,11 @@
           </div>
 
         </div>
+
+        <!-- Interactive Walking Crowd Simulation (Skiper39 UI Integration) -->
+        <div class="absolute bottom-0 left-0 w-full h-[120px] md:h-[180px] pointer-events-none z-0 opacity-60">
+          <canvas id="crowd-canvas" class="absolute bottom-0 w-full h-full"></canvas>
+        </div>
       </footer>
 
     </div>
@@ -909,6 +914,7 @@
           ease: "power2.out",
           onComplete: () => {
             document.getElementById("loader").style.display = "none";
+            initCrowdCanvas(); // Start crowd simulation
           }
         });
       }, 1000);
@@ -1102,6 +1108,261 @@
         }
       });
     });
+
+    // ================= SKIPER39 CROWD CANVAS ENGINE =================
+    function initCrowdCanvas() {
+      const canvas = document.getElementById("crowd-canvas");
+      if (!canvas) return;
+
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return;
+
+      const config = {
+        src: "assets/all-peeps.png",
+        rows: 15,
+        cols: 7,
+      };
+
+      // UTILS
+      const randomRange = (min, max) => min + Math.random() * (max - min);
+      const randomIndex = (array) => randomRange(0, array.length) | 0;
+      const removeFromArray = (array, i) => array.splice(i, 1)[0];
+      const removeItemFromArray = (array, item) => removeFromArray(array, array.indexOf(item));
+      const removeRandomFromArray = (array) => removeFromArray(array, randomIndex(array));
+      const getRandomFromArray = (array) => array[randomIndex(array) | 0];
+
+      const stage = {
+        width: 0,
+        height: 0,
+      };
+
+      // CONFIGS FOR PEEPS SIZE (Scaled down to look natural and elegant)
+      const peepScale = 0.22; // Tiny elegant silhouettes instead of huge cartoon graphics
+
+      // TWEEN FACTORIES
+      const resetPeep = ({ stage, peep }) => {
+        const direction = Math.random() > 0.5 ? 1 : -1;
+        // Scale the vertical scatter range proportionally
+        const offsetY = (80 - 180 * gsap.parseEase("power2.in")(Math.random())) * peepScale;
+        const startY = stage.height - peep.height + offsetY;
+        let startX;
+        let endX;
+
+        if (direction === 1) {
+          startX = -peep.width;
+          endX = stage.width;
+          peep.scaleX = 1;
+        } else {
+          startX = stage.width + peep.width;
+          endX = -peep.width;
+          peep.scaleX = -1;
+        }
+
+        peep.x = startX;
+        peep.y = startY;
+        peep.anchorY = startY;
+
+        return {
+          startX,
+          startY,
+          endX,
+        };
+      };
+
+      const normalWalk = ({ peep, props }) => {
+        const { startX, startY, endX } = props;
+        const xDuration = randomRange(16, 24); // Slower, more natural walking speeds (human pacing)
+        const yDuration = 0.55; // Natural human cadence (bounce every 550ms)
+
+        const tl = gsap.timeline();
+        tl.timeScale(randomRange(0.8, 1.2));
+        tl.to(
+          peep,
+          {
+            duration: xDuration,
+            x: endX,
+            ease: "none",
+          },
+          0
+        );
+        tl.to(
+          peep,
+          {
+            duration: yDuration,
+            repeat: xDuration / yDuration,
+            yoyo: true,
+            // Subtler vertical bounce for a realistic human gait
+            y: startY - (3 * peepScale),
+          },
+          0
+        );
+
+        return tl;
+      };
+
+      const walks = [normalWalk];
+
+      // FACTORY FUNCTIONS
+      const createPeep = ({ image, rect }) => {
+        const peep = {
+          image,
+          rect: [],
+          width: 0,
+          height: 0,
+          drawArgs: [],
+          x: 0,
+          y: 0,
+          anchorY: 0,
+          scaleX: 1,
+          walk: null,
+          setRect(rect) {
+            peep.rect = rect;
+            peep.width = rect[2] * peepScale;
+            peep.height = rect[3] * peepScale;
+            peep.drawArgs = [peep.image, ...rect, 0, 0, peep.width, peep.height];
+          },
+          render(ctx) {
+            ctx.save();
+            ctx.translate(peep.x, peep.y);
+            ctx.scale(peep.scaleX, 1);
+            ctx.drawImage(
+              peep.image,
+              peep.rect[0],
+              peep.rect[1],
+              peep.rect[2],
+              peep.rect[3],
+              0,
+              0,
+              peep.width,
+              peep.height
+            );
+            ctx.restore();
+          },
+        };
+
+        peep.setRect(rect);
+        return peep;
+      };
+
+      // MAIN
+      const img = new Image();
+      const allPeeps = [];
+      const availablePeeps = [];
+      const crowd = [];
+
+      const createPeeps = () => {
+        const { rows, cols } = config;
+        const { naturalWidth: width, naturalHeight: height } = img;
+        const total = rows * cols;
+        const rectWidth = width / rows;
+        const rectHeight = height / cols;
+
+        for (let i = 0; i < total; i++) {
+          allPeeps.push(
+            createPeep({
+              image: img,
+              rect: [
+                (i % rows) * rectWidth,
+                ((i / rows) | 0) * rectHeight,
+                rectWidth,
+                rectHeight,
+              ],
+            })
+          );
+        }
+      };
+
+      const maxCrowdSize = 16; // Less dense crowd for a quieter aesthetic
+
+      const initCrowd = () => {
+        const count = Math.min(availablePeeps.length, maxCrowdSize);
+        for (let i = 0; i < count; i++) {
+          const peep = addPeepToCrowd();
+          if (peep && peep.walk) {
+            peep.walk.progress(Math.random());
+          }
+        }
+      };
+
+      const addPeepToCrowd = () => {
+        if (!availablePeeps.length) return null;
+        const peep = removeRandomFromArray(availablePeeps);
+        const walk = getRandomFromArray(walks)({
+          peep,
+          props: resetPeep({
+            peep,
+            stage,
+          }),
+        }).eventCallback("onComplete", () => {
+          removePeepFromCrowd(peep);
+          addPeepToCrowd();
+        });
+
+        peep.walk = walk;
+
+        crowd.push(peep);
+        crowd.sort((a, b) => a.anchorY - b.anchorY);
+
+        return peep;
+      };
+
+      const removePeepFromCrowd = (peep) => {
+        removeItemFromArray(crowd, peep);
+        availablePeeps.push(peep);
+      };
+
+      const render = () => {
+        if (!canvas) return;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.save();
+        ctx.scale(devicePixelRatio, devicePixelRatio);
+
+        crowd.forEach((peep) => {
+          peep.render(ctx);
+        });
+
+        ctx.restore();
+      };
+
+      const resize = () => {
+        if (!canvas) return;
+        stage.width = canvas.clientWidth;
+        stage.height = canvas.clientHeight;
+        canvas.width = stage.width * devicePixelRatio;
+        canvas.height = stage.height * devicePixelRatio;
+
+        crowd.forEach((peep) => {
+          if (peep.walk) peep.walk.kill();
+        });
+
+        crowd.length = 0;
+        availablePeeps.length = 0;
+        availablePeeps.push(...allPeeps);
+
+        initCrowd();
+      };
+
+      const init = () => {
+        createPeeps();
+        resize();
+        gsap.ticker.add(render);
+      };
+
+      img.onload = init;
+      img.src = config.src;
+
+      const handleResize = () => resize();
+      window.addEventListener("resize", handleResize);
+
+      // Save references on global object for debug or release
+      window._crowdCanvasCleanup = () => {
+        window.removeEventListener("resize", handleResize);
+        gsap.ticker.remove(render);
+        crowd.forEach((peep) => {
+          if (peep.walk) peep.walk.kill();
+        });
+      };
+    }
   </script>
 </body>
 </html>
