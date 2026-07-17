@@ -814,8 +814,11 @@
       <!-- PHASE C: UNPINNED VERTICAL RELEASE (BOTTOM) -->
 
       <!-- Section 4: Footer Section -->
-      <footer id="footer" class="footer-sec w-full bg-brand-bg border-t border-brand-accent/25 py-20 px-8 md:py-28 md:px-16 relative z-10 overflow-hidden">
-        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 items-start relative z-10">
+      <footer id="footer" class="footer-sec w-full bg-brand-bg border-t border-brand-accent/25 relative z-10 overflow-hidden flex flex-col">
+        
+        <!-- Footer Content (TOP) -->
+        <div class="w-full py-20 px-8 md:py-28 md:px-16">
+          <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 items-start">
           
           <!-- Column 1: Studio Description & Logo -->
           <div class="md:col-span-5 flex flex-col justify-between h-full gap-8 border-b border-brand-accent/10 pb-8 md:border-b-0 md:pb-0">
@@ -876,11 +879,12 @@
             </div>
           </div>
 
+          </div>
         </div>
 
-        <!-- Interactive Walking Crowd Simulation (Skiper39 UI Integration) -->
-        <div class="absolute bottom-0 left-0 w-full h-[180px] md:h-[260px] pointer-events-none z-0 opacity-60">
-          <canvas id="crowd-canvas" class="absolute bottom-0 w-full h-full"></canvas>
+        <!-- Walking Crowd Animation (BOTTOM) -->
+        <div class="w-full h-[200px] md:h-[300px] relative pointer-events-none">
+          <canvas id="crowd-canvas" class="w-full h-full"></canvas>
         </div>
       </footer>
 
