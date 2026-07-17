@@ -13,7 +13,7 @@
   <!-- Google Fonts: Cormorant Garamond & Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&family=Playwrite+ID:wght@100..400&family=Yuyu&family=Bebas+Neue&family=Titan+One&display=swap" rel="stylesheet">
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -53,8 +53,13 @@
             }
           },
           fontFamily: {
-            serif: ['"Cormorant Garamond"', 'serif'],
-            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            serif: ['"Titan One"', 'sans-serif'],
+            sans: ['"Titan One"', 'sans-serif'],
+            grotesque: ['"Space Grotesk"', 'sans-serif'],
+            playwrite: ['"Playwrite ID"', 'cursive'],
+            yuyu: ['"Yuyu"', 'sans-serif'],
+            bebas: ['"Bebas Neue"', 'sans-serif'],
+            titan: ['"Titan One"', 'sans-serif'],
           }
         }
       }
@@ -123,13 +128,12 @@
       color: #F3ECD0;
     }
 
-    /* Hero Full-Bleed Photo Slideshow */
+    /* Hero Centered Photo Carousel */
     .hero-slide {
       position: absolute;
       inset: 0;
       background-size: cover;
       background-position: center;
-      filter: grayscale(1) contrast(1.05) brightness(0.95);
       opacity: 0;
       transition: opacity 1.4s ease;
     }
@@ -146,6 +150,17 @@
     }
     .hero-arrow:hover {
       opacity: 0.6;
+    }
+    .hero-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.5);
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+    .hero-dot.active {
+      background: #ffffff;
+      transform: scale(1.3);
     }
   </style>
 </head>
@@ -171,71 +186,56 @@
     <div id="smooth-content" class="w-full relative">
 
       <!-- Navigation Header -->
-      <header class="absolute top-0 left-0 w-full z-30 px-8 py-8 md:px-12 md:py-10 flex justify-between items-center pointer-events-none">
-        <a href="#" class="pointer-events-auto flex items-center gap-1 text-brand-accent">
-          <!-- Small cursive logo -->
-          <svg viewBox="0 0 160 80" class="w-14 h-7 stroke-current fill-none" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M 20 40 C 25 30, 28 25, 34 25 C 40 25, 42 55, 50 55 C 58 55, 62 25, 68 25 C 74 25, 76 55, 85 55 C 93 55, 96 40, 93 34 C 90 28, 83 28, 80 37 C 77 46, 88 55, 100 55 C 108 55, 115 46, 122 38" />
-          </svg>
-          <span class="font-serif text-sm tracking-[0.4em] font-medium ml-1">FIVE</span>
+      <header class="absolute top-0 left-0 w-full z-30 px-8 py-3 md:px-12 md:py-4 flex justify-between items-center pointer-events-none bg-transparent">
+        <a href="#" class="pointer-events-auto font-serif italic text-2xl md:text-3xl font-light text-brand-text tracking-wide">
+          we five
         </a>
-        <div class="pointer-events-auto flex items-center gap-6 md:gap-8 text-[9px] md:text-xs font-semibold tracking-widest text-brand-accent">
-          <a href="#about" class="hover:text-brand-accentMuted transition-colors duration-300">ABOUT</a>
-          <a href="#history" class="hover:text-brand-accentMuted transition-colors duration-300">HISTORY</a>
-          <a href="#archive" class="hover:text-brand-accentMuted transition-colors duration-300">ARCHIVE</a>
-          <a href="#footer" class="hover:text-brand-accentMuted transition-colors duration-300">CONTACT</a>
-        </div>
+        <button aria-label="Open menu" class="pointer-events-auto flex flex-col items-end justify-center gap-[5px] w-7 h-7">
+          <span class="block w-7 h-[1.5px] bg-brand-text"></span>
+          <span class="block w-7 h-[1.5px] bg-brand-text"></span>
+          <span class="block w-7 h-[1.5px] bg-brand-text"></span>
+        </button>
       </header>
 
       <!-- PHASE A: VERTICAL SCROLLING (TOP) -->
 
       <!-- Section 1: Hero Section -->
-      <section id="hero" class="hero-sec w-full h-screen relative overflow-hidden bg-brand-bg">
+      <section id="hero" class="hero-sec w-full h-screen relative overflow-hidden bg-white flex flex-col items-center justify-center">
 
-        <!-- Hero Full-Bleed Photo Slideshow -->
-        <div class="absolute inset-0 z-0 overflow-hidden">
+        <!-- Centered Photo Carousel: full-bleed left/right, white space above/below -->
+        <div class="relative w-full h-[64vh] sm:h-[72vh] md:h-[80vh] overflow-hidden">
           <div class="hero-slide active" style="background-image: url('assets/skyline_architecture.jpg');"></div>
           <div class="hero-slide" style="background-image: url('assets/cinematic_film.jpg');"></div>
           <div class="hero-slide" style="background-image: url('assets/retro_architecture.jpg');"></div>
           <div class="hero-slide" style="background-image: url('assets/craft_process.jpg');"></div>
           <div class="hero-slide" style="background-image: url('assets/cinematic_film.jpg');"></div>
-          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/30"></div>
-        </div>
 
-        <!-- Editorial Border Frame Info -->
-        <div class="absolute inset-8 md:inset-12 pointer-events-none flex flex-col justify-between p-4 md:p-6 z-20">
-          <div class="flex justify-between items-start text-[9px] tracking-[0.25em] text-brand-bg/80">
-            <span>WE FIVE / JOURNAL</span>
-            <span>EST. 2018</span>
+          <!-- Bottom fade for control contrast -->
+          <div class="absolute bottom-0 left-0 w-full h-28 bg-gradient-to-t from-black/50 to-transparent pointer-events-none z-10"></div>
+
+          <!-- Bottom-Left: caption above dots + previous arrow -->
+          <div class="absolute bottom-4 left-4 md:bottom-6 md:left-6 z-20 flex flex-col items-start gap-3">
+            <p id="hero-caption" class="font-titan font-normal text-white text-2xl md:text-4xl"></p>
+            <div class="flex items-center gap-4">
+              <button id="hero-prev" aria-label="Previous slide" class="hero-arrow text-white">
+                <svg viewBox="0 0 24 24" class="w-5 h-5 stroke-current fill-none stroke-[1.5]" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="19" y1="12" x2="5" y2="12" />
+                  <polyline points="12 19 5 12 12 5" />
+                </svg>
+              </button>
+              <div id="hero-dots" class="flex items-center gap-2"></div>
+            </div>
           </div>
-          <div class="flex justify-between items-end text-[9px] tracking-[0.25em] text-brand-bg/80">
-            <span>MILAN — ROME</span>
-            <span>SCROLL TO COMMENCE ↓</span>
+
+          <!-- Bottom-Right: next arrow -->
+          <div class="absolute bottom-4 right-4 md:bottom-6 md:right-6 z-20">
+            <button id="hero-next" aria-label="Next slide" class="hero-arrow text-white">
+              <svg viewBox="0 0 24 24" class="w-5 h-5 stroke-current fill-none stroke-[1.5]" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </button>
           </div>
-        </div>
-
-        <!-- Hero Content: headline bottom-left over photo -->
-        <div class="absolute bottom-24 md:bottom-28 left-0 w-full px-8 md:px-16 z-10 text-left">
-          <h1 class="font-serif italic font-light text-brand-bg text-3xl md:text-5xl leading-tight max-w-xl mb-6">
-            Crafting narratives through design, space, and motion.
-          </h1>
-        </div>
-
-        <!-- Slideshow Controls: arrows + counter -->
-        <div class="absolute bottom-6 left-0 w-full px-8 md:px-16 z-20 flex items-center justify-between pointer-events-none">
-          <button id="hero-prev" aria-label="Previous slide" class="hero-arrow pointer-events-auto text-brand-bg">
-            <svg viewBox="0 0 24 24" class="w-5 h-5 stroke-current fill-none stroke-[1.5]" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="19" y1="12" x2="5" y2="12" />
-              <polyline points="12 19 5 12 12 5" />
-            </svg>
-          </button>
-          <span id="hero-counter" class="font-mono text-xs tracking-[0.3em] text-brand-bg">01 / 05</span>
-          <button id="hero-next" aria-label="Next slide" class="hero-arrow pointer-events-auto text-brand-bg">
-            <svg viewBox="0 0 24 24" class="w-5 h-5 stroke-current fill-none stroke-[1.5]" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="5" y1="12" x2="19" y2="12" />
-              <polyline points="12 5 19 12 12 19" />
-            </svg>
-          </button>
         </div>
       </section>
 
@@ -933,20 +933,39 @@
     // Register ScrollTrigger plugin
     gsap.registerPlugin(ScrollTrigger);
 
-    // Hero Full-Bleed Photo Slideshow
+    // Hero Centered Photo Carousel
     (function initHeroSlideshow() {
       const slides = document.querySelectorAll("#hero .hero-slide");
-      const counter = document.getElementById("hero-counter");
+      const dotsWrap = document.getElementById("hero-dots");
       const prevBtn = document.getElementById("hero-prev");
       const nextBtn = document.getElementById("hero-next");
+      const caption = document.getElementById("hero-caption");
       if (!slides.length) return;
+
+      const captions = [
+        "Urban Geometries — Skyline Study",
+        "The Texture of Time — Cinematic Study",
+        "Retro Architecture — Archive Series",
+        "The Patience of Craft — Process Study",
+        "The Texture of Time — Cinematic Study"
+      ];
+
+      slides.forEach((_, i) => {
+        const dot = document.createElement("button");
+        dot.className = "hero-dot" + (i === 0 ? " active" : "");
+        dot.setAttribute("aria-label", "Go to slide " + (i + 1));
+        dot.addEventListener("click", () => { goTo(i); resetAutoAdvance(); });
+        dotsWrap.appendChild(dot);
+      });
+      const dots = dotsWrap.querySelectorAll(".hero-dot");
 
       let current = 0;
       let autoTimer = null;
 
       function render() {
         slides.forEach((slide, i) => slide.classList.toggle("active", i === current));
-        counter.textContent = String(current + 1).padStart(2, "0") + " / " + String(slides.length).padStart(2, "0");
+        dots.forEach((dot, i) => dot.classList.toggle("active", i === current));
+        if (caption) caption.textContent = captions[current] || "";
       }
 
       function goTo(index) {
