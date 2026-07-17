@@ -737,18 +737,10 @@
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       direction: 'vertical',
       gestureDirection: 'vertical',
-      smooth: true,
-      mouseMultiplier: 1,
       smoothTouch: false,
       touchMultiplier: 2,
       infinite: false,
     });
-
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
 
     // Sync ScrollTrigger with Lenis
     lenis.on('scroll', ScrollTrigger.update);
@@ -1071,13 +1063,20 @@
         }
       };
 
+      const maxCrowdSize = 25; // Limit active crowd to 25 peeps for smooth 60fps performance
+
       const initCrowd = () => {
-        while (availablePeeps.length) {
-          addPeepToCrowd().walk.progress(Math.random());
+        const count = Math.min(availablePeeps.length, maxCrowdSize);
+        for (let i = 0; i < count; i++) {
+          const peep = addPeepToCrowd();
+          if (peep && peep.walk) {
+            peep.walk.progress(Math.random());
+          }
         }
       };
 
       const addPeepToCrowd = () => {
+        if (!availablePeeps.length) return null;
         const peep = removeRandomFromArray(availablePeeps);
         const walk = getRandomFromArray(walks)({
           peep,
