@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>We Five / Journal — Milan & Rome</title>
   
-  <!-- SEO Meta Tags -->
+  <!-- SEO & Meta Tags -->
   <meta name="description" content="WE FIVE / JOURNAL. Crafting narratives through design, space, and motion. Est. 2018, Milan — Rome.">
   <meta name="keywords" content="We Five, Journal, Editorial Design, Hybrid Scroll, Parallax Timeline, GSAP ScrollTrigger, Lenis Smooth Scroll">
   <meta name="author" content="We Five Studio">
   
-  <!-- Google Fonts: Cormorant Garamond & Plus Jakarta Sans -->
+  <!-- Google Fonts: Cormorant Garamond (Editorial Serif) & Plus Jakarta Sans (Clean Sans-Serif) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -47,8 +47,8 @@
               bg: '#F3ECD0',      // Warm Pale Yellow
               accent: '#B32824',  // Deep Crimson Red
               accentMuted: '#9C2421',
-              text: '#1C1917',    // Warm Charcoal
-              muted: '#615451',   // Soft Crimson Brown
+              text: '#201A19',    // Soft warm charcoal
+              muted: '#615451',   // Soft crimson-brown
               border: '#B32824',
             }
           },
@@ -67,36 +67,45 @@
   <!-- Lenis Smooth Scroll CDN -->
   <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
 
-  <!-- Custom CSS for Premium Typography & Layout details -->
+  <!-- Custom CSS -->
   <style>
     /* Custom Scrollbar */
     ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
+      width: 8px;
+      height: 8px;
     }
     ::-webkit-scrollbar-track {
       background: #F3ECD0;
     }
     ::-webkit-scrollbar-thumb {
       background: #B32824;
-      border-radius: 0px; /* Sharp retro styling */
+      border-radius: 4px;
     }
     ::-webkit-scrollbar-thumb:hover {
       background: #9C2421;
     }
 
+    /* Hide standard cursor on desktop */
+    @media (min-width: 768px) {
+      body {
+        cursor: none;
+      }
+      a, button, input, select, textarea, .clickable {
+        cursor: none !important;
+      }
+    }
 
     /* Outlined Editorial Buttons */
     .btn-editorial {
-      border: 1px solid #B32824;
+      border: 1.5px solid #B32824;
       background: transparent;
       color: #B32824;
       font-family: "Plus Jakarta Sans", sans-serif;
       font-weight: 600;
-      font-size: 0.7rem;
-      letter-spacing: 0.2em;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
-      padding: 1rem 2.5rem;
+      padding: 0.85rem 2.25rem;
       transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
       position: relative;
       overflow: hidden;
@@ -127,22 +136,22 @@
 <body class="bg-brand-bg text-brand-text font-sans selection:bg-brand-accent selection:text-brand-bg overflow-x-hidden antialiased">
 
   <!-- Grainy Paper Texture Overlay -->
-  <div class="fixed inset-0 pointer-events-none z-50 opacity-[0.04] mix-blend-multiply" style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.8%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E');"></div>
+  <div class="fixed inset-0 pointer-events-none z-50 opacity-[0.035] mix-blend-multiply" style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.75%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E');"></div>
 
-  <!-- Viewport Art Frame (Locked border frame) -->
-  <div class="fixed inset-4 md:inset-6 pointer-events-none border border-brand-accent/15 z-40"></div>
-
+  <!-- Custom Cursor -->
+  <div class="custom-cursor fixed top-0 left-0 w-8 h-8 -mt-4 -ml-4 rounded-full border border-brand-accent pointer-events-none z-50 transition-transform duration-200 ease-out hidden md:block select-none opacity-80"></div>
+  <div class="custom-cursor-dot fixed top-0 left-0 w-1.5 h-1.5 -mt-0.75 -ml-0.75 bg-brand-accent rounded-full pointer-events-none z-50 hidden md:block select-none"></div>
 
   <!-- Loading Screen Overlay -->
   <div id="loader" class="fixed inset-0 bg-brand-bg z-[100] flex flex-col justify-center items-center pointer-events-none">
     <div class="flex flex-col items-center">
-      <!-- Cursive Logo -->
+      <!-- Cursive SVG logo -->
       <svg viewBox="0 0 160 80" class="w-36 h-18 stroke-brand-accent fill-none animate-pulse" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
         <path d="M 20 40 C 25 30, 28 25, 34 25 C 40 25, 42 55, 50 55 C 58 55, 62 25, 68 25 C 74 25, 76 55, 85 55 C 93 55, 96 40, 93 34 C 90 28, 83 28, 80 37 C 77 46, 88 55, 100 55 C 108 55, 115 46, 122 38" />
       </svg>
       <span class="font-serif text-xl tracking-[0.6em] mr-[-0.6em] font-light text-brand-accent mt-3 select-none">FIVE</span>
     </div>
-    <div class="absolute bottom-16 font-sans text-[9px] tracking-[0.25em] text-brand-muted select-none uppercase">JOURNAL PREPARATION // EST. 2018</div>
+    <div class="absolute bottom-12 font-sans text-xs tracking-[0.2em] text-brand-muted select-none">JOURNAL PREPARATION...</div>
   </div>
 
   <!-- Page Wrapper structure -->
@@ -150,7 +159,7 @@
     <div id="smooth-content" class="w-full relative">
 
       <!-- Navigation Header -->
-      <header class="absolute top-0 left-0 w-full z-30 px-8 py-8 md:px-12 md:py-10 flex justify-between items-center pointer-events-none">
+      <header class="absolute top-0 left-0 w-full z-40 px-6 py-6 md:px-12 md:py-8 flex justify-between items-center pointer-events-none">
         <a href="#" class="pointer-events-auto flex items-center gap-1 text-brand-accent">
           <!-- Small cursive logo -->
           <svg viewBox="0 0 160 80" class="w-14 h-7 stroke-current fill-none" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
@@ -158,7 +167,7 @@
           </svg>
           <span class="font-serif text-sm tracking-[0.4em] font-medium ml-1">FIVE</span>
         </a>
-        <div class="pointer-events-auto flex items-center gap-6 md:gap-8 text-[9px] md:text-xs font-semibold tracking-widest text-brand-accent">
+        <div class="pointer-events-auto flex items-center gap-4 md:gap-8 text-[9px] md:text-xs font-semibold tracking-widest text-brand-accent">
           <a href="#about" class="hover:text-brand-accentMuted transition-colors duration-300">ABOUT</a>
           <a href="#history" class="hover:text-brand-accentMuted transition-colors duration-300">HISTORY</a>
           <a href="#archive" class="hover:text-brand-accentMuted transition-colors duration-300">ARCHIVE</a>
@@ -169,14 +178,14 @@
       <!-- PHASE A: VERTICAL SCROLLING (TOP) -->
 
       <!-- Section 1: Hero Section -->
-      <section id="hero" class="hero-sec w-full h-screen relative flex flex-col justify-center items-center px-8 md:px-16 overflow-hidden bg-brand-bg">
-        <!-- Editorial Border Frame Info -->
-        <div class="absolute inset-8 md:inset-12 pointer-events-none flex flex-col justify-between p-4 md:p-6">
-          <div class="flex justify-between items-start text-[9px] tracking-[0.25em] text-brand-muted">
+      <section id="hero" class="hero-sec w-full h-screen relative flex flex-col justify-center items-center px-6 overflow-hidden bg-brand-bg">
+        <!-- Editorial Border Frame -->
+        <div class="absolute inset-4 md:inset-8 border border-brand-accent/20 pointer-events-none flex flex-col justify-between p-6 md:p-8">
+          <div class="flex justify-between items-start text-[10px] tracking-[0.25em] text-brand-muted">
             <span>WE FIVE / JOURNAL</span>
             <span>EST. 2018</span>
           </div>
-          <div class="flex justify-between items-end text-[9px] tracking-[0.25em] text-brand-muted">
+          <div class="flex justify-between items-end text-[10px] tracking-[0.25em] text-brand-muted">
             <span>MILAN — ROME</span>
             <span>SCROLL TO COMMENCE ↓</span>
           </div>
@@ -186,7 +195,7 @@
         <div class="text-center flex flex-col items-center max-w-4xl px-4 z-10">
           <div class="mb-4">
             <!-- Large cursive "we" logo -->
-            <svg viewBox="0 0 160 80" class="w-44 h-22 stroke-brand-accent fill-none" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round">
+            <svg viewBox="0 0 160 80" class="w-48 h-24 stroke-brand-accent fill-none" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
               <path d="M 20 40 C 25 30, 28 25, 34 25 C 40 25, 42 55, 50 55 C 58 55, 62 25, 68 25 C 74 25, 76 55, 85 55 C 93 55, 96 40, 93 34 C 90 28, 83 28, 80 37 C 77 46, 88 55, 100 55 C 108 55, 115 46, 122 38" />
             </svg>
             <span class="font-serif text-3xl md:text-4xl tracking-[0.6em] mr-[-0.6em] font-light text-brand-accent block mt-2">FIVE</span>
@@ -203,36 +212,36 @@
       </section>
 
       <!-- Section 2: Intro/Preface Content -->
-      <section id="intro" class="intro-sec w-full min-h-screen relative flex flex-col justify-center items-center px-8 md:px-16 py-24 overflow-hidden border-t border-brand-accent/20 bg-brand-bg">
-        <div class="max-w-6xl w-full grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16 items-start">
+      <section id="intro" class="intro-sec w-full min-h-screen relative flex flex-col justify-center items-center px-6 md:px-12 py-20 overflow-hidden border-t border-brand-accent/25 bg-brand-bg">
+        <div class="max-w-6xl w-full grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-start">
           
           <!-- Left Column: Title & Preface -->
           <div class="md:col-span-5 flex flex-col justify-center">
             <span class="text-xs font-mono tracking-[0.35em] text-brand-accent mb-2">// PREFACE</span>
-            <h2 class="font-serif text-4xl md:text-6xl text-brand-text leading-[1.05] mb-6">
+            <h2 class="font-serif text-4xl md:text-6xl text-brand-text leading-[1.1] mb-6">
               The Patience of <span class="italic font-light">Creation</span>.
             </h2>
-            <div class="h-[1px] bg-brand-accent/25 w-1/3 my-4"></div>
+            <div class="h-[1px] bg-brand-accent/30 w-1/2 my-4"></div>
             
             <!-- Bullet Elements Grid -->
-            <div class="grid grid-cols-1 gap-4 font-mono text-[9px] tracking-[0.2em] uppercase font-bold text-brand-accent mt-4">
-              <div class="flex items-center gap-3">
-                <span class="w-1.5 h-1.5 bg-brand-accent"></span>
+            <div class="grid grid-cols-1 gap-3 font-mono text-[10px] tracking-[0.25em] uppercase font-bold text-brand-accent mt-4">
+              <div class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 bg-brand-accent rounded-full"></span>
                 <span>PHYSICAL RESISTANCE</span>
               </div>
-              <div class="flex items-center gap-3">
-                <span class="w-1.5 h-1.5 bg-brand-accent"></span>
+              <div class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 bg-brand-accent rounded-full"></span>
                 <span>DIGITAL TEXTURE</span>
               </div>
-              <div class="flex items-center gap-3">
-                <span class="w-1.5 h-1.5 bg-brand-accent"></span>
+              <div class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 bg-brand-accent rounded-full"></span>
                 <span>EDITORIAL GRID</span>
               </div>
             </div>
           </div>
           
           <!-- Right Column: Narrative Paragraphs -->
-          <div class="md:col-span-7 flex flex-col gap-8 text-brand-muted text-sm md:text-base leading-relaxed font-light">
+          <div class="md:col-span-7 flex flex-col gap-6 text-brand-muted text-sm md:text-base leading-relaxed font-light">
             <p>
               In a digital landscape dominated by rapid consumption, we choose depth. We curate structures that require pause. Our collaborations are experiments in friction, typography, and human curiosity.
             </p>
@@ -252,14 +261,13 @@
         <div class="horizontal-inner flex flex-col md:flex-row h-full w-full md:w-[1000vw]">
 
           <!-- Panel 1: About -->
-          <section id="about" class="panel w-full md:w-screen min-h-screen md:h-screen flex-shrink-0 flex items-center justify-center border-b md:border-b-0 md:border-r border-brand-accent/15 px-8 py-20 md:p-16 relative overflow-hidden">
+          <section id="about" class="panel w-full md:w-screen min-h-screen md:h-screen flex-shrink-0 flex items-center justify-center border-b md:border-b-0 md:border-r border-brand-accent/25 px-6 py-16 md:p-12 relative overflow-hidden">
             <!-- Background Parallax Text -->
-            <div class="absolute right-[-4vw] bottom-[-2vh] font-serif text-[35vw] text-brand-accent/[0.02] select-none pointer-events-none parallax-bg leading-none font-bold">
+            <div class="absolute right-[-5vw] bottom-[-2vh] font-serif text-[35vw] text-brand-accent/[0.025] select-none pointer-events-none parallax-bg leading-none font-bold">
               01
             </div>
             
-            <div class="max-w-6xl w-full grid grid-cols-1 md:grid-cols-12 gap-12 items-start z-10">
-              <!-- Left descriptive column -->
+            <div class="max-w-5xl w-full grid grid-cols-1 md:grid-cols-12 gap-8 items-start z-10">
               <div class="md:col-span-5 text-left">
                 <span class="text-xs font-mono tracking-[0.35em] text-brand-accent block mb-2">[ 01 / ABOUT ]</span>
                 <h3 class="font-serif text-5xl md:text-7xl font-light text-brand-text mb-4">01 / ABOUT</h3>
@@ -271,30 +279,30 @@
               </div>
               
               <!-- Collective Core Grid (M A G L F) -->
-              <div class="md:col-span-7 flex flex-col gap-6 md:border-l md:border-brand-accent/15 md:pl-12 justify-center h-full">
-                <div class="parallax-slow w-full">
-                  <span class="text-[9px] font-mono tracking-[0.25em] text-brand-accent block mb-8 uppercase font-bold">THE COLLECTIVE CORE</span>
+              <div class="md:col-span-7 flex flex-col gap-6 md:border-l md:border-brand-accent/20 md:pl-10 justify-center">
+                <div class="parallax-slow">
+                  <span class="text-[10px] font-mono tracking-[0.25em] text-brand-accent block mb-6">THE COLLECTIVE CORE</span>
                   
-                  <div class="grid grid-cols-5 gap-6 border-t border-brand-accent/20 pt-8">
+                  <div class="grid grid-cols-5 gap-4 border-t border-brand-accent/20 pt-6">
                     <div class="text-center group">
-                      <div class="font-serif text-5xl md:text-6xl font-light text-brand-accent group-hover:scale-105 transition-transform duration-300 select-none">M</div>
-                      <div class="font-mono text-[9px] tracking-widest text-brand-muted mt-4 font-bold uppercase">M. ROSSI</div>
+                      <div class="font-serif text-5xl font-light text-brand-accent group-hover:scale-110 transition-transform duration-300 select-none">M</div>
+                      <div class="font-mono text-[9px] tracking-widest text-brand-muted mt-3 font-bold uppercase">M. ROSSI</div>
                     </div>
                     <div class="text-center group">
-                      <div class="font-serif text-5xl md:text-6xl font-light text-brand-accent group-hover:scale-105 transition-transform duration-300 select-none">A</div>
-                      <div class="font-mono text-[9px] tracking-widest text-brand-muted mt-4 font-bold uppercase">A. BIANCHI</div>
+                      <div class="font-serif text-5xl font-light text-brand-accent group-hover:scale-110 transition-transform duration-300 select-none">A</div>
+                      <div class="font-mono text-[9px] tracking-widest text-brand-muted mt-3 font-bold uppercase">A. BIANCHI</div>
                     </div>
                     <div class="text-center group">
-                      <div class="font-serif text-5xl md:text-6xl font-light text-brand-accent group-hover:scale-105 transition-transform duration-300 select-none">G</div>
-                      <div class="font-mono text-[9px] tracking-widest text-brand-muted mt-4 font-bold uppercase">G. VERDI</div>
+                      <div class="font-serif text-5xl font-light text-brand-accent group-hover:scale-110 transition-transform duration-300 select-none">G</div>
+                      <div class="font-mono text-[9px] tracking-widest text-brand-muted mt-3 font-bold uppercase">G. VERDI</div>
                     </div>
                     <div class="text-center group">
-                      <div class="font-serif text-5xl md:text-6xl font-light text-brand-accent group-hover:scale-105 transition-transform duration-300 select-none">L</div>
-                      <div class="font-mono text-[9px] tracking-widest text-brand-muted mt-4 font-bold uppercase">L. NERO</div>
+                      <div class="font-serif text-5xl font-light text-brand-accent group-hover:scale-110 transition-transform duration-300 select-none">L</div>
+                      <div class="font-mono text-[9px] tracking-widest text-brand-muted mt-3 font-bold uppercase">L. NERO</div>
                     </div>
                     <div class="text-center group">
-                      <div class="font-serif text-5xl md:text-6xl font-light text-brand-accent group-hover:scale-105 transition-transform duration-300 select-none">F</div>
-                      <div class="font-mono text-[9px] tracking-widest text-brand-muted mt-4 font-bold uppercase">F. ORO</div>
+                      <div class="font-serif text-5xl font-light text-brand-accent group-hover:scale-110 transition-transform duration-300 select-none">F</div>
+                      <div class="font-mono text-[9px] tracking-widest text-brand-muted mt-3 font-bold uppercase">F. ORO</div>
                     </div>
                   </div>
                 </div>
@@ -303,52 +311,52 @@
           </section>
 
           <!-- Panel 2: History -->
-          <section id="history" class="panel w-full md:w-screen min-h-screen md:h-screen flex-shrink-0 flex items-center justify-center border-b md:border-b-0 md:border-r border-brand-accent/15 px-8 py-20 md:p-16 relative overflow-hidden">
+          <section id="history" class="panel w-full md:w-screen min-h-screen md:h-screen flex-shrink-0 flex items-center justify-center border-b md:border-b-0 md:border-r border-brand-accent/25 px-6 py-16 md:p-12 relative overflow-hidden">
             <!-- Background Parallax Text -->
-            <div class="absolute left-[4vw] top-[-2vh] font-serif text-[35vw] text-brand-accent/[0.02] select-none pointer-events-none parallax-bg leading-none font-bold">
+            <div class="absolute left-[5vw] top-[-2vh] font-serif text-[35vw] text-brand-accent/[0.025] select-none pointer-events-none parallax-bg leading-none font-bold">
               02
             </div>
 
             <div class="max-w-6xl w-full flex flex-col justify-center items-start z-10">
-              <div class="mb-12">
+              <div class="mb-10">
                 <span class="text-xs font-mono tracking-[0.35em] text-brand-accent block mb-2">[ 02 / HISTORY ]</span>
                 <h3 class="font-serif text-5xl md:text-6xl font-light text-brand-text">02 / HISTORY</h3>
                 <h4 class="font-serif italic text-lg text-brand-accent font-light">Evolution of Form</h4>
               </div>
 
-              <!-- Horizontal timeline axis line (Desktop Only) -->
-              <div class="relative w-full h-[1px] bg-brand-accent/25 my-8 hidden md:block">
-                <!-- Staggered nodes dots -->
-                <div class="absolute left-[10%] top-1/2 -translate-y-1/2 w-2 h-2 bg-brand-accent"></div>
-                <div class="absolute left-[35%] top-1/2 -translate-y-1/2 w-2 h-2 bg-brand-accent"></div>
-                <div class="absolute left-[60%] top-1/2 -translate-y-1/2 w-2 h-2 bg-brand-accent"></div>
-                <div class="absolute left-[85%] top-1/2 -translate-y-1/2 w-2 h-2 bg-brand-accent"></div>
+              <!-- Horizontal timeline line (Desktop Only) -->
+              <div class="relative w-full h-[1.5px] bg-brand-accent/35 my-8 hidden md:block">
+                <!-- Glowing node pointers -->
+                <div class="absolute left-[10%] top-1/2 -translate-y-1/2 w-3.5 h-3.5 bg-brand-bg border border-brand-accent rounded-full"></div>
+                <div class="absolute left-[35%] top-1/2 -translate-y-1/2 w-3.5 h-3.5 bg-brand-bg border border-brand-accent rounded-full"></div>
+                <div class="absolute left-[60%] top-1/2 -translate-y-1/2 w-3.5 h-3.5 bg-brand-bg border border-brand-accent rounded-full"></div>
+                <div class="absolute left-[85%] top-1/2 -translate-y-1/2 w-3.5 h-3.5 bg-brand-bg border border-brand-accent rounded-full"></div>
               </div>
 
               <!-- Timeline nodes -->
-              <div class="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-10 w-full">
+              <div class="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12 w-full">
                 <!-- Node 2018 -->
-                <div class="flex flex-col gap-2 p-2 border-l border-brand-accent/20 relative parallax-fast">
+                <div class="flex flex-col gap-2 p-4 border border-brand-accent/20 bg-brand-bg/50 backdrop-blur-sm relative rounded-sm parallax-fast">
                   <span class="font-serif italic text-3xl text-brand-accent">2018</span>
-                  <h4 class="font-bold text-xs tracking-wider uppercase text-brand-text">The Genesis</h4>
+                  <h4 class="font-bold text-xs tracking-wider uppercase">The Genesis</h4>
                   <p class="text-xs text-brand-muted leading-relaxed font-light">Five multidisciplinary designers establish the studio in a brick-walled workspace in Milan, aiming to bring print pacing to the web.</p>
                 </div>
                 <!-- Node 2020 -->
-                <div class="flex flex-col gap-2 p-2 border-l border-brand-accent/20 relative md:translate-y-6 parallax-slow">
+                <div class="flex flex-col gap-2 p-4 border border-brand-accent/20 bg-brand-bg/50 backdrop-blur-sm relative rounded-sm md:translate-y-6 parallax-slow">
                   <span class="font-serif italic text-3xl text-brand-accent">2020</span>
-                  <h4 class="font-bold text-xs tracking-wider uppercase text-brand-text">The Print Journal</h4>
+                  <h4 class="font-bold text-xs tracking-wider uppercase">The Print Journal</h4>
                   <p class="text-xs text-brand-muted leading-relaxed font-light">Launch of our physical quarterly, "We Five Curation", distributing experimental typography layouts to independent booksellers.</p>
                 </div>
                 <!-- Node 2023 -->
-                <div class="flex flex-col gap-2 p-2 border-l border-brand-accent/20 relative parallax-fast">
+                <div class="flex flex-col gap-2 p-4 border border-brand-accent/20 bg-brand-bg/50 backdrop-blur-sm relative rounded-sm parallax-fast">
                   <span class="font-serif italic text-3xl text-brand-accent">2023</span>
-                  <h4 class="font-bold text-xs tracking-wider uppercase text-brand-text">Digital Physics</h4>
+                  <h4 class="font-bold text-xs tracking-wider uppercase">Digital Physics</h4>
                   <p class="text-xs text-brand-muted leading-relaxed font-light">Pioneering web layouts utilizing inertial-scroll kinetics, digital page-turns, and editorial-grid alignments.</p>
                 </div>
                 <!-- Node 2026 -->
-                <div class="flex flex-col gap-2 p-2 border-l border-brand-accent/20 relative md:translate-y-6 parallax-slow">
+                <div class="flex flex-col gap-2 p-4 border border-brand-accent/20 bg-brand-bg/50 backdrop-blur-sm relative rounded-sm md:translate-y-6 parallax-slow">
                   <span class="font-serif italic text-3xl text-brand-accent">2026</span>
-                  <h4 class="font-bold text-xs tracking-wider uppercase text-brand-text">Hybrid Landscapes</h4>
+                  <h4 class="font-bold text-xs tracking-wider uppercase">Hybrid Landscapes</h4>
                   <p class="text-xs text-brand-muted leading-relaxed font-light">Expanding into architectural spaces and interactive web journals, blending the tactile with the virtual seamlessly.</p>
                 </div>
               </div>
@@ -356,25 +364,25 @@
           </section>
 
           <!-- Panel 3: Archive -->
-          <section id="archive" class="panel w-full md:w-screen min-h-screen md:h-screen flex-shrink-0 flex items-center justify-center border-b md:border-b-0 md:border-r border-brand-accent/15 px-8 py-20 md:p-16 relative overflow-hidden">
+          <section id="archive" class="panel w-full md:w-screen min-h-screen md:h-screen flex-shrink-0 flex items-center justify-center border-b md:border-b-0 md:border-r border-brand-accent/25 px-6 py-16 md:p-12 relative overflow-hidden">
             <!-- Background Parallax Text -->
-            <div class="absolute right-[4vw] top-[-2vh] font-serif text-[35vw] text-brand-accent/[0.02] select-none pointer-events-none parallax-bg leading-none font-bold">
+            <div class="absolute right-[5vw] top-[-2vh] font-serif text-[35vw] text-brand-accent/[0.025] select-none pointer-events-none parallax-bg leading-none font-bold">
               03
             </div>
 
             <div class="max-w-6xl w-full flex flex-col justify-center z-10">
-              <div class="mb-10">
+              <div class="mb-8">
                 <span class="text-xs font-mono tracking-[0.35em] text-brand-accent block mb-2">[ 03 / ARCHIVE ]</span>
                 <h3 class="font-serif text-5xl md:text-6xl font-light text-brand-text">03 / ARCHIVE</h3>
                 <h4 class="font-serif italic text-lg text-brand-accent font-light">Selected Curations — CATALOGUE V.09</h4>
               </div>
 
-              <!-- 3 Case Study Columns separated by lines -->
-              <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full border-t border-brand-accent/20 pt-10">
+              <!-- 3 Case Study Columns -->
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full border-t border-brand-accent/30 pt-8">
                 
                 <!-- Case Study 01 -->
                 <div class="flex flex-col gap-3 group border-b border-brand-accent/15 pb-6 md:border-b-0 md:pb-0 md:border-r md:border-brand-accent/15 md:pr-8 last:border-0 last:pr-0 parallax-fast">
-                  <div class="flex justify-between items-center text-[9px] font-mono text-brand-accent font-bold">
+                  <div class="flex justify-between items-center text-[10px] font-mono text-brand-accent font-bold">
                     <span>01 / CASE STUDY MILAN</span>
                     <span>SCHEMATIC V1</span>
                   </div>
@@ -386,7 +394,7 @@
 
                 <!-- Case Study 02 -->
                 <div class="flex flex-col gap-3 group border-b border-brand-accent/15 pb-6 md:border-b-0 md:pb-0 md:border-r md:border-brand-accent/15 md:pr-8 last:border-0 last:pr-0 parallax-slow">
-                  <div class="flex justify-between items-center text-[9px] font-mono text-brand-accent font-bold">
+                  <div class="flex justify-between items-center text-[10px] font-mono text-brand-accent font-bold">
                     <span>02 / PRINT GENEVA</span>
                     <span>LAYOUT COMPOSITION</span>
                   </div>
@@ -398,7 +406,7 @@
 
                 <!-- Case Study 03 -->
                 <div class="flex flex-col gap-3 group last:border-0 last:pr-0 parallax-fast">
-                  <div class="flex justify-between items-center text-[9px] font-mono text-brand-accent font-bold">
+                  <div class="flex justify-between items-center text-[10px] font-mono text-brand-accent font-bold">
                     <span>03 / INTERACTION TOKYO</span>
                     <span>SYSTEM INTERSECT</span>
                   </div>
@@ -413,29 +421,29 @@
           </section>
 
           <!-- Panel 4: Photos -->
-          <section id="photos" class="panel w-full md:w-screen min-h-screen md:h-screen flex-shrink-0 flex items-center justify-center border-b md:border-b-0 md:border-r border-brand-accent/15 px-8 py-20 md:p-16 relative overflow-hidden">
+          <section id="photos" class="panel w-full md:w-screen min-h-screen md:h-screen flex-shrink-0 flex items-center justify-center border-b md:border-b-0 md:border-r border-brand-accent/25 px-6 py-16 md:p-12 relative overflow-hidden">
             <!-- Background Parallax Text -->
-            <div class="absolute left-[-2vw] bottom-[-2vh] font-serif text-[35vw] text-brand-accent/[0.02] select-none pointer-events-none parallax-bg leading-none font-bold">
+            <div class="absolute left-[-2vw] bottom-[-2vh] font-serif text-[35vw] text-brand-accent/[0.025] select-none pointer-events-none parallax-bg leading-none font-bold">
               04
             </div>
 
             <div class="max-w-6xl w-full flex flex-col justify-center z-10">
-              <div class="mb-10">
+              <div class="mb-8">
                 <span class="text-xs font-mono tracking-[0.35em] text-brand-accent block mb-2">[ 04 / PHOTOS ]</span>
                 <h3 class="font-serif text-5xl md:text-6xl font-light text-brand-text">04 / PHOTOS</h3>
                 <h4 class="font-serif italic text-lg text-brand-accent font-light">Minimal Architectural Plaster</h4>
               </div>
 
-              <!-- Staggered Overlapping Plate Spread -->
-              <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-start w-full mt-4">
+              <!-- Two Plates Layout -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start w-full mt-4">
                 
-                <!-- Plate #04A (High left) -->
-                <div class="md:col-span-6 flex flex-col gap-4 parallax-slow">
-                  <div class="border border-brand-accent/25 p-1 bg-brand-bg shadow-sm">
-                    <img src="assets/retro_architecture.jpg" alt="Minimal Architectural Plaster" class="w-full h-56 md:h-64 object-cover grayscale hover:grayscale-0 transition-all duration-700">
-                    <div class="flex justify-between items-center mt-2 text-[8px] font-mono text-brand-muted uppercase tracking-wider px-1">
-                      <span>PLATE #04A study.con // f/5.6 1/125s ISO 100</span>
-                      <span>MILAN</span>
+                <!-- Plate #04A -->
+                <div class="flex flex-col gap-4 parallax-slow">
+                  <div class="border border-brand-accent/25 p-2 bg-brand-bg shadow-lg">
+                    <img src="assets/retro_architecture.jpg" alt="Minimal Architectural Plaster" class="w-full h-64 md:h-72 object-cover grayscale hover:grayscale-0 transition-all duration-700">
+                    <div class="flex justify-between items-center mt-2 text-[9px] font-mono text-brand-muted uppercase">
+                      <span>ARCHITECTURAL DETAIL, MILAN PLATE #04A</span>
+                      <span>2026</span>
                     </div>
                   </div>
                   <div>
@@ -446,13 +454,13 @@
                   </div>
                 </div>
 
-                <!-- Plate #04B (Low right, overlapping offset) -->
-                <div class="md:col-span-6 flex flex-col gap-4 md:translate-y-12 parallax-fast">
-                  <div class="border border-brand-accent/25 p-1 bg-brand-bg shadow-sm">
-                    <img src="assets/archive_design.jpg" alt="Design Magazines Layout" class="w-full h-56 md:h-64 object-cover grayscale hover:grayscale-0 transition-all duration-700">
-                    <div class="flex justify-between items-center mt-2 text-[8px] font-mono text-brand-muted uppercase tracking-wider px-1">
-                      <span>PLATE #04B print.lay // f/8.0 1/60s ISO 200</span>
-                      <span>ROME</span>
+                <!-- Plate #04B -->
+                <div class="flex flex-col gap-4 md:translate-y-10 parallax-fast">
+                  <div class="border border-brand-accent/25 p-2 bg-brand-bg shadow-lg">
+                    <img src="assets/archive_design.jpg" alt="Design Magazines Layout" class="w-full h-64 md:h-72 object-cover grayscale hover:grayscale-0 transition-all duration-700">
+                    <div class="flex justify-between items-center mt-2 text-[9px] font-mono text-brand-muted uppercase">
+                      <span>EDITORIAL ARTIFACTS PLATE #04B</span>
+                      <span>2026</span>
                     </div>
                   </div>
                   <div>
@@ -468,9 +476,9 @@
           </section>
 
           <!-- Panel 5: Stories -->
-          <section id="stories" class="panel w-full md:w-screen min-h-screen md:h-screen flex-shrink-0 flex items-center justify-center border-b md:border-b-0 md:border-r border-brand-accent/15 px-8 py-20 md:p-16 relative overflow-hidden">
+          <section id="stories" class="panel w-full md:w-screen min-h-screen md:h-screen flex-shrink-0 flex items-center justify-center border-b md:border-b-0 md:border-r border-brand-accent/25 px-6 py-16 md:p-12 relative overflow-hidden">
             <!-- Background Parallax Text -->
-            <div class="absolute right-[4vw] top-[-2vh] font-serif text-[35vw] text-brand-accent/[0.02] select-none pointer-events-none parallax-bg leading-none font-bold">
+            <div class="absolute right-[5vw] top-[-2vh] font-serif text-[35vw] text-brand-accent/[0.025] select-none pointer-events-none parallax-bg leading-none font-bold">
               05
             </div>
 
@@ -485,9 +493,9 @@
               <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 w-full items-start">
                 
                 <!-- Paragraphs (Parallax Fast) -->
-                <div class="text-brand-muted text-sm md:text-base leading-relaxed font-light parallax-fast flex flex-col gap-6">
+                <div class="text-brand-muted text-sm md:text-base leading-relaxed font-light parallax-fast flex flex-col gap-4">
                   <p>
-                    <span class="text-6xl font-serif text-brand-accent float-left mr-4 mt-1 font-bold leading-[0.85] border-t border-b border-brand-accent/25 py-2 px-1">T</span>
+                    <span class="text-7xl font-serif text-brand-accent float-left mr-4 mt-2 font-bold leading-[0.8]">T</span>
                     actility is not lost in pixels. It is merely translated. By introducing micro-friction, deliberate transitions, and generous white space, we invite the viewer to touch the screen with their eyes. We create interfaces that reward slow readings.
                   </p>
                   <p>
@@ -495,15 +503,15 @@
                   </p>
                 </div>
 
-                <!-- Manifesto Quote (Parallax Slow) -->
-                <div class="flex flex-col gap-6 md:border-l md:border-brand-accent/15 md:pl-12 justify-center items-start h-full parallax-slow">
-                  <blockquote class="font-serif text-2xl italic text-brand-text font-light leading-relaxed border-b border-brand-accent/10 pb-6">
+                <!-- Manifesto Quote & Decorator (Parallax Slow) -->
+                <div class="flex flex-col gap-6 md:border-l md:border-brand-accent/20 md:pl-12 justify-center items-start h-full parallax-slow">
+                  <blockquote class="font-serif text-2xl italic text-brand-text font-light leading-relaxed">
                     "Design is not the visual decoration of content. It is the architectural pacing of human understanding."
                   </blockquote>
                   
                   <div class="flex items-center gap-3">
-                    <div class="w-6 h-[1px] bg-brand-accent"></div>
-                    <span class="text-[9px] font-mono tracking-[0.25em] uppercase text-brand-accent font-bold">— WE FIVE MANIFESTO</span>
+                    <div class="w-8 h-[1px] bg-brand-accent"></div>
+                    <span class="text-[10px] font-mono tracking-[0.2em] uppercase text-brand-accent font-bold">— WE FIVE MANIFESTO</span>
                   </div>
 
                   <!-- Small Book Page Icon -->
@@ -519,9 +527,9 @@
           </section>
 
           <!-- Panel 6: Information -->
-          <section id="information" class="panel w-full md:w-screen min-h-screen md:h-screen flex-shrink-0 flex items-center justify-center border-b md:border-b-0 md:border-r border-brand-accent/15 px-8 py-20 md:p-16 relative overflow-hidden">
+          <section id="information" class="panel w-full md:w-screen min-h-screen md:h-screen flex-shrink-0 flex items-center justify-center border-b md:border-b-0 md:border-r border-brand-accent/25 px-6 py-16 md:p-12 relative overflow-hidden">
             <!-- Background Parallax Text -->
-            <div class="absolute left-[4vw] bottom-[-2vh] font-serif text-[35vw] text-brand-accent/[0.02] select-none pointer-events-none parallax-bg leading-none font-bold">
+            <div class="absolute left-[5vw] bottom-[-2vh] font-serif text-[35vw] text-brand-accent/[0.025] select-none pointer-events-none parallax-bg leading-none font-bold">
               06
             </div>
 
@@ -535,35 +543,35 @@
                 </p>
               </div>
 
-              <!-- Structured Blueprints Specs Table -->
-              <div class="w-full border-t border-brand-accent/25 font-mono text-[11px] md:text-xs text-brand-muted mt-4 parallax-fast">
+              <!-- Structured Metadata Table -->
+              <div class="w-full border-t border-brand-accent/30 font-mono text-xs md:text-sm text-brand-muted mt-4 parallax-fast">
                 
-                <div class="grid grid-cols-12 py-3 border-b border-brand-accent/20 uppercase font-bold text-brand-accent">
-                  <div class="col-span-4">CRITERION PARAMETER</div>
-                  <div class="col-span-8">METADATA VALUES</div>
+                <div class="grid grid-cols-12 py-3 border-b border-brand-accent/20">
+                  <div class="col-span-4 text-brand-accent font-bold">CRITERION</div>
+                  <div class="col-span-8 text-brand-text font-semibold uppercase">METADATA VALUES</div>
                 </div>
 
-                <div class="grid grid-cols-12 py-4 border-b border-brand-accent/15 border-dashed items-center">
+                <div class="grid grid-cols-12 py-4 border-b border-brand-accent/15 items-center">
                   <div class="col-span-4 font-bold text-brand-text">FOUNDED</div>
                   <div class="col-span-8">October 2018 / Milan</div>
                 </div>
 
-                <div class="grid grid-cols-12 py-4 border-b border-brand-accent/15 border-dashed items-center">
+                <div class="grid grid-cols-12 py-4 border-b border-brand-accent/15 items-center">
                   <div class="col-span-4 font-bold text-brand-text">STUDIO SIZE</div>
                   <div class="col-span-8">05 Partners / 03 Associates</div>
                 </div>
 
-                <div class="grid grid-cols-12 py-4 border-b border-brand-accent/15 border-dashed items-center">
+                <div class="grid grid-cols-12 py-4 border-b border-brand-accent/15 items-center">
                   <div class="col-span-4 font-bold text-brand-text">DISCIPLINES</div>
                   <div class="col-span-8">Editorial, Web Graphics, Architectural Imagery</div>
                 </div>
 
-                <div class="grid grid-cols-12 py-4 border-b border-brand-accent/15 border-dashed items-center">
+                <div class="grid grid-cols-12 py-4 border-b border-brand-accent/15 items-center">
                   <div class="col-span-4 font-bold text-brand-text">CORE PRINCIPLE</div>
                   <div class="col-span-8 uppercase text-brand-accent font-bold">Friction & Intentionality</div>
                 </div>
 
-                <div class="grid grid-cols-12 py-4 border-b border-brand-accent/25 items-center">
+                <div class="grid grid-cols-12 py-4 border-b border-brand-accent/15 items-center">
                   <div class="col-span-4 font-bold text-brand-text">ARCHIVE VOLUME</div>
                   <div class="col-span-8">120+ Curated Inquisitions</div>
                 </div>
@@ -573,9 +581,9 @@
           </section>
 
           <!-- Panel 7: Own Icons -->
-          <section id="own-icons" class="panel w-full md:w-screen min-h-screen md:h-screen flex-shrink-0 flex items-center justify-center border-b md:border-b-0 md:border-r border-brand-accent/15 px-8 py-20 md:p-16 relative overflow-hidden">
+          <section id="own-icons" class="panel w-full md:w-screen min-h-screen md:h-screen flex-shrink-0 flex items-center justify-center border-b md:border-b-0 md:border-r border-brand-accent/25 px-6 py-16 md:p-12 relative overflow-hidden">
             <!-- Background Parallax Text -->
-            <div class="absolute right-[4vw] top-[-2vh] font-serif text-[35vw] text-brand-accent/[0.02] select-none pointer-events-none parallax-bg leading-none font-bold">
+            <div class="absolute right-[5vw] top-[-2vh] font-serif text-[35vw] text-brand-accent/[0.025] select-none pointer-events-none parallax-bg leading-none font-bold">
               07
             </div>
 
@@ -589,76 +597,78 @@
                 </p>
               </div>
 
-              <!-- Graphic Flat Grid (divide borders instead of card shapes) -->
-              <div class="grid grid-cols-2 md:grid-cols-6 w-full border border-brand-accent/20 divide-x divide-y divide-brand-accent/20 mt-6 parallax-slow bg-transparent">
+              <!-- Graphic Grid -->
+              <div class="grid grid-cols-2 md:grid-cols-6 gap-6 w-full mt-4 parallax-slow">
                 
                 <!-- Icon 01: VISUAL -->
-                <div class="p-6 flex flex-col justify-between items-center hover:bg-brand-accent hover:text-brand-bg transition-colors duration-500 group aspect-square select-none">
+                <div class="border border-brand-accent/20 bg-brand-bg/50 p-6 flex flex-col justify-between items-center rounded-sm hover:bg-brand-accent hover:text-brand-bg hover:border-brand-accent transition-all duration-500 group aspect-square select-none">
                   <div class="flex-grow flex items-center justify-center">
-                    <svg viewBox="0 0 24 24" class="w-10 h-10 stroke-[1.25] stroke-current fill-none group-hover:scale-105 transition-transform duration-300">
+                    <svg viewBox="0 0 24 24" class="w-10 h-10 stroke-[1.25] stroke-current fill-none group-hover:scale-110 transition-transform duration-300">
                       <circle cx="12" cy="12" r="10" />
                       <circle cx="12" cy="12" r="4" />
                       <line x1="12" y1="2" x2="12" y2="8" />
                       <line x1="12" y1="16" x2="12" y2="22" />
                       <line x1="2" y1="12" x2="8" y2="12" />
                       <line x1="16" y1="12" x2="22" y2="12" />
+                      <line x1="4.93" y1="4.93" x2="9.17" y2="9.17" />
+                      <line x1="14.83" y1="14.83" x2="19.07" y2="19.07" />
                     </svg>
                   </div>
-                  <span class="font-mono text-[8px] tracking-widest uppercase font-semibold mt-4">01 / VISUAL</span>
+                  <span class="font-mono text-[9px] tracking-widest uppercase font-semibold mt-4">01 / VISUAL</span>
                 </div>
 
                 <!-- Icon 02: JOURNAL -->
-                <div class="p-6 flex flex-col justify-between items-center hover:bg-brand-accent hover:text-brand-bg transition-colors duration-500 group aspect-square select-none">
+                <div class="border border-brand-accent/20 bg-brand-bg/50 p-6 flex flex-col justify-between items-center rounded-sm hover:bg-brand-accent hover:text-brand-bg hover:border-brand-accent transition-all duration-500 group aspect-square select-none">
                   <div class="flex-grow flex items-center justify-center">
-                    <svg viewBox="0 0 24 24" class="w-10 h-10 stroke-[1.25] stroke-current fill-none group-hover:scale-105 transition-transform duration-300">
+                    <svg viewBox="0 0 24 24" class="w-10 h-10 stroke-[1.25] stroke-current fill-none group-hover:scale-110 transition-transform duration-300">
                       <path d="M12 2L4 12v6l3 3h4l9-9L12 2zM12 2l6 6M8 16l4-4" />
                       <circle cx="9" cy="13" r="1" />
                     </svg>
                   </div>
-                  <span class="font-mono text-[8px] tracking-widest uppercase font-semibold mt-4">02 / JOURNAL</span>
+                  <span class="font-mono text-[9px] tracking-widest uppercase font-semibold mt-4">02 / JOURNAL</span>
                 </div>
 
                 <!-- Icon 03: SPACE -->
-                <div class="p-6 flex flex-col justify-between items-center hover:bg-brand-accent hover:text-brand-bg transition-colors duration-500 group aspect-square select-none">
+                <div class="border border-brand-accent/20 bg-brand-bg/50 p-6 flex flex-col justify-between items-center rounded-sm hover:bg-brand-accent hover:text-brand-bg hover:border-brand-accent transition-all duration-500 group aspect-square select-none">
                   <div class="flex-grow flex items-center justify-center">
-                    <svg viewBox="0 0 24 24" class="w-10 h-10 stroke-[1.25] stroke-current fill-none group-hover:scale-105 transition-transform duration-300">
+                    <svg viewBox="0 0 24 24" class="w-10 h-10 stroke-[1.25] stroke-current fill-none group-hover:scale-110 transition-transform duration-300">
                       <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5M2 7v10M22 7v10M12 12v10" />
                     </svg>
                   </div>
-                  <span class="font-mono text-[8px] tracking-widest uppercase font-semibold mt-4">03 / SPACE</span>
+                  <span class="font-mono text-[9px] tracking-widest uppercase font-semibold mt-4">03 / SPACE</span>
                 </div>
 
                 <!-- Icon 04: FILM -->
-                <div class="p-6 flex flex-col justify-between items-center hover:bg-brand-accent hover:text-brand-bg transition-colors duration-500 group aspect-square select-none">
+                <div class="border border-brand-accent/20 bg-brand-bg/50 p-6 flex flex-col justify-between items-center rounded-sm hover:bg-brand-accent hover:text-brand-bg hover:border-brand-accent transition-all duration-500 group aspect-square select-none">
                   <div class="flex-grow flex items-center justify-center">
-                    <svg viewBox="0 0 24 24" class="w-10 h-10 stroke-[1.25] stroke-current fill-none group-hover:scale-105 transition-transform duration-300">
+                    <svg viewBox="0 0 24 24" class="w-10 h-10 stroke-[1.25] stroke-current fill-none group-hover:scale-110 transition-transform duration-300">
                       <path d="M23 7l-7 5 7 5V7zM1 5h14v14H1V5z" />
                       <circle cx="5" cy="10" r="1.5" />
                       <circle cx="11" cy="10" r="1.5" />
                     </svg>
                   </div>
-                  <span class="font-mono text-[8px] tracking-widest uppercase font-semibold mt-4">04 / FILM</span>
+                  <span class="font-mono text-[9px] tracking-widest uppercase font-semibold mt-4">04 / FILM</span>
                 </div>
 
                 <!-- Icon 05: GEOGRAPHY -->
-                <div class="p-6 flex flex-col justify-between items-center hover:bg-brand-accent hover:text-brand-bg transition-colors duration-500 group aspect-square select-none">
+                <div class="border border-brand-accent/20 bg-brand-bg/50 p-6 flex flex-col justify-between items-center rounded-sm hover:bg-brand-accent hover:text-brand-bg hover:border-brand-accent transition-all duration-500 group aspect-square select-none">
                   <div class="flex-grow flex items-center justify-center">
-                    <svg viewBox="0 0 24 24" class="w-10 h-10 stroke-[1.25] stroke-current fill-none group-hover:scale-105 transition-transform duration-300">
+                    <svg viewBox="0 0 24 24" class="w-10 h-10 stroke-[1.25] stroke-current fill-none group-hover:scale-110 transition-transform duration-300">
                       <path d="M12 2v6M12 8L6 22M12 8l6 14M8 17h8" />
                       <circle cx="12" cy="8" r="1.5" />
                     </svg>
                   </div>
-                  <span class="font-mono text-[8px] tracking-widest uppercase font-semibold mt-4">05 / GEOGRAPHY</span>
+                  <span class="font-mono text-[9px] tracking-widest uppercase font-semibold mt-4">05 / GEOGRAPHY</span>
                 </div>
 
                 <!-- Icon 06: TIME -->
-                <div class="p-6 flex flex-col justify-between items-center hover:bg-brand-accent hover:text-brand-bg transition-colors duration-500 group aspect-square select-none">
+                <div class="border border-brand-accent/20 bg-brand-bg/50 p-6 flex flex-col justify-between items-center rounded-sm hover:bg-brand-accent hover:text-brand-bg hover:border-brand-accent transition-all duration-500 group aspect-square select-none">
                   <div class="flex-grow flex items-center justify-center">
-                    <svg viewBox="0 0 24 24" class="w-10 h-10 stroke-[1.25] stroke-current fill-none group-hover:scale-105 transition-transform duration-300">
+                    <svg viewBox="0 0 24 24" class="w-10 h-10 stroke-[1.25] stroke-current fill-none group-hover:scale-110 transition-transform duration-300">
                       <path d="M5 2h14v4L13 12l6 6v4H5v-4l6-6L5 6V2zM5 6h14M5 18h14M12 12m-1 0a1 1 0 1 0 2 0 1 1 0 1 0 -2 0" />
                     </svg>
                   </div>
-                  <span class="font-mono text-[8px] tracking-widest uppercase font-semibold mt-4">06 / TIME</span>
+                  <span class="font-mono text-[9px] tracking-widest uppercase font-semibold mt-4">06 / TIME</span>
                 </div>
 
               </div>
@@ -666,9 +676,9 @@
           </section>
 
           <!-- Panel 8: How We Work -->
-          <section id="how-we-work" class="panel w-full md:w-screen min-h-screen md:h-screen flex-shrink-0 flex items-center justify-center border-b md:border-b-0 md:border-r border-brand-accent/15 px-8 py-20 md:p-16 relative overflow-hidden">
+          <section id="how-we-work" class="panel w-full md:w-screen min-h-screen md:h-screen flex-shrink-0 flex items-center justify-center border-b md:border-b-0 md:border-r border-brand-accent/25 px-6 py-16 md:p-12 relative overflow-hidden">
             <!-- Background Parallax Text -->
-            <div class="absolute left-[-2vw] top-[-2vh] font-serif text-[35vw] text-brand-accent/[0.02] select-none pointer-events-none parallax-bg leading-none font-bold">
+            <div class="absolute left-[-2vw] top-[-2vh] font-serif text-[35vw] text-brand-accent/[0.025] select-none pointer-events-none parallax-bg leading-none font-bold">
               08
             </div>
 
@@ -679,14 +689,17 @@
                 <h4 class="font-serif italic text-lg text-brand-accent font-light">The Triadic Methodology</h4>
               </div>
 
-              <!-- Staggered horizontal process columns layout -->
-              <div class="grid grid-cols-1 md:grid-cols-3 gap-12 w-full relative border-t border-brand-accent/20 pt-10">
+              <!-- Staggered horizontal process layout -->
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 w-full relative">
                 
-                <!-- Column 01 -->
-                <div class="flex flex-col gap-6 relative z-10 md:border-r md:border-brand-accent/15 md:pr-8 last:border-0 last:pr-0 group hover:scale-[1.01] transition-transform duration-500 parallax-fast">
-                  <div class="flex justify-between items-center">
-                    <span class="font-serif italic text-3xl text-brand-accent font-bold">01</span>
-                    <span class="text-[8px] tracking-widest font-mono border border-brand-accent/30 px-2 py-0.5 text-brand-accent font-semibold">PHASE 1</span>
+                <!-- Horizontal line (Desktop Only) -->
+                <div class="absolute left-0 right-0 top-1/3 h-[1px] bg-brand-accent/25 z-0 hidden md:block"></div>
+                
+                <!-- Card 01 -->
+                <div class="border border-brand-accent/20 bg-brand-bg p-8 flex flex-col justify-between h-[360px] relative z-10 shadow-lg group hover:scale-[1.02] transition-transform duration-500 parallax-fast">
+                  <div class="flex justify-between items-start">
+                    <span class="font-serif italic text-4xl text-brand-accent font-bold">01</span>
+                    <span class="text-[9px] tracking-widest font-mono border border-brand-accent/40 px-2 py-0.5 text-brand-accent">PHASE 1</span>
                   </div>
                   <div>
                     <h4 class="font-serif text-2xl font-light text-brand-text mb-3">Archival Immersion</h4>
@@ -696,11 +709,11 @@
                   </div>
                 </div>
 
-                <!-- Column 02 -->
-                <div class="flex flex-col gap-6 relative z-10 md:border-r md:border-brand-accent/15 md:pr-8 last:border-0 last:pr-0 md:translate-y-6 group hover:scale-[1.01] transition-transform duration-500 parallax-slow">
-                  <div class="flex justify-between items-center">
-                    <span class="font-serif italic text-3xl text-brand-accent font-bold">02</span>
-                    <span class="text-[8px] tracking-widest font-mono border border-brand-accent/30 px-2 py-0.5 text-brand-accent font-semibold">PHASE 2</span>
+                <!-- Card 02 -->
+                <div class="border border-brand-accent/20 bg-brand-bg p-8 flex flex-col justify-between h-[360px] relative z-10 shadow-lg md:translate-y-6 group hover:scale-[1.02] transition-transform duration-500 parallax-slow">
+                  <div class="flex justify-between items-start">
+                    <span class="font-serif italic text-4xl text-brand-accent font-bold">02</span>
+                    <span class="text-[9px] tracking-widest font-mono border border-brand-accent/40 px-2 py-0.5 text-brand-accent">PHASE 2</span>
                   </div>
                   <div>
                     <h4 class="font-serif text-2xl font-light text-brand-text mb-3">Deliberate Friction</h4>
@@ -710,11 +723,11 @@
                   </div>
                 </div>
 
-                <!-- Column 03 -->
-                <div class="flex flex-col gap-6 relative z-10 group hover:scale-[1.01] transition-transform duration-500 parallax-fast">
-                  <div class="flex justify-between items-center">
-                    <span class="font-serif italic text-3xl text-brand-accent font-bold">03</span>
-                    <span class="text-[8px] tracking-widest font-mono border border-brand-accent/30 px-2 py-0.5 text-brand-accent font-semibold">PHASE 3</span>
+                <!-- Card 03 -->
+                <div class="border border-brand-accent/20 bg-brand-bg p-8 flex flex-col justify-between h-[360px] relative z-10 shadow-lg group hover:scale-[1.02] transition-transform duration-500 parallax-fast">
+                  <div class="flex justify-between items-start">
+                    <span class="font-serif italic text-4xl text-brand-accent font-bold">03</span>
+                    <span class="text-[9px] tracking-widest font-mono border border-brand-accent/40 px-2 py-0.5 text-brand-accent">PHASE 3</span>
                   </div>
                   <div>
                     <h4 class="font-serif text-2xl font-light text-brand-text mb-3">Spatial Physics</h4>
@@ -729,9 +742,9 @@
           </section>
 
           <!-- Panel 9: Films -->
-          <section id="films" class="panel w-full md:w-screen min-h-screen md:h-screen flex-shrink-0 flex items-center justify-center border-b md:border-b-0 md:border-r border-brand-accent/25 px-8 py-20 md:p-16 relative overflow-hidden">
+          <section id="films" class="panel w-full md:w-screen min-h-screen md:h-screen flex-shrink-0 flex items-center justify-center border-b md:border-b-0 md:border-r border-brand-accent/25 px-6 py-16 md:p-12 relative overflow-hidden">
             <!-- Background Parallax Text -->
-            <div class="absolute right-[5vw] top-[-2vh] font-serif text-[35vw] text-brand-accent/[0.02] select-none pointer-events-none parallax-bg leading-none font-bold">
+            <div class="absolute right-[5vw] top-[-2vh] font-serif text-[35vw] text-brand-accent/[0.025] select-none pointer-events-none parallax-bg leading-none font-bold">
               09
             </div>
 
@@ -742,29 +755,29 @@
                 <h4 class="font-serif italic text-lg text-brand-accent font-light">Film Background</h4>
               </div>
 
-              <!-- Camera Widescreen Viewfinder Box (no shadow, clean borders) -->
-              <div class="relative group cursor-pointer overflow-hidden border border-brand-accent/25 w-full max-w-4xl aspect-[16/9] mx-auto bg-black parallax-slow">
-                <img src="assets/cinematic_film.jpg" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700 ease-out scale-[1.02] group-hover:scale-100" alt="Cinematic film still">
-                <div class="absolute inset-0 bg-brand-accent/10 group-hover:bg-transparent transition-all duration-500"></div>
+              <!-- Camera Widescreen Viewfinder Box -->
+              <div class="relative group cursor-pointer overflow-hidden border border-brand-accent/30 rounded-sm w-full max-w-4xl aspect-[16/9] mx-auto shadow-2xl parallax-slow">
+                <img src="assets/cinematic_film.jpg" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 ease-out scale-[1.03] group-hover:scale-100" alt="Cinematic film still">
+                <div class="absolute inset-0 bg-brand-accent/15 group-hover:bg-transparent transition-all duration-500"></div>
                 
                 <!-- Widescreen HUD labels -->
-                <div class="absolute inset-0 p-4 md:p-6 flex flex-col justify-between font-mono text-[9px] md:text-[10px] text-brand-accent select-none pointer-events-none">
+                <div class="absolute inset-0 p-4 flex flex-col justify-between font-mono text-[9px] md:text-xs text-brand-accent select-none pointer-events-none">
                   <div class="flex justify-between items-start">
                     <div class="flex items-center gap-1.5 font-bold">
-                      <span class="w-2.5 h-2.5 bg-brand-accent rounded-full animate-pulse"></span>
+                      <span class="w-2 h-2 bg-brand-accent rounded-full animate-ping"></span>
                       <span>REC [1080P/60]</span>
                     </div>
                     <div>01:14:52:08</div>
                   </div>
                   
                   <!-- PLAY trigger in the center -->
-                  <div class="self-center pointer-events-auto group-hover:scale-105 transition-transform duration-300 flex flex-col items-center gap-2">
-                    <div class="w-14 h-14 md:w-16 md:h-16 border border-brand-accent bg-brand-bg/95 flex items-center justify-center text-brand-accent group-hover:bg-brand-accent group-hover:text-brand-bg transition-colors duration-300">
+                  <div class="self-center pointer-events-auto group-hover:scale-110 transition-transform duration-300 flex flex-col items-center gap-2">
+                    <div class="w-14 h-14 md:w-16 md:h-16 rounded-full border border-brand-accent bg-brand-bg/90 flex items-center justify-center text-brand-accent group-hover:bg-brand-accent group-hover:text-brand-bg transition-colors duration-300">
                       <svg viewBox="0 0 24 24" class="w-6 h-6 fill-current translate-x-0.5">
                         <path d="M8 5v14l11-7z"/>
                       </svg>
                     </div>
-                    <span class="text-[9px] tracking-[0.25em] font-bold">PLAY</span>
+                    <span class="text-[10px] tracking-[0.25em] font-bold">PLAY</span>
                   </div>
 
                   <div class="flex justify-between items-end">
@@ -782,9 +795,9 @@
           </section>
 
           <!-- Panel 10: Journey -->
-          <section id="journey" class="panel w-full md:w-screen min-h-screen md:h-screen flex-shrink-0 flex items-center justify-center px-8 py-20 md:p-16 relative overflow-hidden">
+          <section id="journey" class="panel w-full md:w-screen min-h-screen md:h-screen flex-shrink-0 flex items-center justify-center px-6 py-16 md:p-12 relative overflow-hidden">
             <!-- Background Parallax Text -->
-            <div class="absolute left-[-2vw] bottom-[-2vh] font-serif text-[35vw] text-brand-accent/[0.02] select-none pointer-events-none parallax-bg leading-none font-bold">
+            <div class="absolute left-[-2vw] bottom-[-2vh] font-serif text-[35vw] text-brand-accent/[0.025] select-none pointer-events-none parallax-bg leading-none font-bold">
               10
             </div>
 
@@ -795,7 +808,7 @@
               </h3>
               <h4 class="font-serif italic text-2xl text-brand-accent font-light mb-6">The path is continuous.</h4>
               
-              <div class="h-[1px] bg-brand-accent/25 w-32 my-6"></div>
+              <div class="h-[1px] bg-brand-accent/30 w-32 my-6"></div>
               
               <p class="font-serif italic text-xl text-brand-muted leading-relaxed max-w-xl mb-12 font-light parallax-fast">
                 You have journeyed across our digital canvas. The horizontal restraint will now release. Continue scrolling down to discover our footer space and return to standard verticality.
@@ -814,11 +827,11 @@
       <!-- PHASE C: UNPINNED VERTICAL RELEASE (BOTTOM) -->
 
       <!-- Section 4: Footer Section -->
-      <footer id="footer" class="footer-sec w-full bg-brand-bg border-t border-brand-accent/25 py-20 px-8 md:py-28 md:px-16 relative z-10 overflow-hidden">
-        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 items-start relative z-10">
+      <footer id="footer" class="footer-sec w-full bg-brand-bg border-t border-brand-accent/25 py-16 px-6 md:py-24 md:px-12 relative z-10 overflow-hidden">
+        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 items-start">
           
           <!-- Column 1: Studio Description & Logo -->
-          <div class="md:col-span-5 flex flex-col justify-between h-full gap-8 border-b border-brand-accent/10 pb-8 md:border-b-0 md:pb-0">
+          <div class="md:col-span-5 flex flex-col justify-between h-full gap-8">
             <div>
               <div class="flex items-center gap-1 text-brand-accent mb-4">
                 <!-- Cursive Logo -->
@@ -831,14 +844,14 @@
                 An independent design studio curating high-end digital identities, print typography systems, and architectural media frameworks. Operative since 2018.
               </p>
             </div>
-            <div class="text-[9px] text-brand-muted font-mono tracking-widest mt-6">
+            <div class="text-[10px] text-brand-muted font-mono tracking-widest mt-6">
               © 2026 WE FIVE. ALL RIGHTS RESERVED.
             </div>
           </div>
 
           <!-- Column 2: Navigation Links -->
           <div class="md:col-span-2 flex flex-col gap-4 text-xs font-semibold tracking-wider text-brand-accent">
-            <h5 class="text-[9px] font-mono tracking-[0.25em] text-brand-muted font-bold mb-2 uppercase">NAVIGATE</h5>
+            <h5 class="text-[10px] font-mono tracking-[0.25em] text-brand-muted font-bold mb-2">NAVIGATE</h5>
             <a href="#hero" class="hover:text-brand-accentMuted transition-colors duration-300">TOP OF PAGE</a>
             <a href="#intro" class="hover:text-brand-accentMuted transition-colors duration-300">INTRO</a>
             <a href="#about" class="hover:text-brand-accentMuted transition-colors duration-300">ABOUT PANEL</a>
@@ -847,7 +860,7 @@
 
           <!-- Column 3: Social/Network Links -->
           <div class="md:col-span-2 flex flex-col gap-4 text-xs font-semibold tracking-wider text-brand-accent">
-            <h5 class="text-[9px] font-mono tracking-[0.25em] text-brand-muted font-bold mb-2 uppercase">DIGITAL NETWORK</h5>
+            <h5 class="text-[10px] font-mono tracking-[0.25em] text-brand-muted font-bold mb-2">DIGITAL NETWORK</h5>
             <a href="#" class="hover:text-brand-accentMuted transition-colors duration-300">INSTAGRAM</a>
             <a href="#" class="hover:text-brand-accentMuted transition-colors duration-300">ARE.NA</a>
             <a href="#" class="hover:text-brand-accentMuted transition-colors duration-300">READ.CV</a>
@@ -855,8 +868,8 @@
           </div>
 
           <!-- Column 4: Location & Inquiries -->
-          <div class="md:col-span-3 flex flex-col gap-4 text-xs text-brand-muted border-t border-brand-accent/10 pt-8 md:border-t-0 md:pt-0">
-            <h5 class="text-[9px] font-mono tracking-[0.25em] text-brand-accent font-bold mb-2 uppercase">INQUIRIES</h5>
+          <div class="md:col-span-3 flex flex-col gap-4 text-xs text-brand-muted">
+            <h5 class="text-[10px] font-mono tracking-[0.25em] text-brand-accent font-bold mb-2 uppercase">INQUIRIES</h5>
             
             <div class="flex flex-col gap-2 font-mono text-[11px] leading-relaxed">
               <span class="text-brand-text font-bold">WE FIVE LABS S.R.L.</span>
@@ -866,7 +879,7 @@
 
             <!-- Back to Top Button -->
             <div class="mt-6">
-              <a href="#hero" class="inline-flex items-center gap-2 text-[9px] font-mono tracking-widest text-brand-accent font-bold uppercase hover:text-brand-accentMuted border-b border-brand-accent/20 hover:border-brand-accent pb-1 transition-colors">
+              <a href="#hero" class="inline-flex items-center gap-2 text-[10px] font-mono tracking-widest text-brand-accent font-bold uppercase hover:text-brand-accentMuted border-b border-brand-accent/20 hover:border-brand-accent pb-1 transition-colors">
                 <span>BACK TO TOP</span>
                 <svg viewBox="0 0 24 24" class="w-3.5 h-3.5 stroke-current fill-none stroke-[2]" stroke-linecap="round" stroke-linejoin="round">
                   <line x1="12" y1="19" x2="12" y2="5" />
@@ -879,7 +892,7 @@
         </div>
 
         <!-- Interactive Walking Crowd Simulation (Skiper39 UI Integration) -->
-        <div class="absolute bottom-0 left-0 w-full h-[180px] md:h-[260px] pointer-events-none z-0 opacity-60">
+        <div class="absolute bottom-0 left-0 w-full h-[120px] md:h-[180px] pointer-events-none z-0 opacity-60">
           <canvas id="crowd-canvas" class="absolute bottom-0 w-full h-full"></canvas>
         </div>
       </footer>
@@ -907,6 +920,47 @@
       }, 1000);
     });
 
+    // Custom Cursor tracking (Desktop Only)
+    const cursor = document.querySelector('.custom-cursor');
+    const cursorDot = document.querySelector('.custom-cursor-dot');
+    
+    if (window.innerWidth >= 768) {
+      document.addEventListener('mousemove', (e) => {
+        gsap.to(cursor, {
+          x: e.clientX,
+          y: e.clientY,
+          duration: 0.15,
+          ease: "power2.out"
+        });
+        gsap.to(cursorDot, {
+          x: e.clientX,
+          y: e.clientY,
+          duration: 0.05,
+          ease: "power2.out"
+        });
+      });
+
+      // Hover scale effects on interactive elements
+      const clickables = document.querySelectorAll('a, button, input, .clickable, form');
+      clickables.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+          gsap.to(cursor, {
+            scale: 1.6,
+            backgroundColor: "rgba(179, 40, 36, 0.08)",
+            borderColor: "#B32824",
+            duration: 0.25
+          });
+        });
+        el.addEventListener('mouseleave', () => {
+          gsap.to(cursor, {
+            scale: 1,
+            backgroundColor: "transparent",
+            borderColor: "#B32824",
+            duration: 0.25
+          });
+        });
+      });
+    }
 
     // Lenis Smooth Scroll Configuration
     const lenis = new Lenis({
@@ -936,16 +990,16 @@
       gsap.set(".horizontal-inner", { width: "1000vw", height: "100%" });
       gsap.set(".panel", { width: "100vw", height: "100vh" });
 
-      // Core Horizontal Pin Tween (mathematically exact viewport width increments to align properly)
+      // Core Horizontal Pin Tween
       let horizontalTween = gsap.to(".horizontal-inner", {
-        x: () => -(window.innerWidth * (panels.length - 1)),
+        x: () => -(document.querySelector(".horizontal-inner").scrollWidth - window.innerWidth),
         ease: "none",
         scrollTrigger: {
           trigger: ".horizontal-outer",
           pin: true,
           scrub: 1.2, // Smooth scrubbing linking to scrollbar
           start: "top top",
-          end: () => "+=" + (window.innerWidth * (panels.length - 1)),
+          end: () => "+=" + (document.querySelector(".horizontal-inner").scrollWidth - window.innerWidth),
           invalidateOnRefresh: true,
         }
       });
@@ -956,7 +1010,7 @@
         const fastItems = panel.querySelectorAll(".parallax-fast");
         fastItems.forEach(item => {
           gsap.to(item, {
-            x: -80,
+            x: -120,
             ease: "none",
             scrollTrigger: {
               trigger: panel,
@@ -972,7 +1026,7 @@
         const slowItems = panel.querySelectorAll(".parallax-slow");
         slowItems.forEach(item => {
           gsap.to(item, {
-            x: 80,
+            x: 120,
             ease: "none",
             scrollTrigger: {
               trigger: panel,
@@ -988,7 +1042,7 @@
         const bgItems = panel.querySelectorAll(".parallax-bg");
         bgItems.forEach(item => {
           gsap.to(item, {
-            x: -40,
+            x: -60,
             ease: "none",
             scrollTrigger: {
               trigger: panel,
@@ -1082,14 +1136,28 @@
         height: 0,
       };
 
-      // CONFIGS FOR PEEPS SIZE (Scaled to fit the footer container correctly)
-      const peepScale = 0.45;
-
       // TWEEN FACTORIES
       const resetPeep = ({ stage, peep }) => {
         const direction = Math.random() > 0.5 ? 1 : -1;
-        const offsetY = (100 - 250 * gsap.parseEase("power2.in")(Math.random())) * peepScale;
-        const startY = stage.height - peep.height + offsetY;
+        
+        // Random relative depth between 0 (back) and 1 (front)
+        const depth = Math.random(); 
+        
+        // Map depth to scale: back (0.13) to front (0.22) for a realistic sense of scale
+        peep.peepScale = gsap.utils.mapRange(0, 1, 0.13, 0.22, depth);
+        
+        // Re-scale width and height based on individual scale
+        peep.width = peep.rect[2] * peep.peepScale;
+        peep.height = peep.rect[3] * peep.peepScale;
+        
+        // Set opacity based on depth (fainter in back, stronger in front for visual atmospheric perspective)
+        peep.opacity = gsap.utils.mapRange(0, 1, 0.35, 0.85, depth);
+        
+        // Vertical positioning: back lanes are higher up, front lanes are lower down
+        const minY = stage.height - peep.height - 45;
+        const maxY = stage.height - peep.height + 25;
+        const startY = gsap.utils.mapRange(0, 1, minY, maxY, depth);
+        
         let startX;
         let endX;
 
@@ -1099,7 +1167,6 @@
           peep.scaleX = 1;
         } else {
           startX = stage.width + peep.width;
-          // Set endX to -peep.width to ensure characters walk completely off-screen rather than popping out at 0
           endX = -peep.width;
           peep.scaleX = -1;
         }
@@ -1117,11 +1184,19 @@
 
       const normalWalk = ({ peep, props }) => {
         const { startX, startY, endX } = props;
-        const xDuration = 10;
-        const yDuration = 0.25;
+        
+        // Speed is proportional to depth: people in front walk faster, people in back walk slower
+        // Map scale (0.13 to 0.22) to duration (26s down to 16s)
+        const walkSpeedFactor = gsap.utils.mapRange(0.13, 0.22, 26, 16, peep.peepScale);
+        const xDuration = walkSpeedFactor * randomRange(0.9, 1.15);
+        
+        // Stride cadence is slightly randomized around human walking speed (bounce every 500-650ms)
+        const yDuration = randomRange(0.5, 0.65); 
+        
+        // Bounce height is also proportional to their scale
+        const bounceHeight = 3.5 * peep.peepScale;
 
         const tl = gsap.timeline();
-        tl.timeScale(randomRange(0.5, 1.5));
         tl.to(
           peep,
           {
@@ -1137,7 +1212,7 @@
             duration: yDuration,
             repeat: xDuration / yDuration,
             yoyo: true,
-            y: startY - (10 * peepScale),
+            y: startY - bounceHeight,
           },
           0
         );
@@ -1160,14 +1235,17 @@
           anchorY: 0,
           scaleX: 1,
           walk: null,
+          peepScale: 0.20,
+          opacity: 0.7,
           setRect(rect) {
             peep.rect = rect;
-            peep.width = rect[2] * peepScale;
-            peep.height = rect[3] * peepScale;
+            peep.width = rect[2] * peep.peepScale;
+            peep.height = rect[3] * peep.peepScale;
             peep.drawArgs = [peep.image, ...rect, 0, 0, peep.width, peep.height];
           },
           render(ctx) {
             ctx.save();
+            ctx.globalAlpha = peep.opacity;
             ctx.translate(peep.x, peep.y);
             ctx.scale(peep.scaleX, 1);
             ctx.drawImage(
@@ -1217,8 +1295,11 @@
         }
       };
 
+      const maxCrowdSize = 15; // Moderate density for elegant breathing room
+
       const initCrowd = () => {
-        while (availablePeeps.length) {
+        const count = Math.min(availablePeeps.length, maxCrowdSize);
+        for (let i = 0; i < count; i++) {
           const peep = addPeepToCrowd();
           if (peep && peep.walk) {
             peep.walk.progress(Math.random());
