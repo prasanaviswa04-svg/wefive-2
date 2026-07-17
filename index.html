@@ -122,16 +122,37 @@
     .btn-editorial:hover {
       color: #F3ECD0;
     }
+
+    /* Hero Full-Bleed Photo Slideshow */
+    .hero-slide {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      filter: grayscale(1) contrast(1.05) brightness(0.95);
+      opacity: 0;
+      transition: opacity 1.4s ease;
+    }
+    .hero-slide.active {
+      opacity: 1;
+    }
+    .hero-arrow {
+      width: 2.25rem;
+      height: 2.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.3s ease;
+    }
+    .hero-arrow:hover {
+      opacity: 0.6;
+    }
   </style>
 </head>
 <body class="bg-brand-bg text-brand-text font-sans selection:bg-brand-accent selection:text-brand-bg overflow-x-hidden antialiased">
 
   <!-- Grainy Paper Texture Overlay -->
   <div class="fixed inset-0 pointer-events-none z-50 opacity-[0.04] mix-blend-multiply" style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.8%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E');"></div>
-
-  <!-- Viewport Art Frame (Locked border frame) -->
-  <div class="fixed inset-4 md:inset-6 pointer-events-none border border-brand-accent/15 z-40"></div>
-
 
   <!-- Loading Screen Overlay -->
   <div id="loader" class="fixed inset-0 bg-brand-bg z-[100] flex flex-col justify-center items-center pointer-events-none">
@@ -169,36 +190,52 @@
       <!-- PHASE A: VERTICAL SCROLLING (TOP) -->
 
       <!-- Section 1: Hero Section -->
-      <section id="hero" class="hero-sec w-full h-screen relative flex flex-col justify-center items-center px-8 md:px-16 overflow-hidden bg-brand-bg">
+      <section id="hero" class="hero-sec w-full h-screen relative overflow-hidden bg-brand-bg">
+
+        <!-- Hero Full-Bleed Photo Slideshow -->
+        <div class="absolute inset-0 z-0 overflow-hidden">
+          <div class="hero-slide active" style="background-image: url('assets/skyline_architecture.jpg');"></div>
+          <div class="hero-slide" style="background-image: url('assets/cinematic_film.jpg');"></div>
+          <div class="hero-slide" style="background-image: url('assets/retro_architecture.jpg');"></div>
+          <div class="hero-slide" style="background-image: url('assets/craft_process.jpg');"></div>
+          <div class="hero-slide" style="background-image: url('assets/cinematic_film.jpg');"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/30"></div>
+        </div>
+
         <!-- Editorial Border Frame Info -->
-        <div class="absolute inset-8 md:inset-12 pointer-events-none flex flex-col justify-between p-4 md:p-6">
-          <div class="flex justify-between items-start text-[9px] tracking-[0.25em] text-brand-muted">
+        <div class="absolute inset-8 md:inset-12 pointer-events-none flex flex-col justify-between p-4 md:p-6 z-20">
+          <div class="flex justify-between items-start text-[9px] tracking-[0.25em] text-brand-bg/80">
             <span>WE FIVE / JOURNAL</span>
             <span>EST. 2018</span>
           </div>
-          <div class="flex justify-between items-end text-[9px] tracking-[0.25em] text-brand-muted">
+          <div class="flex justify-between items-end text-[9px] tracking-[0.25em] text-brand-bg/80">
             <span>MILAN — ROME</span>
             <span>SCROLL TO COMMENCE ↓</span>
           </div>
         </div>
 
-        <!-- Hero Content -->
-        <div class="text-center flex flex-col items-center max-w-4xl px-4 z-10">
-          <div class="mb-4">
-            <!-- Large cursive "we" logo -->
-            <svg viewBox="0 0 160 80" class="w-44 h-22 stroke-brand-accent fill-none" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M 20 40 C 25 30, 28 25, 34 25 C 40 25, 42 55, 50 55 C 58 55, 62 25, 68 25 C 74 25, 76 55, 85 55 C 93 55, 96 40, 93 34 C 90 28, 83 28, 80 37 C 77 46, 88 55, 100 55 C 108 55, 115 46, 122 38" />
-            </svg>
-            <span class="font-serif text-3xl md:text-4xl tracking-[0.6em] mr-[-0.6em] font-light text-brand-accent block mt-2">FIVE</span>
-          </div>
-          
-          <h1 class="font-serif italic font-light text-brand-text text-xl md:text-3xl mt-4 mb-8 leading-relaxed max-w-xl">
+        <!-- Hero Content: headline bottom-left over photo -->
+        <div class="absolute bottom-24 md:bottom-28 left-0 w-full px-8 md:px-16 z-10 text-left">
+          <h1 class="font-serif italic font-light text-brand-bg text-3xl md:text-5xl leading-tight max-w-xl mb-6">
             Crafting narratives through design, space, and motion.
           </h1>
+        </div>
 
-          <a href="#intro" class="btn-editorial pointer-events-auto">
-            EXPLORE THE JOURNAL
-          </a>
+        <!-- Slideshow Controls: arrows + counter -->
+        <div class="absolute bottom-6 left-0 w-full px-8 md:px-16 z-20 flex items-center justify-between pointer-events-none">
+          <button id="hero-prev" aria-label="Previous slide" class="hero-arrow pointer-events-auto text-brand-bg">
+            <svg viewBox="0 0 24 24" class="w-5 h-5 stroke-current fill-none stroke-[1.5]" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12" />
+              <polyline points="12 19 5 12 12 5" />
+            </svg>
+          </button>
+          <span id="hero-counter" class="font-mono text-xs tracking-[0.3em] text-brand-bg">01 / 05</span>
+          <button id="hero-next" aria-label="Next slide" class="hero-arrow pointer-events-auto text-brand-bg">
+            <svg viewBox="0 0 24 24" class="w-5 h-5 stroke-current fill-none stroke-[1.5]" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
+          </button>
         </div>
       </section>
 
@@ -895,6 +932,39 @@
   <script>
     // Register ScrollTrigger plugin
     gsap.registerPlugin(ScrollTrigger);
+
+    // Hero Full-Bleed Photo Slideshow
+    (function initHeroSlideshow() {
+      const slides = document.querySelectorAll("#hero .hero-slide");
+      const counter = document.getElementById("hero-counter");
+      const prevBtn = document.getElementById("hero-prev");
+      const nextBtn = document.getElementById("hero-next");
+      if (!slides.length) return;
+
+      let current = 0;
+      let autoTimer = null;
+
+      function render() {
+        slides.forEach((slide, i) => slide.classList.toggle("active", i === current));
+        counter.textContent = String(current + 1).padStart(2, "0") + " / " + String(slides.length).padStart(2, "0");
+      }
+
+      function goTo(index) {
+        current = (index + slides.length) % slides.length;
+        render();
+      }
+
+      function resetAutoAdvance() {
+        clearInterval(autoTimer);
+        autoTimer = setInterval(() => goTo(current + 1), 5500);
+      }
+
+      prevBtn.addEventListener("click", () => { goTo(current - 1); resetAutoAdvance(); });
+      nextBtn.addEventListener("click", () => { goTo(current + 1); resetAutoAdvance(); });
+
+      render();
+      resetAutoAdvance();
+    })();
 
     // Initial loader screen fade-out
     window.addEventListener('load', () => {
