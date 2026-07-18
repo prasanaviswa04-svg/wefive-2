@@ -1,0 +1,18 @@
+{
+  "name": "we-five-scrolling-timeline",
+  "version": "1.0.0",
+  "description": "A single-page website with a hybrid horizontal parallax scrolling timeline for We Five.",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx -y live-server --port=3000"
+  },
+  "keywords": [
+    "we-five",
+    "parallax",
+    "scrolling-timeline",
+    "gsap",
+    "scrolltrigger"
+  ],
+  "author": "We Five Studio",
+  "license": "ISC"
+}

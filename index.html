@@ -1,0 +1,1607 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>We Five / Journal — Milan & Rome</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="WE FIVE / JOURNAL. Crafting narratives through design, space, and motion. Est. 2018, Milan — Rome.">
+  <meta name="keywords" content="We Five, Journal, Editorial Design, Hybrid Scroll, Parallax Timeline, GSAP ScrollTrigger, Lenis Smooth Scroll">
+  <meta name="author" content="We Five Studio">
+  
+  <!-- Google Fonts: Cormorant Garamond & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&family=Playwrite+ID:wght@100..400&family=Yuyu&family=Bebas+Neue&family=Titan+One&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Lenis Smooth Scroll CSS -->
+  <style>
+    html.lenis, html.lenis body {
+      height: auto;
+    }
+    .lenis-smooth {
+      scroll-behavior: auto !important;
+    }
+    .lenis-smooth [data-lenis-prevent] {
+      overscroll-behavior: contain;
+    }
+    .lenis-stopped {
+      overflow: hidden;
+    }
+    .lenis-scrolling iframe {
+      pointer-events: none;
+    }
+  </style>
+
+  <!-- Tailwind Configuration -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              bg: '#FCF6DD',      // Zesty Lemon, softened with cream/white
+              accent: '#B32824',  // Deep Crimson Red
+              accentMuted: '#9C2421',
+              text: '#1C1917',    // Warm Charcoal
+              muted: '#615451',   // Soft Crimson Brown
+              border: '#B32824',
+            }
+          },
+          fontFamily: {
+            serif: ['"Titan One"', 'sans-serif'],
+            sans: ['"Titan One"', 'sans-serif'],
+            grotesque: ['"Space Grotesk"', 'sans-serif'],
+            playwrite: ['"Playwrite ID"', 'cursive'],
+            yuyu: ['"Yuyu"', 'sans-serif'],
+            bebas: ['"Bebas Neue"', 'sans-serif'],
+            titan: ['"Titan One"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- GSAP & Plugins CDNs -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <!-- Lenis Smooth Scroll CDN -->
+  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+
+  <!-- Custom CSS for Premium Typography & Layout details -->
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #F3ECD0;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #B32824;
+      border-radius: 0px; /* Sharp retro styling */
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #9C2421;
+    }
+
+
+    /* Outlined Editorial Buttons */
+    .btn-editorial {
+      border: 1px solid #B32824;
+      background: transparent;
+      color: #B32824;
+      font-family: "Plus Jakarta Sans", sans-serif;
+      font-weight: 600;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 1rem 2.5rem;
+      transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .btn-editorial::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #B32824;
+      transform: translateY(100%);
+      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: -1;
+    }
+    .btn-editorial:hover::before {
+      transform: translateY(0);
+    }
+    .btn-editorial:hover {
+      color: #F3ECD0;
+    }
+
+    /* Hero Centered Photo Carousel */
+    .hero-slide {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 1.4s ease;
+    }
+    .hero-slide.active {
+      opacity: 1;
+    }
+    .hero-arrow {
+      width: 2.25rem;
+      height: 2.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.3s ease;
+    }
+    .hero-arrow:hover {
+      opacity: 0.6;
+    }
+    .hero-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.5);
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+    .hero-dot.active {
+      background: #ffffff;
+      transform: scale(1.3);
+    }
+  </style>
+</head>
+<body class="bg-brand-bg text-brand-text font-sans selection:bg-brand-accent selection:text-brand-bg overflow-x-hidden antialiased" style="background-image: linear-gradient(160deg, #FFFEF5 0%, #FCF6DD 35%, #F5EFC9 70%, #EDE6A8 100%);">
+
+  <!-- Grainy Paper Texture Overlay -->
+  <div class="fixed inset-0 pointer-events-none z-50 opacity-[0.04] mix-blend-multiply" style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.8%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E');"></div>
+
+  <!-- Premium Minimal Splash Screen -->
+  <div id="splash-screen" class="fixed inset-0 bg-[#fdd95a] z-[1000] flex flex-col justify-center items-center overflow-hidden">
+    <div class="absolute inset-0 w-full h-full pointer-events-none">
+      <svg id="splash-svg" class="w-full h-full" fill="none">
+        <path id="entry-w-path" stroke="#a64a3d" stroke-linecap="round" stroke-linejoin="round" />
+        <path id="w-path" stroke="#a64a3d" stroke-linecap="round" stroke-linejoin="round" />
+        <path id="entry-e-path" stroke="#a64a3d" stroke-linecap="round" stroke-linejoin="round" />
+        <path id="e-path" stroke="#a64a3d" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </div>
+    <div id="five-text" class="absolute font-serif font-light text-[#a64a3d] select-none pointer-events-none opacity-0" style="font-family: 'Cormorant Garamond', Georgia, serif; left: 50%; transform: translate(-50%, -50%); white-space: nowrap; letter-spacing: 0.65em; margin-right: -0.65em;">FIVE</div>
+  </div>
+  <script>
+    if (sessionStorage.getItem('wefive_splash_played') === 'true') {
+      document.getElementById('splash-screen').style.display = 'none';
+    }
+  </script>
+
+  <!-- Page Wrapper structure -->
+  <div id="smooth-wrapper" class="w-full relative">
+    <div id="smooth-content" class="w-full relative">
+
+      <!-- Navigation Header -->
+      <header class="absolute top-0 left-0 w-full z-30 px-8 py-3 md:px-12 md:py-4 flex justify-between items-center pointer-events-none bg-transparent">
+        <a href="#" class="pointer-events-auto font-serif italic text-2xl md:text-3xl font-light text-brand-text tracking-wide">
+          we five
+        </a>
+        <button aria-label="Open menu" class="pointer-events-auto flex flex-col items-end justify-center gap-[5px] w-7 h-7">
+          <span class="block w-7 h-[1.5px] bg-brand-text"></span>
+          <span class="block w-7 h-[1.5px] bg-brand-text"></span>
+          <span class="block w-7 h-[1.5px] bg-brand-text"></span>
+        </button>
+      </header>
+
+      <!-- PHASE A: VERTICAL SCROLLING (TOP) -->
+
+      <!-- Section 1: Hero Section -->
+      <section id="hero" class="hero-sec w-full h-screen relative overflow-hidden bg-brand-bg flex flex-col items-center justify-center">
+
+        <!-- Centered Photo Carousel: full-bleed left/right, white space above/below -->
+        <div class="relative w-full h-[64vh] sm:h-[72vh] md:h-[80vh] overflow-hidden border-y-2 border-brand-text">
+          <div class="hero-slide active" style="background-image: url('assets/skyline_architecture.jpg');"></div>
+          <div class="hero-slide" style="background-image: url('assets/cinematic_film.jpg');"></div>
+          <div class="hero-slide" style="background-image: url('assets/retro_architecture.jpg');"></div>
+          <div class="hero-slide" style="background-image: url('assets/craft_process.jpg');"></div>
+          <div class="hero-slide" style="background-image: url('assets/cinematic_film.jpg');"></div>
+
+          <!-- Bottom fade for control contrast -->
+          <div class="absolute bottom-0 left-0 w-full h-28 bg-gradient-to-t from-black/50 to-transparent pointer-events-none z-10"></div>
+
+          <!-- Bottom-Left: caption above dots + previous arrow -->
+          <div class="absolute bottom-4 left-4 md:bottom-6 md:left-6 z-20 flex flex-col items-start gap-3">
+            <p id="hero-caption" class="font-titan font-normal text-white text-2xl md:text-4xl"></p>
+            <div class="flex items-center gap-4">
+              <button id="hero-prev" aria-label="Previous slide" class="hero-arrow text-white">
+                <svg viewBox="0 0 24 24" class="w-5 h-5 stroke-current fill-none stroke-[1.5]" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="19" y1="12" x2="5" y2="12" />
+                  <polyline points="12 19 5 12 12 5" />
+                </svg>
+              </button>
+              <div id="hero-dots" class="flex items-center gap-2"></div>
+            </div>
+          </div>
+
+          <!-- Bottom-Right: next arrow -->
+          <div class="absolute bottom-4 right-4 md:bottom-6 md:right-6 z-20">
+            <button id="hero-next" aria-label="Next slide" class="hero-arrow text-white">
+              <svg viewBox="0 0 24 24" class="w-5 h-5 stroke-current fill-none stroke-[1.5]" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2: Intro/Preface Content -->
+      <section id="intro" class="intro-sec w-full min-h-screen relative flex flex-col justify-center items-center px-8 md:px-16 py-24 overflow-hidden border-t border-brand-accent/20 bg-brand-bg">
+        <div class="max-w-6xl w-full grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16 items-start">
+          
+          <!-- Left Column: Title & Preface -->
+          <div class="md:col-span-5 flex flex-col justify-center">
+            <span class="text-xs font-mono tracking-[0.35em] text-brand-accent mb-2">// PREFACE</span>
+            <h2 class="font-serif text-4xl md:text-6xl text-brand-text leading-[1.05] mb-6">
+              The Patience of <span class="italic font-light">Creation</span>.
+            </h2>
+            <div class="h-[1px] bg-brand-accent/25 w-1/3 my-4"></div>
+            
+            <!-- Bullet Elements Grid -->
+            <div class="grid grid-cols-1 gap-4 font-mono text-[9px] tracking-[0.2em] uppercase font-bold text-brand-accent mt-4">
+              <div class="flex items-center gap-3">
+                <span class="w-1.5 h-1.5 bg-brand-accent"></span>
+                <span>PHYSICAL RESISTANCE</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <span class="w-1.5 h-1.5 bg-brand-accent"></span>
+                <span>DIGITAL TEXTURE</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <span class="w-1.5 h-1.5 bg-brand-accent"></span>
+                <span>EDITORIAL GRID</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Right Column: Narrative Paragraphs -->
+          <div class="md:col-span-7 flex flex-col gap-8 text-brand-muted text-sm md:text-base leading-relaxed font-light">
+            <p>
+              In a digital landscape dominated by rapid consumption, we choose depth. We curate structures that require pause. Our collaborations are experiments in friction, typography, and human curiosity.
+            </p>
+            <p>
+              We believe the modern interface has lost its weight. By treating the digital canvas with the same spatial respect as a physical book page, we create websites that are read rather than merely scanned. It is an editorial approach to user flow: structured, breathing, and deliberate.
+            </p>
+            <p class="border-l border-brand-accent/40 pl-6 italic font-serif text-lg text-brand-accent/90">
+              As you scroll downwards, the screen will lock, translating your vertical motion into a horizontal voyage across our archival panels. Elements within this track will move at varying speeds, creating a multi-dimensional parallax depth. We invite you to experience the friction.
+            </p>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- PHASE B: PINNED HORIZONTAL PARALLAX TRACK -->
+      <div class="horizontal-outer overflow-hidden w-full md:h-screen relative bg-brand-bg">
+        <div class="horizontal-inner flex flex-col md:flex-row h-full w-full md:w-[1000vw]">
+
+          <!-- Panel 1: About -->
+          <section id="about" class="panel w-full md:w-screen min-h-screen md:h-screen flex-shrink-0 flex items-center justify-center border-b md:border-b-0 md:border-r border-brand-accent/15 px-8 py-20 md:p-16 relative overflow-hidden">
+            <!-- Background Parallax Text -->
+            <div class="absolute right-[-4vw] bottom-[-2vh] font-serif text-[35vw] text-brand-accent/[0.02] select-none pointer-events-none parallax-bg leading-none font-bold">
+              01
+            </div>
+            
+            <div class="max-w-6xl w-full grid grid-cols-1 md:grid-cols-12 gap-12 items-start z-10">
+              <!-- Left descriptive column -->
+              <div class="md:col-span-5 text-left">
+                <span class="text-xs font-mono tracking-[0.35em] text-brand-accent block mb-2">[ 01 / ABOUT ]</span>
+                <h3 class="font-serif text-5xl md:text-7xl font-light text-brand-text mb-4">01 / ABOUT</h3>
+                <h4 class="font-serif italic text-xl md:text-2xl text-brand-accent font-light mb-6">The Curated Essence</h4>
+                
+                <p class="text-brand-muted text-sm md:text-base leading-relaxed font-light pr-4 parallax-fast">
+                  We Five is an independent team of creators working collectively. We bridge the gap between design theory and implementation, establishing digital products that resonate on a tactile, visual level.
+                </p>
+              </div>
+              
+              <!-- Collective Core Grid (M A G L F) -->
+              <div class="md:col-span-7 flex flex-col gap-6 md:border-l md:border-brand-accent/15 md:pl-12 justify-center h-full">
+                <div class="parallax-slow w-full">
+                  <span class="text-[9px] font-mono tracking-[0.25em] text-brand-accent block mb-8 uppercase font-bold">THE COLLECTIVE CORE</span>
+                  
+                  <div class="grid grid-cols-5 gap-6 border-t border-brand-accent/20 pt-8">
+                    <div class="text-center group">
+                      <div class="font-serif text-5xl md:text-6xl font-light text-brand-accent group-hover:scale-105 transition-transform duration-300 select-none">M</div>
+                      <div class="font-mono text-[9px] tracking-widest text-brand-muted mt-4 font-bold uppercase">M. ROSSI</div>
+                    </div>
+                    <div class="text-center group">
+                      <div class="font-serif text-5xl md:text-6xl font-light text-brand-accent group-hover:scale-105 transition-transform duration-300 select-none">A</div>
+                      <div class="font-mono text-[9px] tracking-widest text-brand-muted mt-4 font-bold uppercase">A. BIANCHI</div>
+                    </div>
+                    <div class="text-center group">
+                      <div class="font-serif text-5xl md:text-6xl font-light text-brand-accent group-hover:scale-105 transition-transform duration-300 select-none">G</div>
+                      <div class="font-mono text-[9px] tracking-widest text-brand-muted mt-4 font-bold uppercase">G. VERDI</div>
+                    </div>
+                    <div class="text-center group">
+                      <div class="font-serif text-5xl md:text-6xl font-light text-brand-accent group-hover:scale-105 transition-transform duration-300 select-none">L</div>
+                      <div class="font-mono text-[9px] tracking-widest text-brand-muted mt-4 font-bold uppercase">L. NERO</div>
+                    </div>
+                    <div class="text-center group">
+                      <div class="font-serif text-5xl md:text-6xl font-light text-brand-accent group-hover:scale-105 transition-transform duration-300 select-none">F</div>
+                      <div class="font-mono text-[9px] tracking-widest text-brand-muted mt-4 font-bold uppercase">F. ORO</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Panel 2: History -->
+          <section id="history" class="panel w-full md:w-screen min-h-screen md:h-screen flex-shrink-0 flex items-center justify-center border-b md:border-b-0 md:border-r border-brand-accent/15 px-8 py-20 md:p-16 relative overflow-hidden">
+            <!-- Background Parallax Text -->
+            <div class="absolute left-[4vw] top-[-2vh] font-serif text-[35vw] text-brand-accent/[0.02] select-none pointer-events-none parallax-bg leading-none font-bold">
+              02
+            </div>
+
+            <div class="max-w-6xl w-full flex flex-col justify-center items-start z-10">
+              <div class="mb-12">
+                <span class="text-xs font-mono tracking-[0.35em] text-brand-accent block mb-2">[ 02 / HISTORY ]</span>
+                <h3 class="font-serif text-5xl md:text-6xl font-light text-brand-text">02 / HISTORY</h3>
+                <h4 class="font-serif italic text-lg text-brand-accent font-light">Evolution of Form</h4>
+              </div>
+
+              <!-- Horizontal timeline axis line (Desktop Only) -->
+              <div class="relative w-full h-[1px] bg-brand-accent/25 my-8 hidden md:block">
+                <!-- Staggered nodes dots -->
+                <div class="absolute left-[10%] top-1/2 -translate-y-1/2 w-2 h-2 bg-brand-accent"></div>
+                <div class="absolute left-[35%] top-1/2 -translate-y-1/2 w-2 h-2 bg-brand-accent"></div>
+                <div class="absolute left-[60%] top-1/2 -translate-y-1/2 w-2 h-2 bg-brand-accent"></div>
+                <div class="absolute left-[85%] top-1/2 -translate-y-1/2 w-2 h-2 bg-brand-accent"></div>
+              </div>
+
+              <!-- Timeline nodes -->
+              <div class="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-10 w-full">
+                <!-- Node 2018 -->
+                <div class="flex flex-col gap-2 p-2 border-l border-brand-accent/20 relative parallax-fast">
+                  <span class="font-serif italic text-3xl text-brand-accent">2018</span>
+                  <h4 class="font-bold text-xs tracking-wider uppercase text-brand-text">The Genesis</h4>
+                  <p class="text-xs text-brand-muted leading-relaxed font-light">Five multidisciplinary designers establish the studio in a brick-walled workspace in Milan, aiming to bring print pacing to the web.</p>
+                </div>
+                <!-- Node 2020 -->
+                <div class="flex flex-col gap-2 p-2 border-l border-brand-accent/20 relative md:translate-y-6 parallax-slow">
+                  <span class="font-serif italic text-3xl text-brand-accent">2020</span>
+                  <h4 class="font-bold text-xs tracking-wider uppercase text-brand-text">The Print Journal</h4>
+                  <p class="text-xs text-brand-muted leading-relaxed font-light">Launch of our physical quarterly, "We Five Curation", distributing experimental typography layouts to independent booksellers.</p>
+                </div>
+                <!-- Node 2023 -->
+                <div class="flex flex-col gap-2 p-2 border-l border-brand-accent/20 relative parallax-fast">
+                  <span class="font-serif italic text-3xl text-brand-accent">2023</span>
+                  <h4 class="font-bold text-xs tracking-wider uppercase text-brand-text">Digital Physics</h4>
+                  <p class="text-xs text-brand-muted leading-relaxed font-light">Pioneering web layouts utilizing inertial-scroll kinetics, digital page-turns, and editorial-grid alignments.</p>
+                </div>
+                <!-- Node 2026 -->
+                <div class="flex flex-col gap-2 p-2 border-l border-brand-accent/20 relative md:translate-y-6 parallax-slow">
+                  <span class="font-serif italic text-3xl text-brand-accent">2026</span>
+                  <h4 class="font-bold text-xs tracking-wider uppercase text-brand-text">Hybrid Landscapes</h4>
+                  <p class="text-xs text-brand-muted leading-relaxed font-light">Expanding into architectural spaces and interactive web journals, blending the tactile with the virtual seamlessly.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Panel 3: Archive -->
+          <section id="archive" class="panel w-full md:w-screen min-h-screen md:h-screen flex-shrink-0 flex items-center justify-center border-b md:border-b-0 md:border-r border-brand-accent/15 px-8 py-20 md:p-16 relative overflow-hidden">
+            <!-- Background Parallax Text -->
+            <div class="absolute right-[4vw] top-[-2vh] font-serif text-[35vw] text-brand-accent/[0.02] select-none pointer-events-none parallax-bg leading-none font-bold">
+              03
+            </div>
+
+            <div class="max-w-6xl w-full flex flex-col justify-center z-10">
+              <div class="mb-10">
+                <span class="text-xs font-mono tracking-[0.35em] text-brand-accent block mb-2">[ 03 / ARCHIVE ]</span>
+                <h3 class="font-serif text-5xl md:text-6xl font-light text-brand-text">03 / ARCHIVE</h3>
+                <h4 class="font-serif italic text-lg text-brand-accent font-light">Selected Curations — CATALOGUE V.09</h4>
+              </div>
+
+              <!-- 3 Case Study Columns separated by lines -->
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full border-t border-brand-accent/20 pt-10">
+                
+                <!-- Case Study 01 -->
+                <div class="flex flex-col gap-3 group border-b border-brand-accent/15 pb-6 md:border-b-0 md:pb-0 md:border-r md:border-brand-accent/15 md:pr-8 last:border-0 last:pr-0 parallax-fast">
+                  <div class="flex justify-between items-center text-[9px] font-mono text-brand-accent font-bold">
+                    <span>01 / CASE STUDY MILAN</span>
+                    <span>SCHEMATIC V1</span>
+                  </div>
+                  <h5 class="font-serif text-2xl font-light text-brand-text group-hover:text-brand-accent transition-colors duration-300">Space & Geometry</h5>
+                  <p class="text-xs text-brand-muted leading-relaxed font-light mt-2">
+                    A visual spatial analysis exploring brutalist architecture inside Milanese courtyards.
+                  </p>
+                </div>
+
+                <!-- Case Study 02 -->
+                <div class="flex flex-col gap-3 group border-b border-brand-accent/15 pb-6 md:border-b-0 md:pb-0 md:border-r md:border-brand-accent/15 md:pr-8 last:border-0 last:pr-0 parallax-slow">
+                  <div class="flex justify-between items-center text-[9px] font-mono text-brand-accent font-bold">
+                    <span>02 / PRINT GENEVA</span>
+                    <span>LAYOUT COMPOSITION</span>
+                  </div>
+                  <h5 class="font-serif text-2xl font-light text-brand-text group-hover:text-brand-accent transition-colors duration-300">Form & Serif</h5>
+                  <p class="text-xs text-brand-muted leading-relaxed font-light mt-2">
+                    Custom letterforms and grid structures designed for our physical editorial catalog.
+                  </p>
+                </div>
+
+                <!-- Case Study 03 -->
+                <div class="flex flex-col gap-3 group last:border-0 last:pr-0 parallax-fast">
+                  <div class="flex justify-between items-center text-[9px] font-mono text-brand-accent font-bold">
+                    <span>03 / INTERACTION TOKYO</span>
+                    <span>SYSTEM INTERSECT</span>
+                  </div>
+                  <h5 class="font-serif text-2xl font-light text-brand-text group-hover:text-brand-accent transition-colors duration-300">Tactile Kinetics</h5>
+                  <p class="text-xs text-brand-muted leading-relaxed font-light mt-2">
+                    Developing fluid digital scroll structures that mirror the tactile feedback of print.
+                  </p>
+                </div>
+
+              </div>
+            </div>
+          </section>
+
+          <!-- Panel 4: Photos -->
+          <section id="photos" class="panel w-full md:w-screen min-h-screen md:h-screen flex-shrink-0 flex items-center justify-center border-b md:border-b-0 md:border-r border-brand-accent/15 px-8 py-20 md:p-16 relative overflow-hidden">
+            <!-- Background Parallax Text -->
+            <div class="absolute left-[-2vw] bottom-[-2vh] font-serif text-[35vw] text-brand-accent/[0.02] select-none pointer-events-none parallax-bg leading-none font-bold">
+              04
+            </div>
+
+            <div class="max-w-6xl w-full flex flex-col justify-center z-10">
+              <div class="mb-10">
+                <span class="text-xs font-mono tracking-[0.35em] text-brand-accent block mb-2">[ 04 / PHOTOS ]</span>
+                <h3 class="font-serif text-5xl md:text-6xl font-light text-brand-text">04 / PHOTOS</h3>
+                <h4 class="font-serif italic text-lg text-brand-accent font-light">Minimal Architectural Plaster</h4>
+              </div>
+
+              <!-- Staggered Overlapping Plate Spread -->
+              <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-start w-full mt-4">
+                
+                <!-- Plate #04A (High left) -->
+                <div class="md:col-span-6 flex flex-col gap-4 parallax-slow">
+                  <div class="border border-brand-accent/25 p-1 bg-brand-bg shadow-sm">
+                    <img src="assets/retro_architecture.jpg" alt="Minimal Architectural Plaster" class="w-full h-56 md:h-64 object-cover grayscale hover:grayscale-0 transition-all duration-700">
+                    <div class="flex justify-between items-center mt-2 text-[8px] font-mono text-brand-muted uppercase tracking-wider px-1">
+                      <span>PLATE #04A study.con // f/5.6 1/125s ISO 100</span>
+                      <span>MILAN</span>
+                    </div>
+                  </div>
+                  <div>
+                    <h5 class="font-serif text-2xl font-light text-brand-text mb-2">Capturing Spatial Silence</h5>
+                    <p class="text-xs text-brand-muted leading-relaxed font-light">
+                      Our photography explores light, negative space, and geometry. We capture details that feel silent, allowing the background texture of the paper or screen to interact with the visual subject.
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Plate #04B (Low right, overlapping offset) -->
+                <div class="md:col-span-6 flex flex-col gap-4 md:translate-y-12 parallax-fast">
+                  <div class="border border-brand-accent/25 p-1 bg-brand-bg shadow-sm">
+                    <img src="assets/archive_design.jpg" alt="Design Magazines Layout" class="w-full h-56 md:h-64 object-cover grayscale hover:grayscale-0 transition-all duration-700">
+                    <div class="flex justify-between items-center mt-2 text-[8px] font-mono text-brand-muted uppercase tracking-wider px-1">
+                      <span>PLATE #04B print.lay // f/8.0 1/60s ISO 200</span>
+                      <span>ROME</span>
+                    </div>
+                  </div>
+                  <div>
+                    <h5 class="font-serif text-2xl font-light text-brand-text mb-2">Design Magazines Layout</h5>
+                    <p class="text-xs text-brand-muted leading-relaxed font-light">
+                      Analyzing layouts, font metrics, and geometric grids across print artifacts to integrate physical breathing margins into standard web dimensions.
+                    </p>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </section>
+
+          <!-- Panel 5: Stories -->
+          <section id="stories" class="panel w-full md:w-screen min-h-screen md:h-screen flex-shrink-0 flex items-center justify-center border-b md:border-b-0 md:border-r border-brand-accent/15 px-8 py-20 md:p-16 relative overflow-hidden">
+            <!-- Background Parallax Text -->
+            <div class="absolute right-[4vw] top-[-2vh] font-serif text-[35vw] text-brand-accent/[0.02] select-none pointer-events-none parallax-bg leading-none font-bold">
+              05
+            </div>
+
+            <div class="max-w-5xl w-full flex flex-col justify-center items-start z-10">
+              <div class="mb-10">
+                <span class="text-xs font-mono tracking-[0.35em] text-brand-accent block mb-2">[ 05 / STORIES ]</span>
+                <h3 class="font-serif text-5xl md:text-6xl font-light text-brand-text">05 / STORIES</h3>
+                <h4 class="font-serif italic text-lg text-brand-accent font-light">Tactility in a Digital Age</h4>
+              </div>
+
+              <!-- Two Column Editorial Layout -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 w-full items-start">
+                
+                <!-- Paragraphs (Parallax Fast) -->
+                <div class="text-brand-muted text-sm md:text-base leading-relaxed font-light parallax-fast flex flex-col gap-6">
+                  <p>
+                    <span class="text-6xl font-serif text-brand-accent float-left mr-4 mt-1 font-bold leading-[0.85] border-t border-b border-brand-accent/25 py-2 px-1">T</span>
+                    actility is not lost in pixels. It is merely translated. By introducing micro-friction, deliberate transitions, and generous white space, we invite the viewer to touch the screen with their eyes. We create interfaces that reward slow readings.
+                  </p>
+                  <p>
+                    The modern web is fast, but it is often thin. We build digital spaces that feel heavy. Not in loading times, but in visual weight and cultural resonance. Every element is set inside a structured grid, allowing for clear paths of exploration.
+                  </p>
+                </div>
+
+                <!-- Manifesto Quote (Parallax Slow) -->
+                <div class="flex flex-col gap-6 md:border-l md:border-brand-accent/15 md:pl-12 justify-center items-start h-full parallax-slow">
+                  <blockquote class="font-serif text-2xl italic text-brand-text font-light leading-relaxed border-b border-brand-accent/10 pb-6">
+                    "Design is not the visual decoration of content. It is the architectural pacing of human understanding."
+                  </blockquote>
+                  
+                  <div class="flex items-center gap-3">
+                    <div class="w-6 h-[1px] bg-brand-accent"></div>
+                    <span class="text-[9px] font-mono tracking-[0.25em] uppercase text-brand-accent font-bold">— WE FIVE MANIFESTO</span>
+                  </div>
+
+                  <!-- Small Book Page Icon -->
+                  <svg viewBox="0 0 100 40" class="w-24 h-10 stroke-brand-accent fill-none mt-2 opacity-80" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M 10 30 Q 30 10 50 30 Q 70 10 90 30" />
+                    <path d="M 10 25 Q 30 5 50 25 Q 70 5 90 25" />
+                    <line x1="50" y1="5" x2="50" y2="35" />
+                  </svg>
+                </div>
+
+              </div>
+            </div>
+          </section>
+
+          <!-- Panel 6: Information -->
+          <section id="information" class="panel w-full md:w-screen min-h-screen md:h-screen flex-shrink-0 flex items-center justify-center border-b md:border-b-0 md:border-r border-brand-accent/15 px-8 py-20 md:p-16 relative overflow-hidden">
+            <!-- Background Parallax Text -->
+            <div class="absolute left-[4vw] bottom-[-2vh] font-serif text-[35vw] text-brand-accent/[0.02] select-none pointer-events-none parallax-bg leading-none font-bold">
+              06
+            </div>
+
+            <div class="max-w-5xl w-full flex flex-col justify-center items-start z-10">
+              <div class="mb-8">
+                <span class="text-xs font-mono tracking-[0.35em] text-brand-accent block mb-2">[ 06 / INFORMATION ]</span>
+                <h3 class="font-serif text-5xl md:text-6xl font-light text-brand-text">06 / INFORMATION</h3>
+                <h4 class="font-serif italic text-lg text-brand-accent font-light">Structural Metadata</h4>
+                <p class="text-xs text-brand-muted leading-relaxed font-light mt-4 max-w-xl">
+                  A structured breakdown of our operational boundaries and criteria. We maintain a small portfolio to ensure high-end craft for each partner.
+                </p>
+              </div>
+
+              <!-- Structured Blueprints Specs Table -->
+              <div class="w-full border-t border-brand-accent/25 font-mono text-[11px] md:text-xs text-brand-muted mt-4 parallax-fast">
+                
+                <div class="grid grid-cols-12 py-3 border-b border-brand-accent/20 uppercase font-bold text-brand-accent">
+                  <div class="col-span-4">CRITERION PARAMETER</div>
+                  <div class="col-span-8">METADATA VALUES</div>
+                </div>
+
+                <div class="grid grid-cols-12 py-4 border-b border-brand-accent/15 border-dashed items-center">
+                  <div class="col-span-4 font-bold text-brand-text">FOUNDED</div>
+                  <div class="col-span-8">October 2018 / Milan</div>
+                </div>
+
+                <div class="grid grid-cols-12 py-4 border-b border-brand-accent/15 border-dashed items-center">
+                  <div class="col-span-4 font-bold text-brand-text">STUDIO SIZE</div>
+                  <div class="col-span-8">05 Partners / 03 Associates</div>
+                </div>
+
+                <div class="grid grid-cols-12 py-4 border-b border-brand-accent/15 border-dashed items-center">
+                  <div class="col-span-4 font-bold text-brand-text">DISCIPLINES</div>
+                  <div class="col-span-8">Editorial, Web Graphics, Architectural Imagery</div>
+                </div>
+
+                <div class="grid grid-cols-12 py-4 border-b border-brand-accent/15 border-dashed items-center">
+                  <div class="col-span-4 font-bold text-brand-text">CORE PRINCIPLE</div>
+                  <div class="col-span-8 uppercase text-brand-accent font-bold">Friction & Intentionality</div>
+                </div>
+
+                <div class="grid grid-cols-12 py-4 border-b border-brand-accent/25 items-center">
+                  <div class="col-span-4 font-bold text-brand-text">ARCHIVE VOLUME</div>
+                  <div class="col-span-8">120+ Curated Inquisitions</div>
+                </div>
+
+              </div>
+            </div>
+          </section>
+
+          <!-- Panel 7: Own Icons -->
+          <section id="own-icons" class="panel w-full md:w-screen min-h-screen md:h-screen flex-shrink-0 flex items-center justify-center border-b md:border-b-0 md:border-r border-brand-accent/15 px-8 py-20 md:p-16 relative overflow-hidden">
+            <!-- Background Parallax Text -->
+            <div class="absolute right-[4vw] top-[-2vh] font-serif text-[35vw] text-brand-accent/[0.02] select-none pointer-events-none parallax-bg leading-none font-bold">
+              07
+            </div>
+
+            <div class="max-w-5xl w-full flex flex-col justify-center items-start z-10">
+              <div class="mb-8">
+                <span class="text-xs font-mono tracking-[0.35em] text-brand-accent block mb-2">[ 07 / OWN ICONS ]</span>
+                <h3 class="font-serif text-5xl md:text-6xl font-light text-brand-text">07 / OWN ICONS</h3>
+                <h4 class="font-serif italic text-lg text-brand-accent font-light">Iconographic Systems</h4>
+                <p class="text-xs text-brand-muted leading-relaxed font-light mt-4 max-w-xl">
+                  A custom-drawn set of line symbols representing our core design elements. These vectors function as editorial markers across our projects. Hover to invert.
+                </p>
+              </div>
+
+              <!-- Graphic Flat Grid (divide borders instead of card shapes) -->
+              <div class="grid grid-cols-2 md:grid-cols-6 w-full border border-brand-accent/20 divide-x divide-y divide-brand-accent/20 mt-6 parallax-slow bg-transparent">
+                
+                <!-- Icon 01: VISUAL -->
+                <div class="p-6 flex flex-col justify-between items-center hover:bg-brand-accent hover:text-brand-bg transition-colors duration-500 group aspect-square select-none">
+                  <div class="flex-grow flex items-center justify-center">
+                    <svg viewBox="0 0 24 24" class="w-10 h-10 stroke-[1.25] stroke-current fill-none group-hover:scale-105 transition-transform duration-300">
+                      <circle cx="12" cy="12" r="10" />
+                      <circle cx="12" cy="12" r="4" />
+                      <line x1="12" y1="2" x2="12" y2="8" />
+                      <line x1="12" y1="16" x2="12" y2="22" />
+                      <line x1="2" y1="12" x2="8" y2="12" />
+                      <line x1="16" y1="12" x2="22" y2="12" />
+                    </svg>
+                  </div>
+                  <span class="font-mono text-[8px] tracking-widest uppercase font-semibold mt-4">01 / VISUAL</span>
+                </div>
+
+                <!-- Icon 02: JOURNAL -->
+                <div class="p-6 flex flex-col justify-between items-center hover:bg-brand-accent hover:text-brand-bg transition-colors duration-500 group aspect-square select-none">
+                  <div class="flex-grow flex items-center justify-center">
+                    <svg viewBox="0 0 24 24" class="w-10 h-10 stroke-[1.25] stroke-current fill-none group-hover:scale-105 transition-transform duration-300">
+                      <path d="M12 2L4 12v6l3 3h4l9-9L12 2zM12 2l6 6M8 16l4-4" />
+                      <circle cx="9" cy="13" r="1" />
+                    </svg>
+                  </div>
+                  <span class="font-mono text-[8px] tracking-widest uppercase font-semibold mt-4">02 / JOURNAL</span>
+                </div>
+
+                <!-- Icon 03: SPACE -->
+                <div class="p-6 flex flex-col justify-between items-center hover:bg-brand-accent hover:text-brand-bg transition-colors duration-500 group aspect-square select-none">
+                  <div class="flex-grow flex items-center justify-center">
+                    <svg viewBox="0 0 24 24" class="w-10 h-10 stroke-[1.25] stroke-current fill-none group-hover:scale-105 transition-transform duration-300">
+                      <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5M2 7v10M22 7v10M12 12v10" />
+                    </svg>
+                  </div>
+                  <span class="font-mono text-[8px] tracking-widest uppercase font-semibold mt-4">03 / SPACE</span>
+                </div>
+
+                <!-- Icon 04: FILM -->
+                <div class="p-6 flex flex-col justify-between items-center hover:bg-brand-accent hover:text-brand-bg transition-colors duration-500 group aspect-square select-none">
+                  <div class="flex-grow flex items-center justify-center">
+                    <svg viewBox="0 0 24 24" class="w-10 h-10 stroke-[1.25] stroke-current fill-none group-hover:scale-105 transition-transform duration-300">
+                      <path d="M23 7l-7 5 7 5V7zM1 5h14v14H1V5z" />
+                      <circle cx="5" cy="10" r="1.5" />
+                      <circle cx="11" cy="10" r="1.5" />
+                    </svg>
+                  </div>
+                  <span class="font-mono text-[8px] tracking-widest uppercase font-semibold mt-4">04 / FILM</span>
+                </div>
+
+                <!-- Icon 05: GEOGRAPHY -->
+                <div class="p-6 flex flex-col justify-between items-center hover:bg-brand-accent hover:text-brand-bg transition-colors duration-500 group aspect-square select-none">
+                  <div class="flex-grow flex items-center justify-center">
+                    <svg viewBox="0 0 24 24" class="w-10 h-10 stroke-[1.25] stroke-current fill-none group-hover:scale-105 transition-transform duration-300">
+                      <path d="M12 2v6M12 8L6 22M12 8l6 14M8 17h8" />
+                      <circle cx="12" cy="8" r="1.5" />
+                    </svg>
+                  </div>
+                  <span class="font-mono text-[8px] tracking-widest uppercase font-semibold mt-4">05 / GEOGRAPHY</span>
+                </div>
+
+                <!-- Icon 06: TIME -->
+                <div class="p-6 flex flex-col justify-between items-center hover:bg-brand-accent hover:text-brand-bg transition-colors duration-500 group aspect-square select-none">
+                  <div class="flex-grow flex items-center justify-center">
+                    <svg viewBox="0 0 24 24" class="w-10 h-10 stroke-[1.25] stroke-current fill-none group-hover:scale-105 transition-transform duration-300">
+                      <path d="M5 2h14v4L13 12l6 6v4H5v-4l6-6L5 6V2zM5 6h14M5 18h14M12 12m-1 0a1 1 0 1 0 2 0 1 1 0 1 0 -2 0" />
+                    </svg>
+                  </div>
+                  <span class="font-mono text-[8px] tracking-widest uppercase font-semibold mt-4">06 / TIME</span>
+                </div>
+
+              </div>
+            </div>
+          </section>
+
+          <!-- Panel 8: How We Work -->
+          <section id="how-we-work" class="panel w-full md:w-screen min-h-screen md:h-screen flex-shrink-0 flex items-center justify-center border-b md:border-b-0 md:border-r border-brand-accent/15 px-8 py-20 md:p-16 relative overflow-hidden">
+            <!-- Background Parallax Text -->
+            <div class="absolute left-[-2vw] top-[-2vh] font-serif text-[35vw] text-brand-accent/[0.02] select-none pointer-events-none parallax-bg leading-none font-bold">
+              08
+            </div>
+
+            <div class="max-w-6xl w-full flex flex-col justify-center items-start z-10">
+              <div class="mb-12">
+                <span class="text-xs font-mono tracking-[0.35em] text-brand-accent block mb-2">[ 08 / METHODOLOGY ]</span>
+                <h3 class="font-serif text-5xl md:text-6xl font-light text-brand-text">08 / HOW WE WORK</h3>
+                <h4 class="font-serif italic text-lg text-brand-accent font-light">The Triadic Methodology</h4>
+              </div>
+
+              <!-- Staggered horizontal process columns layout -->
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-12 w-full relative border-t border-brand-accent/20 pt-10">
+                
+                <!-- Column 01 -->
+                <div class="flex flex-col gap-6 relative z-10 md:border-r md:border-brand-accent/15 md:pr-8 last:border-0 last:pr-0 group hover:scale-[1.01] transition-transform duration-500 parallax-fast">
+                  <div class="flex justify-between items-center">
+                    <span class="font-serif italic text-3xl text-brand-accent font-bold">01</span>
+                    <span class="text-[8px] tracking-widest font-mono border border-brand-accent/30 px-2 py-0.5 text-brand-accent font-semibold">PHASE 1</span>
+                  </div>
+                  <div>
+                    <h4 class="font-serif text-2xl font-light text-brand-text mb-3">Archival Immersion</h4>
+                    <p class="text-xs text-brand-muted leading-relaxed font-light">
+                      We start inside libraries and print archives. We catalog typographies, layouts, and historical context before translating them to active code.
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Column 02 -->
+                <div class="flex flex-col gap-6 relative z-10 md:border-r md:border-brand-accent/15 md:pr-8 last:border-0 last:pr-0 md:translate-y-6 group hover:scale-[1.01] transition-transform duration-500 parallax-slow">
+                  <div class="flex justify-between items-center">
+                    <span class="font-serif italic text-3xl text-brand-accent font-bold">02</span>
+                    <span class="text-[8px] tracking-widest font-mono border border-brand-accent/30 px-2 py-0.5 text-brand-accent font-semibold">PHASE 2</span>
+                  </div>
+                  <div>
+                    <h4 class="font-serif text-2xl font-light text-brand-text mb-3">Deliberate Friction</h4>
+                    <p class="text-xs text-brand-muted leading-relaxed font-light">
+                      We construct intentional layout weights. We craft pauses, large serif markers, and asymmetrical shapes that require the viewer's eye to process.
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Column 03 -->
+                <div class="flex flex-col gap-6 relative z-10 group hover:scale-[1.01] transition-transform duration-500 parallax-fast">
+                  <div class="flex justify-between items-center">
+                    <span class="font-serif italic text-3xl text-brand-accent font-bold">03</span>
+                    <span class="text-[8px] tracking-widest font-mono border border-brand-accent/30 px-2 py-0.5 text-brand-accent font-semibold">PHASE 3</span>
+                  </div>
+                  <div>
+                    <h4 class="font-serif text-2xl font-light text-brand-text mb-3">Spatial Physics</h4>
+                    <p class="text-xs text-brand-muted leading-relaxed font-light">
+                      We build the code wrapper using GSAP and Lenis to create a smooth, mechanical translation of user motion, blending physical depth with virtual space.
+                    </p>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </section>
+
+          <!-- Panel 9: Films -->
+          <section id="films" class="panel w-full md:w-screen min-h-screen md:h-screen flex-shrink-0 flex items-center justify-center border-b md:border-b-0 md:border-r border-brand-accent/25 px-8 py-20 md:p-16 relative overflow-hidden">
+            <!-- Background Parallax Text -->
+            <div class="absolute right-[5vw] top-[-2vh] font-serif text-[35vw] text-brand-accent/[0.02] select-none pointer-events-none parallax-bg leading-none font-bold">
+              09
+            </div>
+
+            <div class="max-w-6xl w-full flex flex-col justify-center items-center z-10">
+              <div class="w-full text-left mb-6">
+                <span class="text-xs font-mono tracking-[0.35em] text-brand-accent block mb-2">[ 09 / CINEMATICS ]</span>
+                <h3 class="font-serif text-5xl md:text-6xl font-light text-brand-text mb-2">09 / FILMS</h3>
+                <h4 class="font-serif italic text-lg text-brand-accent font-light">Film Background</h4>
+              </div>
+
+              <!-- Camera Widescreen Viewfinder Box (no shadow, clean borders) -->
+              <div class="relative group cursor-pointer overflow-hidden border border-brand-accent/25 w-full max-w-4xl aspect-[16/9] mx-auto bg-black parallax-slow">
+                <img src="assets/cinematic_film.jpg" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700 ease-out scale-[1.02] group-hover:scale-100" alt="Cinematic film still">
+                <div class="absolute inset-0 bg-brand-accent/10 group-hover:bg-transparent transition-all duration-500"></div>
+                
+                <!-- Widescreen HUD labels -->
+                <div class="absolute inset-0 p-4 md:p-6 flex flex-col justify-between font-mono text-[9px] md:text-[10px] text-brand-accent select-none pointer-events-none">
+                  <div class="flex justify-between items-start">
+                    <div class="flex items-center gap-1.5 font-bold">
+                      <span class="w-2.5 h-2.5 bg-brand-accent rounded-full animate-pulse"></span>
+                      <span>REC [1080P/60]</span>
+                    </div>
+                    <div>01:14:52:08</div>
+                  </div>
+                  
+                  <!-- PLAY trigger in the center -->
+                  <div class="self-center pointer-events-auto group-hover:scale-105 transition-transform duration-300 flex flex-col items-center gap-2">
+                    <div class="w-14 h-14 md:w-16 md:h-16 border border-brand-accent bg-brand-bg/95 flex items-center justify-center text-brand-accent group-hover:bg-brand-accent group-hover:text-brand-bg transition-colors duration-300">
+                      <svg viewBox="0 0 24 24" class="w-6 h-6 fill-current translate-x-0.5">
+                        <path d="M8 5v14l11-7z"/>
+                      </svg>
+                    </div>
+                    <span class="text-[9px] tracking-[0.25em] font-bold">PLAY</span>
+                  </div>
+
+                  <div class="flex justify-between items-end">
+                    <span>01:45 / 03:20</span>
+                    <span>CH_01 / LPCM ST</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Bottom caption -->
+              <div class="w-full text-left mt-4 text-xs font-mono text-brand-muted parallax-fast">
+                <span>"The Texture of Time" — A Documentary Short (2025) PROD. WE FIVE LAB</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Panel 10: Journey -->
+          <section id="journey" class="panel w-full md:w-screen min-h-screen md:h-screen flex-shrink-0 flex items-center justify-center px-8 py-20 md:p-16 relative overflow-hidden">
+            <!-- Background Parallax Text -->
+            <div class="absolute left-[-2vw] bottom-[-2vh] font-serif text-[35vw] text-brand-accent/[0.02] select-none pointer-events-none parallax-bg leading-none font-bold">
+              10
+            </div>
+
+            <div class="max-w-4xl w-full flex flex-col justify-center items-center text-center z-10">
+              <span class="text-xs font-mono tracking-[0.35em] text-brand-accent block mb-4">[ 10 / ROAD ]</span>
+              <h3 class="font-serif text-5xl md:text-7xl font-light text-brand-text leading-tight mb-4">
+                10 / JOURNEY
+              </h3>
+              <h4 class="font-serif italic text-2xl text-brand-accent font-light mb-6">The path is continuous.</h4>
+              
+              <div class="h-[1px] bg-brand-accent/25 w-32 my-6"></div>
+              
+              <p class="font-serif italic text-xl text-brand-muted leading-relaxed max-w-xl mb-12 font-light parallax-fast">
+                You have journeyed across our digital canvas. The horizontal restraint will now release. Continue scrolling down to discover our footer space and return to standard verticality.
+              </p>
+
+              <!-- Release Indicator Button -->
+              <a href="#footer" class="btn-editorial pointer-events-auto parallax-slow">
+                RELEASE SCROLL
+              </a>
+            </div>
+          </section>
+
+        </div>
+      </div>
+
+      <!-- PHASE C: UNPINNED VERTICAL RELEASE (BOTTOM) -->
+
+      <!-- Section 4: Footer Section -->
+      <footer id="footer" class="footer-sec w-full bg-brand-bg border-t border-brand-accent/25 relative z-10 overflow-hidden flex flex-col">
+        
+        <!-- Footer Content (TOP) -->
+        <div class="w-full pt-48 pb-6 px-8 md:pt-56 md:pb-10 md:px-16">
+          <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 items-start">
+          
+          <!-- Column 1: Studio Description & Logo -->
+          <div class="md:col-span-5 flex flex-col justify-between h-full gap-8 border-b border-brand-accent/10 pb-8 md:border-b-0 md:pb-0">
+            <div>
+              <div class="flex items-center gap-1 text-brand-accent mb-4">
+                <!-- Cursive Logo -->
+                <svg viewBox="0 0 160 80" class="w-16 h-8 stroke-current fill-none" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M 20 40 C 25 30, 28 25, 34 25 C 40 25, 42 55, 50 55 C 58 55, 62 25, 68 25 C 74 25, 76 55, 85 55 C 93 55, 96 40, 93 34 C 90 28, 83 28, 80 37 C 77 46, 88 55, 100 55 C 108 55, 115 46, 122 38" />
+                </svg>
+                <span class="font-serif text-lg tracking-[0.4em] font-semibold mt-1">FIVE</span>
+              </div>
+              <p class="text-xs text-brand-muted leading-relaxed font-light max-w-sm">
+                An independent design studio curating high-end digital identities, print typography systems, and architectural media frameworks. Operative since 2018.
+              </p>
+            </div>
+            <div class="text-[9px] text-brand-muted font-mono tracking-widest mt-6">
+              © 2026 WE FIVE. ALL RIGHTS RESERVED.
+            </div>
+          </div>
+
+          <!-- Column 2: Navigation Links -->
+          <div class="md:col-span-2 flex flex-col gap-4 text-xs font-semibold tracking-wider text-brand-accent">
+            <h5 class="text-[9px] font-mono tracking-[0.25em] text-brand-muted font-bold mb-2 uppercase">NAVIGATE</h5>
+            <a href="#hero" class="hover:text-brand-accentMuted transition-colors duration-300">TOP OF PAGE</a>
+            <a href="#intro" class="hover:text-brand-accentMuted transition-colors duration-300">INTRO</a>
+            <a href="#about" class="hover:text-brand-accentMuted transition-colors duration-300">ABOUT PANEL</a>
+            <a href="#archive" class="hover:text-brand-accentMuted transition-colors duration-300">VISUAL ARCHIVE</a>
+          </div>
+
+          <!-- Column 3: Social/Network Links -->
+          <div class="md:col-span-2 flex flex-col gap-4 text-xs font-semibold tracking-wider text-brand-accent">
+            <h5 class="text-[9px] font-mono tracking-[0.25em] text-brand-muted font-bold mb-2 uppercase">DIGITAL NETWORK</h5>
+            <a href="#" class="hover:text-brand-accentMuted transition-colors duration-300">INSTAGRAM</a>
+            <a href="#" class="hover:text-brand-accentMuted transition-colors duration-300">ARE.NA</a>
+            <a href="#" class="hover:text-brand-accentMuted transition-colors duration-300">READ.CV</a>
+            <a href="#" class="hover:text-brand-accentMuted transition-colors duration-300">TWITTER</a>
+          </div>
+
+          <!-- Column 4: Location & Inquiries -->
+          <div class="md:col-span-3 flex flex-col gap-4 text-xs text-brand-muted border-t border-brand-accent/10 pt-8 md:border-t-0 md:pt-0">
+            <h5 class="text-[9px] font-mono tracking-[0.25em] text-brand-accent font-bold mb-2 uppercase">INQUIRIES</h5>
+            
+            <div class="flex flex-col gap-2 font-mono text-[11px] leading-relaxed">
+              <span class="text-brand-text font-bold">WE FIVE LABS S.R.L.</span>
+              <span>VIA SAN VITTORE, 42 — MILAN</span>
+              <a href="mailto:hello@wefive.design" class="text-brand-accent font-semibold hover:text-brand-accentMuted mt-1">hello@wefive.design</a>
+            </div>
+
+            <!-- Back to Top Button -->
+            <div class="mt-6">
+              <a href="#hero" class="inline-flex items-center gap-2 text-[9px] font-mono tracking-widest text-brand-accent font-bold uppercase hover:text-brand-accentMuted border-b border-brand-accent/20 hover:border-brand-accent pb-1 transition-colors">
+                <span>BACK TO TOP</span>
+                <svg viewBox="0 0 24 24" class="w-3.5 h-3.5 stroke-current fill-none stroke-[2]" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="19" x2="12" y2="5" />
+                  <polyline points="5 12 12 5 19 12" />
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          </div>
+        </div>
+
+        <!-- Walking Crowd Animation (BOTTOM) -->
+        <div class="w-full h-[200px] md:h-[300px] relative pointer-events-none">
+          <canvas id="crowd-canvas" class="w-full h-full"></canvas>
+        </div>
+      </footer>
+
+    </div>
+  </div>
+
+  <!-- GSAP scroll orchestration script -->
+  <script>
+    // Register ScrollTrigger plugin
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Hero Centered Photo Carousel
+    (function initHeroSlideshow() {
+      const slides = document.querySelectorAll("#hero .hero-slide");
+      const dotsWrap = document.getElementById("hero-dots");
+      const prevBtn = document.getElementById("hero-prev");
+      const nextBtn = document.getElementById("hero-next");
+      const caption = document.getElementById("hero-caption");
+      if (!slides.length) return;
+
+      const captions = [
+        "Urban Geometries — Skyline Study",
+        "The Texture of Time — Cinematic Study",
+        "Retro Architecture — Archive Series",
+        "The Patience of Craft — Process Study",
+        "The Texture of Time — Cinematic Study"
+      ];
+
+      slides.forEach((_, i) => {
+        const dot = document.createElement("button");
+        dot.className = "hero-dot" + (i === 0 ? " active" : "");
+        dot.setAttribute("aria-label", "Go to slide " + (i + 1));
+        dot.addEventListener("click", () => { goTo(i); resetAutoAdvance(); });
+        dotsWrap.appendChild(dot);
+      });
+      const dots = dotsWrap.querySelectorAll(".hero-dot");
+
+      let current = 0;
+      let autoTimer = null;
+
+      function render() {
+        slides.forEach((slide, i) => slide.classList.toggle("active", i === current));
+        dots.forEach((dot, i) => dot.classList.toggle("active", i === current));
+        if (caption) caption.textContent = captions[current] || "";
+      }
+
+      function goTo(index) {
+        current = (index + slides.length) % slides.length;
+        render();
+      }
+
+      function resetAutoAdvance() {
+        clearInterval(autoTimer);
+        autoTimer = setInterval(() => goTo(current + 1), 5500);
+      }
+
+      prevBtn.addEventListener("click", () => { goTo(current - 1); resetAutoAdvance(); });
+      nextBtn.addEventListener("click", () => { goTo(current + 1); resetAutoAdvance(); });
+
+      render();
+      resetAutoAdvance();
+    })();
+
+    // Lenis Smooth Scroll Configuration
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      syncTouch: true
+    });
+
+    // Splash Screen and Loader Logic
+    const showSplash = sessionStorage.getItem('wefive_splash_played') !== 'true';
+
+    // Exact thinned points from the official logo image
+    const wPoints = [
+      [284, 500], [284, 502], [285, 502], [286, 506], [287, 506], [287, 508], [290, 514], [291, 514], [292, 518], [293, 518], [293, 521], [294, 521], [294, 523], [295, 523], [295, 525], [296, 525], [296, 527], [297, 527], [297, 529], [298, 529], [298, 531], [299, 533], [300, 533], [300, 535], [301, 535], [304, 542], [306, 543], [306, 545], [307, 545], [309, 549], [312, 551], [312, 553], [313, 553], [315, 556], [319, 558], [319, 559], [325, 562], [325, 563], [327, 563], [330, 565], [337, 566], [338, 567], [355, 567], [360, 565], [364, 565], [369, 562], [374, 561], [397, 547], [408, 538], [436, 519], [448, 514], [458, 513], [459, 512], [465, 512], [466, 511], [467, 512], [479, 513], [480, 514], [482, 514], [482, 515], [489, 517], [489, 518], [496, 522], [496, 523], [499, 524], [501, 527], [503, 527], [503, 528], [511, 534], [511, 535], [512, 535], [512, 536], [513, 536], [513, 537], [514, 537], [514, 538], [515, 538], [515, 539], [516, 539], [519, 543], [521, 543], [521, 544], [522, 544], [525, 548], [534, 554], [535, 556], [537, 556], [538, 558], [549, 564], [549, 565], [557, 567], [560, 569], [562, 569], [562, 570], [567, 570], [571, 572], [579, 572], [580, 573], [597, 573], [598, 572], [606, 572], [607, 571], [611, 571], [612, 570], [620, 568], [623, 566], [625, 566], [639, 559], [659, 546], [674, 533], [675, 533], [707, 502], [707, 501], [721, 486], [723, 482], [733, 469], [734, 466], [737, 463], [743, 451]
+    ];
+
+    const ePoints = [
+      [838, 490], [843, 495], [845, 495], [849, 498], [855, 499], [856, 500], [862, 500], [863, 501], [884, 501], [885, 500], [893, 499], [894, 498], [899, 497], [901, 495], [904, 494], [912, 487], [912, 485], [914, 482], [914, 479], [915, 478], [915, 467], [914, 466], [914, 463], [910, 457], [905, 452], [902, 451], [900, 449], [898, 449], [891, 446], [887, 446], [886, 445], [870, 444], [869, 445], [861, 445], [860, 446], [849, 448], [839, 453], [837, 455], [835, 455], [831, 459], [826, 462], [814, 474], [809, 483], [805, 488], [805, 490], [803, 493], [802, 499], [800, 502], [800, 508], [799, 509], [799, 524], [800, 525], [802, 536], [810, 548], [815, 553], [822, 558], [832, 563], [837, 564], [843, 567], [850, 568], [851, 569], [858, 569], [859, 570], [865, 570], [866, 571], [884, 571], [885, 572], [889, 572], [890, 571], [912, 570], [913, 569], [918, 569], [919, 568], [933, 566], [944, 561], [946, 561], [951, 558], [953, 558], [958, 554], [960, 554]
+    ];
+
+    // SVG Path Generator for Splash Screen
+    function generateSplashPath() {
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      const svg = document.getElementById('splash-svg');
+      if (!svg) return null;
+      svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+
+      const cx = w / 2;
+      const cy = h / 2;
+
+      // Scale logo based on viewport width
+      let logoWidth = Math.min(w * 0.45, 340);
+      if (w < 768) {
+        logoWidth = Math.max(w * 0.65, 220);
+      }
+      
+      const s = logoWidth / 676; // scale factor based on original thinned path width (960 - 284 = 676)
+
+      // Center original path (center X at 622, center Y at 508)
+      const tx = cx - 622 * s;
+      const ty = cy - 508 * s;
+
+      const getX = (x) => x * s + tx;
+      const getY = (y) => y * s + ty;
+
+      const startWX = getX(wPoints[0][0]);
+      const startWY = getY(wPoints[0][1]);
+      
+      const startEX = getX(ePoints[0][0]);
+      const startEY = getY(ePoints[0][1]);
+
+      // 1. Straight diagonal entry path for W: from bottom-left (0, h) to start of W
+      const entryWPathD = `M 0 ${h} L ${startWX} ${startWY}`;
+
+      // 2. W logo path
+      let wPathD = `M ${startWX} ${startWY}`;
+      for (let i = 1; i < wPoints.length; i++) {
+        wPathD += ` L ${getX(wPoints[i][0])} ${getY(wPoints[i][1])}`;
+      }
+
+      // 3. Straight diagonal entry path for E: from top-right (w, 0) to start of E
+      const entryEPathD = `M ${w} 0 L ${startEX} ${startEY}`;
+
+      // 4. E logo path
+      let ePathD = `M ${startEX} ${startEY}`;
+      for (let i = 1; i < ePoints.length; i++) {
+        ePathD += ` L ${getX(ePoints[i][0])} ${getY(ePoints[i][1])}`;
+      }
+
+      const entryWPath = document.getElementById('entry-w-path');
+      const wPath = document.getElementById('w-path');
+      const entryEPath = document.getElementById('entry-e-path');
+      const ePath = document.getElementById('e-path');
+
+      let strokeWidth = 24 * s;
+      if (w < 768) {
+        strokeWidth = Math.max(24 * s, 10.0);
+      }
+
+      if (entryWPath) {
+        entryWPath.setAttribute('d', entryWPathD);
+        entryWPath.setAttribute('stroke-width', strokeWidth);
+      }
+      if (wPath) {
+        wPath.setAttribute('d', wPathD);
+        wPath.setAttribute('stroke-width', strokeWidth);
+      }
+      if (entryEPath) {
+        entryEPath.setAttribute('d', entryEPathD);
+        entryEPath.setAttribute('stroke-width', strokeWidth);
+      }
+      if (ePath) {
+        ePath.setAttribute('d', ePathD);
+        ePath.setAttribute('stroke-width', strokeWidth);
+      }
+
+      const fiveText = document.getElementById('five-text');
+      if (fiveText) {
+        // Position FIVE exactly 156 * s below the center of the logo (matching the official logo proportion)
+        fiveText.style.top = `calc(50% + ${156 * s}px)`;
+        fiveText.style.fontSize = `${71 * s}px`;
+      }
+
+      return { entryWPath, wPath, entryEPath, ePath };
+    }
+
+    // Initialize splash or skip
+    if (!showSplash) {
+      // Skip splash
+      const splash = document.getElementById('splash-screen');
+      if (splash) splash.style.display = 'none';
+      window.addEventListener('load', () => {
+        initCrowdCanvas();
+      });
+    } else {
+      // Pause scroll
+      lenis.stop();
+
+      window.addEventListener('load', () => {
+        const paths = generateSplashPath();
+        if (!paths) return;
+
+        const { entryWPath, wPath, entryEPath, ePath } = paths;
+
+        // Set up dash arrays for all four paths
+        const entryWLen = entryWPath.getTotalLength();
+        entryWPath.style.strokeDasharray = entryWLen;
+        entryWPath.style.strokeDashoffset = entryWLen;
+
+        const wLen = wPath.getTotalLength();
+        wPath.style.strokeDasharray = wLen;
+        wPath.style.strokeDashoffset = wLen;
+
+        const entryELen = entryEPath.getTotalLength();
+        entryEPath.style.strokeDasharray = entryELen;
+        entryEPath.style.strokeDashoffset = entryELen;
+
+        const eLen = ePath.getTotalLength();
+        ePath.style.strokeDasharray = eLen;
+        ePath.style.strokeDashoffset = eLen;
+
+        const tl = gsap.timeline({
+          onComplete: () => {
+            // Wait 0.5 seconds after both letters finish drawing
+            setTimeout(() => {
+              // Fade in the word "FIVE" beneath the logo
+              gsap.to("#five-text", {
+                opacity: 1,
+                duration: 1.0,
+                ease: "power1.out",
+                onComplete: () => {
+                  // Hold the completed logo still for 4 seconds
+                  setTimeout(() => {
+                    // Smoothly fade the splash screen into the homepage over 600 ms
+                    gsap.to("#splash-screen", {
+                      opacity: 0,
+                      duration: 0.6,
+                      ease: "power2.out",
+                      onComplete: () => {
+                        const splash = document.getElementById('splash-screen');
+                        if (splash) splash.style.display = 'none';
+                        lenis.start();
+                        initCrowdCanvas();
+                        sessionStorage.setItem('wefive_splash_played', 'true');
+                      }
+                    });
+                  }, 4000); // 4 seconds hold
+                }
+              });
+            }, 500); // 0.5s wait
+          }
+        });
+
+        // 1. Draw both straight incoming strokes simultaneously over 0.8 seconds (t = 0)
+        tl.to(entryWPath, { strokeDashoffset: 0, duration: 0.8, ease: "power1.inOut" }, 0);
+        tl.to(entryEPath, { strokeDashoffset: 0, duration: 0.8, ease: "power1.inOut" }, 0);
+
+        // 2. Draw "w" and "e" logo paths simultaneously over 1.9 seconds (t = 0.8s)
+        tl.to(wPath, { strokeDashoffset: 0, duration: 1.9, ease: "power1.inOut" }, 0.8);
+        tl.to(ePath, { strokeDashoffset: 0, duration: 1.9, ease: "power1.inOut" }, 0.8);
+
+        // Simultaneously fade out the entry paths over 0.8 seconds starting at t = 0.8s
+        tl.to(entryWPath, { opacity: 0, duration: 0.8, ease: "power1.out" }, 0.8);
+        tl.to(entryEPath, { opacity: 0, duration: 0.8, ease: "power1.out" }, 0.8);
+      });
+
+      // Handle resize during splash screen play
+      window.addEventListener('resize', () => {
+        if (sessionStorage.getItem('wefive_splash_played') !== 'true') {
+          const paths = generateSplashPath();
+          if (paths) {
+            const { entryWPath, wPath, entryEPath, ePath } = paths;
+            
+            const entryWLen = entryWPath.getTotalLength();
+            entryWPath.style.strokeDasharray = entryWLen;
+            
+            const wLen = wPath.getTotalLength();
+            wPath.style.strokeDasharray = wLen;
+
+            const entryELen = entryEPath.getTotalLength();
+            entryEPath.style.strokeDasharray = entryELen;
+
+            const eLen = ePath.getTotalLength();
+            ePath.style.strokeDasharray = eLen;
+
+            if (gsap.getProperty("#five-text", "opacity") === 1) {
+              entryWPath.style.strokeDashoffset = 0;
+              wPath.style.strokeDashoffset = 0;
+              entryEPath.style.strokeDashoffset = 0;
+              ePath.style.strokeDashoffset = 0;
+            } else {
+              entryWPath.style.strokeDashoffset = entryWLen;
+              wPath.style.strokeDashoffset = wLen;
+              entryEPath.style.strokeDashoffset = entryELen;
+              ePath.style.strokeDashoffset = eLen;
+            }
+          }
+        }
+      });
+    }
+
+    lenis.on('scroll', ScrollTrigger.update);
+
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
+
+    gsap.ticker.lagSmoothing(0);
+
+    // Responsive GSAP MatchMedia for Hybrid Scrolling
+    let mm = gsap.matchMedia();
+    const panels = gsap.utils.toArray(".panel");
+
+    mm.add("(min-width: 768px)", () => {
+      // DESKTOP: LOCKED HORIZONTAL SCROLL PINNING & PARALLAX
+      
+      // Force correct desktop structures
+      gsap.set(".horizontal-outer", { height: "100vh" });
+      gsap.set(".horizontal-inner", { width: "1000vw", height: "100%" });
+      gsap.set(".panel", { width: "100vw", height: "100vh" });
+
+      // Core Horizontal Pin Tween (mathematically exact viewport width increments to align properly)
+      let horizontalTween = gsap.to(".horizontal-inner", {
+        x: () => -(window.innerWidth * (panels.length - 1)),
+        ease: "none",
+        scrollTrigger: {
+          trigger: ".horizontal-outer",
+          pin: true,
+          scrub: 1.2, // Smooth scrubbing linking to scrollbar
+          start: "top top",
+          end: () => "+=" + (window.innerWidth * (panels.length - 1)),
+          invalidateOnRefresh: true,
+        }
+      });
+
+      // Secondary Parallax Offsets for Inner Panel Elements
+      panels.forEach(panel => {
+        // Fast Elements (scroll faster leftwards)
+        const fastItems = panel.querySelectorAll(".parallax-fast");
+        fastItems.forEach(item => {
+          gsap.to(item, {
+            x: -80,
+            ease: "none",
+            scrollTrigger: {
+              trigger: panel,
+              containerAnimation: horizontalTween,
+              start: "left right",
+              end: "right left",
+              scrub: true
+            }
+          });
+        });
+
+        // Slow Elements (shift rightwards to create spatial separation)
+        const slowItems = panel.querySelectorAll(".parallax-slow");
+        slowItems.forEach(item => {
+          gsap.to(item, {
+            x: 80,
+            ease: "none",
+            scrollTrigger: {
+              trigger: panel,
+              containerAnimation: horizontalTween,
+              start: "left right",
+              end: "right left",
+              scrub: true
+            }
+          });
+        });
+
+        // Background Text / Giant Elements
+        const bgItems = panel.querySelectorAll(".parallax-bg");
+        bgItems.forEach(item => {
+          gsap.to(item, {
+            x: -40,
+            ease: "none",
+            scrollTrigger: {
+              trigger: panel,
+              containerAnimation: horizontalTween,
+              start: "left right",
+              end: "right left",
+              scrub: true
+            }
+          });
+        });
+      });
+      
+      // Update Lenis instance on viewport resize
+      ScrollTrigger.addEventListener("refresh", () => lenis.resize());
+
+      return () => {
+        // Cleanup functions if needed
+      };
+    });
+
+    mm.add("(max-width: 767px)", () => {
+      // MOBILE: VERTICAL STACKING (FALLBACK RULE)
+      
+      // Reset all layout properties for fluid vertical scroll
+      gsap.set(".horizontal-outer", { height: "auto", overflow: "visible" });
+      gsap.set(".horizontal-inner", { width: "100%", height: "auto", flexDirection: "column" });
+      gsap.set(".panel", { width: "100%", height: "auto", minHeight: "100vh" });
+
+      // Staggered vertical fade-in on mobile scroll
+      panels.forEach(panel => {
+        const animatedContent = panel.querySelectorAll(".parallax-fast, .parallax-slow");
+        if (animatedContent.length > 0) {
+          gsap.from(animatedContent, {
+            y: 40,
+            opacity: 0,
+            duration: 1,
+            stagger: 0.2,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: panel,
+              start: "top 80%",
+              toggleActions: "play none none reverse"
+            }
+          });
+        }
+      });
+    });
+
+    // Handle scroll anchor links smoothly with Lenis
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        
+        const target = document.querySelector(targetId);
+        if (target) {
+          lenis.scrollTo(target, {
+            offset: 0,
+            duration: 1.5,
+            ease: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+          });
+        }
+      });
+    });
+
+    // ================= SKIPER39 CROWD CANVAS ENGINE =================
+    function initCrowdCanvas() {
+      const canvas = document.getElementById("crowd-canvas");
+      if (!canvas) return;
+
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return;
+
+      const config = {
+        src: "assets/all-peeps.png",
+        rows: 15,
+        cols: 7,
+      };
+
+      // UTILS
+      const randomRange = (min, max) => min + Math.random() * (max - min);
+      const randomIndex = (array) => randomRange(0, array.length) | 0;
+      const removeFromArray = (array, i) => array.splice(i, 1)[0];
+      const removeItemFromArray = (array, item) => removeFromArray(array, array.indexOf(item));
+      const removeRandomFromArray = (array) => removeFromArray(array, randomIndex(array));
+      const getRandomFromArray = (array) => array[randomIndex(array) | 0];
+
+      const stage = {
+        width: 0,
+        height: 0,
+      };
+
+      // CONFIGS FOR PEEPS SIZE (Scaled to fit the footer container correctly)
+      const peepScale = 0.45;
+
+      // TWEEN FACTORIES
+      const resetPeep = ({ stage, peep }) => {
+        const direction = Math.random() > 0.5 ? 1 : -1;
+        const offsetY = (100 - 250 * gsap.parseEase("power2.in")(Math.random())) * peepScale;
+        const startY = stage.height - peep.height + offsetY;
+        let startX;
+        let endX;
+
+        if (direction === 1) {
+          startX = -peep.width;
+          endX = stage.width;
+          peep.scaleX = 1;
+        } else {
+          startX = stage.width + peep.width;
+          // Set endX to -peep.width to ensure characters walk completely off-screen rather than popping out at 0
+          endX = -peep.width;
+          peep.scaleX = -1;
+        }
+
+        peep.x = startX;
+        peep.y = startY;
+        peep.anchorY = startY;
+
+        return {
+          startX,
+          startY,
+          endX,
+        };
+      };
+
+      const normalWalk = ({ peep, props }) => {
+        const { startX, startY, endX } = props;
+        const xDuration = 10;
+        const yDuration = 0.25;
+
+        const tl = gsap.timeline();
+        tl.timeScale(randomRange(0.5, 1.5));
+        tl.to(
+          peep,
+          {
+            duration: xDuration,
+            x: endX,
+            ease: "none",
+          },
+          0
+        );
+        tl.to(
+          peep,
+          {
+            duration: yDuration,
+            repeat: xDuration / yDuration,
+            yoyo: true,
+            y: startY - (10 * peepScale),
+          },
+          0
+        );
+
+        return tl;
+      };
+
+      const walks = [normalWalk];
+
+      // FACTORY FUNCTIONS
+      const createPeep = ({ image, rect }) => {
+        const peep = {
+          image,
+          rect: [],
+          width: 0,
+          height: 0,
+          drawArgs: [],
+          x: 0,
+          y: 0,
+          anchorY: 0,
+          scaleX: 1,
+          walk: null,
+          setRect(rect) {
+            peep.rect = rect;
+            peep.width = rect[2] * peepScale;
+            peep.height = rect[3] * peepScale;
+            peep.drawArgs = [peep.image, ...rect, 0, 0, peep.width, peep.height];
+          },
+          render(ctx) {
+            ctx.save();
+            ctx.translate(peep.x, peep.y);
+            ctx.scale(peep.scaleX, 1);
+            ctx.drawImage(
+              peep.image,
+              peep.rect[0],
+              peep.rect[1],
+              peep.rect[2],
+              peep.rect[3],
+              0,
+              0,
+              peep.width,
+              peep.height
+            );
+            ctx.restore();
+          },
+        };
+
+        peep.setRect(rect);
+        return peep;
+      };
+
+      // MAIN
+      const img = new Image();
+      const allPeeps = [];
+      const availablePeeps = [];
+      const crowd = [];
+
+      const createPeeps = () => {
+        const { rows, cols } = config;
+        const { naturalWidth: width, naturalHeight: height } = img;
+        const total = rows * cols;
+        const rectWidth = width / rows;
+        const rectHeight = height / cols;
+
+        for (let i = 0; i < total; i++) {
+          allPeeps.push(
+            createPeep({
+              image: img,
+              rect: [
+                (i % rows) * rectWidth,
+                ((i / rows) | 0) * rectHeight,
+                rectWidth,
+                rectHeight,
+              ],
+            })
+          );
+        }
+      };
+
+      const initCrowd = () => {
+        while (availablePeeps.length) {
+          const peep = addPeepToCrowd();
+          if (peep && peep.walk) {
+            peep.walk.progress(Math.random());
+          }
+        }
+      };
+
+      const addPeepToCrowd = () => {
+        if (!availablePeeps.length) return null;
+        const peep = removeRandomFromArray(availablePeeps);
+        const walk = getRandomFromArray(walks)({
+          peep,
+          props: resetPeep({
+            peep,
+            stage,
+          }),
+        }).eventCallback("onComplete", () => {
+          removePeepFromCrowd(peep);
+          addPeepToCrowd();
+        });
+
+        peep.walk = walk;
+
+        crowd.push(peep);
+        crowd.sort((a, b) => a.anchorY - b.anchorY);
+
+        return peep;
+      };
+
+      const removePeepFromCrowd = (peep) => {
+        removeItemFromArray(crowd, peep);
+        availablePeeps.push(peep);
+      };
+
+      const render = () => {
+        if (!canvas) return;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.save();
+        ctx.scale(devicePixelRatio, devicePixelRatio);
+
+        crowd.forEach((peep) => {
+          peep.render(ctx);
+        });
+
+        ctx.restore();
+      };
+
+      const resize = () => {
+        if (!canvas) return;
+        stage.width = canvas.clientWidth;
+        stage.height = canvas.clientHeight;
+        canvas.width = stage.width * devicePixelRatio;
+        canvas.height = stage.height * devicePixelRatio;
+
+        crowd.forEach((peep) => {
+          if (peep.walk) peep.walk.kill();
+        });
+
+        crowd.length = 0;
+        availablePeeps.length = 0;
+        availablePeeps.push(...allPeeps);
+
+        initCrowd();
+      };
+
+      const init = () => {
+        createPeeps();
+        resize();
+        gsap.ticker.add(render);
+      };
+
+      img.onload = init;
+      img.src = config.src;
+
+      const handleResize = () => resize();
+      window.addEventListener("resize", handleResize);
+
+      // Save references on global object for debug or release
+      window._crowdCanvasCleanup = () => {
+        window.removeEventListener("resize", handleResize);
+        gsap.ticker.remove(render);
+        crowd.forEach((peep) => {
+          if (peep.walk) peep.walk.kill();
+        });
+      };
+    }
+  </script>
+</body>
+</html>
