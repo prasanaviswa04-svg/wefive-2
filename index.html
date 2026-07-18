@@ -17,7 +17,10 @@
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  
+
+  <!-- Swiper Carousel CDN (Photos coverflow) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
   <!-- Lenis Smooth Scroll CSS -->
   <style>
     html.lenis, html.lenis body {
@@ -44,7 +47,7 @@
         extend: {
           colors: {
             brand: {
-              bg: '#FCF6DD',      // Zesty Lemon, softened with cream/white
+              bg: '#FAEFB8',      // Zesty Lemon, richer cream/yellow
               accent: '#B32824',  // Deep Crimson Red
               accentMuted: '#9C2421',
               text: '#1C1917',    // Warm Charcoal
@@ -162,9 +165,54 @@
       background: #ffffff;
       transform: scale(1.3);
     }
+
+    /* Photos Stacked Cards Carousel */
+    .photos-swiper {
+      padding: 10px 0 8px;
+      position: relative;
+      width: 260px;
+      height: 380px;
+    }
+    @media (min-width: 768px) {
+      .photos-swiper {
+        width: 300px;
+        height: 440px;
+      }
+    }
+    .photos-swiper .swiper-slide {
+      border-radius: 1.5rem;
+      overflow: hidden;
+    }
+    .photos-swiper-prev,
+    .photos-swiper-next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 20;
+      cursor: pointer;
+    }
+    .photos-swiper-prev { left: -8px; }
+    .photos-swiper-next { right: -8px; }
+    @media (min-width: 768px) {
+      .photos-swiper-prev { left: -48px; }
+      .photos-swiper-next { right: -48px; }
+    }
+    .photo-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 9999px;
+      background: rgba(179, 40, 36, 0.25);
+      display: inline-block;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+    .photo-dot.swiper-pagination-bullet-active {
+      background: #B32824;
+      transform: scale(1.3);
+    }
   </style>
 </head>
-<body class="bg-brand-bg text-brand-text font-sans selection:bg-brand-accent selection:text-brand-bg overflow-x-hidden antialiased" style="background-image: linear-gradient(160deg, #FFFEF5 0%, #FCF6DD 35%, #F5EFC9 70%, #EDE6A8 100%);">
+<body class="bg-brand-bg text-brand-text font-sans selection:bg-brand-accent selection:text-brand-bg overflow-x-hidden antialiased" style="background-image: linear-gradient(160deg, #FFF9E0 0%, #FAEFB8 35%, #F0E39A 70%, #E0D073 100%);">
 
   <!-- Grainy Paper Texture Overlay -->
   <div class="fixed inset-0 pointer-events-none z-50 opacity-[0.04] mix-blend-multiply" style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.8%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E');"></div>
@@ -186,7 +234,7 @@
     <div id="smooth-content" class="w-full relative">
 
       <!-- Navigation Header -->
-      <header class="absolute top-0 left-0 w-full z-30 px-8 py-3 md:px-12 md:py-4 flex justify-between items-center pointer-events-none bg-transparent">
+      <header class="absolute top-0 left-0 w-full z-30 px-8 py-1 md:px-12 md:py-2 flex justify-between items-center pointer-events-none bg-transparent">
         <a href="#" class="pointer-events-auto font-serif italic text-2xl md:text-3xl font-light text-brand-text tracking-wide">
           we five
         </a>
@@ -200,14 +248,14 @@
       <!-- PHASE A: VERTICAL SCROLLING (TOP) -->
 
       <!-- Section 1: Hero Section -->
-      <section id="hero" class="hero-sec w-full h-screen relative overflow-hidden bg-brand-bg flex flex-col items-center justify-center">
+      <section id="hero" class="hero-sec w-full h-screen relative overflow-hidden bg-brand-bg flex flex-col items-center pt-10 md:pt-12">
 
-        <!-- Centered Photo Carousel: full-bleed left/right, white space above/below -->
-        <div class="relative w-full h-[64vh] sm:h-[72vh] md:h-[80vh] overflow-hidden border-y-2 border-brand-text">
-          <div class="hero-slide active" style="background-image: url('assets/skyline_architecture.jpg');"></div>
-          <div class="hero-slide" style="background-image: url('assets/cinematic_film.jpg');"></div>
-          <div class="hero-slide" style="background-image: url('assets/retro_architecture.jpg');"></div>
-          <div class="hero-slide" style="background-image: url('assets/craft_process.jpg');"></div>
+        <!-- Photo Carousel: full-bleed left/right, fills down to the bottom edge -->
+        <div class="relative w-full flex-1 min-h-0 overflow-hidden border-y-2 border-brand-text">
+          <div class="hero-slide active" style="background-image: url('assets/stairwell_portrait.jpg');"></div>
+          <div class="hero-slide" style="background-image: url('assets/cafe_portrait.jpg');"></div>
+          <div class="hero-slide" style="background-image: url('assets/golden_hour_portrait.jpg');"></div>
+          <div class="hero-slide" style="background-image: url('assets/studio_portrait.jpg');"></div>
           <div class="hero-slide" style="background-image: url('assets/cinematic_film.jpg');"></div>
 
           <!-- Bottom fade for control contrast -->
@@ -459,45 +507,67 @@
             <div class="max-w-6xl w-full flex flex-col justify-center z-10">
               <div class="mb-10">
                 <span class="text-xs font-mono tracking-[0.35em] text-brand-accent block mb-2">[ 04 / PHOTOS ]</span>
-                <h3 class="font-serif text-5xl md:text-6xl font-light text-brand-text">04 / PHOTOS</h3>
-                <h4 class="font-serif italic text-lg text-brand-accent font-light">Minimal Architectural Plaster</h4>
+                <h3 class="font-serif text-3xl md:text-4xl font-light text-brand-text">04 / PHOTOS</h3>
+                <h4 class="font-serif italic text-base md:text-lg text-brand-accent font-light">Minimal Architectural Plaster</h4>
               </div>
 
-              <!-- Staggered Overlapping Plate Spread -->
-              <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-start w-full mt-4">
-                
-                <!-- Plate #04A (High left) -->
-                <div class="md:col-span-6 flex flex-col gap-4 parallax-slow">
-                  <div class="border border-brand-accent/25 p-1 bg-brand-bg shadow-sm">
-                    <img src="assets/retro_architecture.jpg" alt="Minimal Architectural Plaster" class="w-full h-56 md:h-64 object-cover grayscale hover:grayscale-0 transition-all duration-700">
-                    <div class="flex justify-between items-center mt-2 text-[8px] font-mono text-brand-muted uppercase tracking-wider px-1">
-                      <span>PLATE #04A study.con // f/5.6 1/125s ISO 100</span>
-                      <span>MILAN</span>
+              <!-- Split layout: Carousel (left) + Per-photo content (right) -->
+              <div class="w-full grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16">
+
+                <!-- Left: Stacked Cards Photo Carousel -->
+                <div class="md:col-span-5 flex flex-col items-center justify-center gap-5 h-full parallax-slow">
+                  <div class="photos-swiper swiper">
+                    <div class="swiper-wrapper">
+
+                      <div class="swiper-slide border border-brand-accent/20" data-title="Capturing Spatial Silence" data-loc="MILAN" data-meta="PLATE #04A · f/5.6 1/125s ISO 100" data-desc="We capture details that feel silent, allowing the negative space of a courtyard or facade to interact with the visual subject. Milan's brutalist textures taught us restraint.">
+                        <img src="assets/retro_architecture.jpg" alt="Minimal Architectural Plaster" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700">
+                      </div>
+
+                      <div class="swiper-slide border border-brand-accent/20" data-title="Design Magazines Layout" data-loc="ROME" data-meta="PLATE #04B · f/8.0 1/60s ISO 200" data-desc="Analyzing layouts, font metrics, and geometric grids across print artifacts. We integrate physical breathing margins into standard web dimensions.">
+                        <img src="assets/archive_design.jpg" alt="Design Magazines Layout" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700">
+                      </div>
+
+                      <div class="swiper-slide border border-brand-accent/20" data-title="Urban Geometries" data-loc="MILAN" data-meta="PLATE #04C · f/4.0 1/250s ISO 100" data-desc="A study of rooflines and repeating structure against an open sky. These frames inform the grid logic behind our editorial pages.">
+                        <img src="assets/skyline_architecture.jpg" alt="Urban Geometries" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700">
+                      </div>
+
+                      <div class="swiper-slide border border-brand-accent/20" data-title="The Texture of Time" data-loc="ROME" data-meta="PLATE #04D · f/2.8 1/500s ISO 400" data-desc="Stills pulled from our short documentary, exploring how grain and motion blur carry emotional weight into a static frame.">
+                        <img src="assets/cinematic_film.jpg" alt="The Texture of Time" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700">
+                      </div>
+
+                      <div class="swiper-slide border border-brand-accent/20" data-title="The Patience of Craft" data-loc="MILAN" data-meta="PLATE #04E · f/5.0 1/125s ISO 200" data-desc="Behind the scenes of our print studio — hands, tools, and half-finished pages. Craft is slow, and we photograph it that way.">
+                        <img src="assets/craft_process.jpg" alt="The Patience of Craft" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700">
+                      </div>
+
                     </div>
+
+                    <!-- Arrows -->
+                    <button aria-label="Previous photo" class="photos-swiper-prev hero-arrow text-brand-accent">
+                      <svg viewBox="0 0 24 24" class="w-5 h-5 stroke-current fill-none stroke-[1.5]" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="19" y1="12" x2="5" y2="12" />
+                        <polyline points="12 19 5 12 12 5" />
+                      </svg>
+                    </button>
+                    <button aria-label="Next photo" class="photos-swiper-next hero-arrow text-brand-accent">
+                      <svg viewBox="0 0 24 24" class="w-5 h-5 stroke-current fill-none stroke-[1.5]" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                        <polyline points="12 5 19 12 12 19" />
+                      </svg>
+                    </button>
                   </div>
-                  <div>
-                    <h5 class="font-serif text-2xl font-light text-brand-text mb-2">Capturing Spatial Silence</h5>
-                    <p class="text-xs text-brand-muted leading-relaxed font-light">
-                      Our photography explores light, negative space, and geometry. We capture details that feel silent, allowing the background texture of the paper or screen to interact with the visual subject.
-                    </p>
-                  </div>
+
+                  <!-- Pagination -->
+                  <div class="photos-swiper-pagination flex justify-center gap-2"></div>
                 </div>
 
-                <!-- Plate #04B (Low right, overlapping offset) -->
-                <div class="md:col-span-6 flex flex-col gap-4 md:translate-y-12 parallax-fast">
-                  <div class="border border-brand-accent/25 p-1 bg-brand-bg shadow-sm">
-                    <img src="assets/archive_design.jpg" alt="Design Magazines Layout" class="w-full h-56 md:h-64 object-cover grayscale hover:grayscale-0 transition-all duration-700">
-                    <div class="flex justify-between items-center mt-2 text-[8px] font-mono text-brand-muted uppercase tracking-wider px-1">
-                      <span>PLATE #04B print.lay // f/8.0 1/60s ISO 200</span>
-                      <span>ROME</span>
-                    </div>
-                  </div>
-                  <div>
-                    <h5 class="font-serif text-2xl font-light text-brand-text mb-2">Design Magazines Layout</h5>
-                    <p class="text-xs text-brand-muted leading-relaxed font-light">
-                      Analyzing layouts, font metrics, and geometric grids across print artifacts to integrate physical breathing margins into standard web dimensions.
-                    </p>
-                  </div>
+                <!-- Right: Per-photo content — updates with the active card -->
+                <div class="md:col-span-7 flex flex-col items-center justify-center text-center gap-4 h-full border-t border-brand-accent/15 pt-8 md:border-t-0 md:border-l md:border-brand-accent/15 md:pl-12 parallax-fast">
+                  <span id="photo-caption-loc" class="text-[9px] font-mono tracking-[0.25em] text-brand-accent uppercase font-bold">MILAN</span>
+                  <h5 id="photo-caption-title" class="font-serif text-3xl md:text-4xl font-light text-brand-text">Capturing Spatial Silence</h5>
+                  <p id="photo-caption-desc" class="text-sm md:text-base text-brand-muted leading-relaxed font-light max-w-md">
+                    We capture details that feel silent, allowing the negative space of a courtyard or facade to interact with the visual subject. Milan's brutalist textures taught us restraint.
+                  </p>
+                  <p id="photo-caption-meta" class="text-[8px] font-mono text-brand-muted uppercase tracking-wider mt-2">PLATE #04A · f/5.6 1/125s ISO 100</p>
                 </div>
 
               </div>
@@ -928,6 +998,9 @@
     </div>
   </div>
 
+  <!-- Swiper Carousel CDN (Photos coverflow) -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
   <!-- GSAP scroll orchestration script -->
   <script>
     // Register ScrollTrigger plugin
@@ -943,10 +1016,10 @@
       if (!slides.length) return;
 
       const captions = [
-        "Urban Geometries — Skyline Study",
-        "The Texture of Time — Cinematic Study",
-        "Retro Architecture — Archive Series",
-        "The Patience of Craft — Process Study",
+        "Stepped Light — Stairwell Study",
+        "Café Reverie — Editorial Portrait",
+        "Golden Hour — Profile Study",
+        "At the Desk — Studio Portrait",
         "The Texture of Time — Cinematic Study"
       ];
 
@@ -983,6 +1056,55 @@
 
       render();
       resetAutoAdvance();
+    })();
+
+    // Photos Section Coverflow Carousel
+    (function initPhotosCarousel() {
+      const carouselEl = document.querySelector(".photos-swiper");
+      if (!carouselEl || typeof Swiper === "undefined") return;
+
+      const titleEl = document.getElementById("photo-caption-title");
+      const metaEl = document.getElementById("photo-caption-meta");
+      const locEl = document.getElementById("photo-caption-loc");
+      const descEl = document.getElementById("photo-caption-desc");
+      const slides = carouselEl.querySelectorAll(".swiper-slide");
+
+      function updateCaption(swiper) {
+        const activeSlide = slides[swiper.realIndex];
+        if (!activeSlide) return;
+        if (titleEl) titleEl.textContent = activeSlide.dataset.title || "";
+        if (metaEl) metaEl.textContent = activeSlide.dataset.meta || "";
+        if (locEl) locEl.textContent = activeSlide.dataset.loc || "";
+        if (descEl) descEl.textContent = activeSlide.dataset.desc || "";
+      }
+
+      new Swiper(carouselEl, {
+        effect: "cards",
+        grabCursor: true,
+        loop: true,
+        cardsEffect: {
+          perSlideRotate: 4,
+          perSlideOffset: 8,
+          slideShadows: false,
+        },
+        autoplay: {
+          delay: 3500,
+          disableOnInteraction: false,
+        },
+        pagination: {
+          el: ".photos-swiper-pagination",
+          clickable: true,
+          renderBullet: (index, className) => `<span class="${className} photo-dot"></span>`,
+        },
+        navigation: {
+          nextEl: ".photos-swiper-next",
+          prevEl: ".photos-swiper-prev",
+        },
+        on: {
+          init: updateCaption,
+          slideChange: updateCaption,
+        },
+      });
     })();
 
     // Initial loader screen fade-out
