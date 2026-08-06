@@ -4,7 +4,7 @@
   "description": "A single-page website with a hybrid horizontal parallax scrolling timeline for We Five.",
   "main": "index.html",
   "scripts": {
-    "dev": "npx -y live-server --port=3000"
+    "dev": "npx -y live-server --port=8085"
   },
   "keywords": [
     "we-five",
