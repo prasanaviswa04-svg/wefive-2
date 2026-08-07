@@ -921,7 +921,14 @@
 
       const proxy = { y: 487, rot: 30 };
       const applyTransform = () => {
-        textEl.style.transform = `rotateX(${proxy.rot}deg) translateY(${proxy.y}px) translateZ(10px)`;
+        // Once fully flat, drop the transform entirely instead of leaving rotateX(0)/translateZ(10px)
+        // in place — a lingering 3D transform keeps the text in a GPU-composited layer, which
+        // renders noticeably blurrier than normal flat text even at zero rotation.
+        if (proxy.rot <= 0.05 && Math.abs(proxy.y) <= 0.5) {
+          textEl.style.transform = "none";
+        } else {
+          textEl.style.transform = `rotateX(${proxy.rot}deg) translateY(${proxy.y}px) translateZ(10px)`;
+        }
       };
       applyTransform();
 
