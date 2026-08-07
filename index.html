@@ -387,6 +387,28 @@
 
       <!-- PHASE C: UNPINNED VERTICAL RELEASE (BOTTOM) -->
 
+      <!-- Section 3: Perspective Scroll Text (reveals after the 4-panel horizontal scroll finishes) -->
+      <div id="perspective-text-section" class="relative z-0 h-[300vh] w-full bg-[#f5f4f3] text-black">
+        <div class="absolute left-1/2 top-[10%] grid -translate-x-1/2 content-start justify-items-center gap-6 text-center text-black">
+          <span class="relative max-w-[12ch] text-xs uppercase leading-tight opacity-40 after:absolute after:left-1/2 after:top-full after:h-16 after:w-px after:bg-gradient-to-b after:from-black/60 after:to-transparent after:content-['']">
+            scroll down to see
+          </span>
+        </div>
+        <div
+          class="sticky top-0 mx-auto flex items-center justify-center bg-transparent py-20 overflow-hidden"
+          style="transform-style: preserve-3d; perspective: 200px;"
+        >
+          <div
+            id="perspective-text"
+            class="font-titan relative w-full max-w-4xl text-center text-4xl md:text-6xl font-bold tracking-tighter text-[#ff5800]"
+            style="transform-style: preserve-3d;"
+          >
+            Every celebration carries its own rhythm, its own light, its own quiet moments worth keeping. We follow that rhythm closely, letting the story unfold the way it was always meant to, without ever forcing a single frame. What you feel in the room is what we capture on the screen.
+            <div class="pointer-events-none absolute bottom-0 left-0 h-[60vh] w-full bg-gradient-to-b from-transparent to-[#f5f4f3]"></div>
+          </div>
+        </div>
+      </div>
+
       <!-- Section 4: Camera Screen Footer Section -->
       <footer id="footer" class="footer-sec w-full bg-brand-bg border-t border-brand-accent/25 relative z-10 overflow-hidden flex flex-col">
 
@@ -886,6 +908,38 @@
         }
       });
     });
+
+    // Perspective Scroll Text — sticky text tilts up out of a 3D perspective as the
+    // 300vh section scrolls by (ported from the Skiper28 React component to vanilla GSAP).
+    // Initialized last, after the pinned horizontal-scroll ScrollTrigger above has already
+    // inserted its pin-spacer — otherwise this trigger's start/end would be computed against
+    // a shorter, stale layout and think its scroll range had already finished.
+    (function initPerspectiveScroll() {
+      const section = document.getElementById("perspective-text-section");
+      const textEl = document.getElementById("perspective-text");
+      if (!section || !textEl) return;
+
+      const proxy = { y: 487 };
+      const applyTransform = () => {
+        textEl.style.transform = `rotateX(30deg) translateY(${proxy.y}px) translateZ(10px)`;
+      };
+      applyTransform();
+
+      gsap.to(proxy, {
+        y: 0,
+        ease: "none",
+        onUpdate: applyTransform,
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: "bottom bottom",
+          scrub: true,
+          invalidateOnRefresh: true,
+        },
+      });
+
+      ScrollTrigger.refresh();
+    })();
   </script>
 </body>
 </html>
