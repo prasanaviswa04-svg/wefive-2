@@ -388,9 +388,9 @@
       <!-- PHASE C: UNPINNED VERTICAL RELEASE (BOTTOM) -->
 
       <!-- Section 3: Perspective Scroll Text (reveals after the 4-panel horizontal scroll finishes) -->
-      <div id="perspective-text-section" class="relative z-0 h-[300vh] w-full bg-[#f5f4f3] text-black">
-        <div class="absolute left-1/2 top-[10%] grid -translate-x-1/2 content-start justify-items-center gap-6 text-center text-black">
-          <span class="relative max-w-[12ch] text-xs uppercase leading-tight opacity-40 after:absolute after:left-1/2 after:top-full after:h-16 after:w-px after:bg-gradient-to-b after:from-black/60 after:to-transparent after:content-['']">
+      <div id="perspective-text-section" class="relative z-0 h-[300vh] w-full bg-brand-bg text-brand-text">
+        <div class="absolute left-1/2 top-[10%] grid -translate-x-1/2 content-start justify-items-center gap-6 text-center text-brand-muted">
+          <span class="relative max-w-[12ch] text-xs uppercase leading-tight tracking-[0.25em] font-mono opacity-60 after:absolute after:left-1/2 after:top-full after:h-16 after:w-px after:bg-gradient-to-b after:from-brand-accent/50 after:to-transparent after:content-['']">
             scroll down to see
           </span>
         </div>
@@ -400,11 +400,11 @@
         >
           <div
             id="perspective-text"
-            class="font-titan relative w-full max-w-4xl text-center text-4xl md:text-6xl font-bold tracking-tighter text-[#ff5800]"
+            class="font-titan relative w-full max-w-4xl text-center text-4xl md:text-6xl font-bold tracking-tighter text-brand-accent"
             style="transform-style: preserve-3d;"
           >
-            Every celebration carries its own rhythm, its own light, its own quiet moments worth keeping. We follow that rhythm closely, letting the story unfold the way it was always meant to, without ever forcing a single frame. What you feel in the room is what we capture on the screen.
-            <div class="pointer-events-none absolute bottom-0 left-0 h-[60vh] w-full bg-gradient-to-b from-transparent to-[#f5f4f3]"></div>
+            Every celebration carries its own rhythm, its own light, its own quiet moments worth keeping. We Five follows that rhythm closely, letting the story unfold the way it was always meant to, without ever forcing a single frame. What you feel in the room is what we capture on the screen.
+            <div class="pointer-events-none absolute bottom-0 left-0 h-[60vh] w-full bg-gradient-to-b from-transparent to-brand-bg"></div>
           </div>
         </div>
       </div>
@@ -919,14 +919,15 @@
       const textEl = document.getElementById("perspective-text");
       if (!section || !textEl) return;
 
-      const proxy = { y: 487 };
+      const proxy = { y: 487, rot: 30 };
       const applyTransform = () => {
-        textEl.style.transform = `rotateX(30deg) translateY(${proxy.y}px) translateZ(10px)`;
+        textEl.style.transform = `rotateX(${proxy.rot}deg) translateY(${proxy.y}px) translateZ(10px)`;
       };
       applyTransform();
 
       gsap.to(proxy, {
         y: 0,
+        rot: 0,
         ease: "none",
         onUpdate: applyTransform,
         scrollTrigger: {
