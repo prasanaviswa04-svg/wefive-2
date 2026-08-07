@@ -268,10 +268,10 @@
           </h1>
         </div>
 
-        <!-- Wavy Bottom Edge Transition sitting low and flush at bottom of Hero Section -->
+        <!-- Wavy Bottom Edge Transition trailing smoothly into Section 2 (#intro) -->
         <div class="absolute -bottom-px left-0 w-full overflow-hidden leading-none z-20 pointer-events-none">
-          <svg id="hero-wave-svg" class="relative block w-full h-[25px] sm:h-[40px] md:h-[55px] lg:h-[70px]" viewBox="0 0 1440 100" preserveAspectRatio="none" fill="none">
-            <path id="hero-wave-path" fill="#FCF6DD" d="M 0,100 L 0,55 C 240,80 480,30 720,55 C 960,80 1200,30 1440,55 L 1440,100 Z"></path>
+          <svg id="hero-wave-svg" class="relative block w-full h-[70px] sm:h-[110px] md:h-[150px] lg:h-[190px]" viewBox="0 0 1440 240" preserveAspectRatio="none" fill="none">
+            <path id="hero-wave-path" fill="#FCF6DD" d="M 0,240 L 0,100 C 200,180 440,20 720,100 C 1000,180 1240,20 1440,90 L 1440,240 Z"></path>
           </svg>
         </div>
       </section>
@@ -802,9 +802,9 @@
 
     gsap.ticker.lagSmoothing(0);
 
-    // Hero Wavy Bottom Edge remains low and anchored flush at section boundary
+    // Hero Wavy Bottom Edge Path Morph on Scroll
     gsap.to("#hero-wave-path", {
-      d: "M 0,100 L 0,65 C 240,90 480,40 720,65 C 960,90 1200,40 1440,65 L 1440,100 Z",
+      d: "M 0,240 L 0,115 C 200,195 440,35 720,115 C 1000,195 1240,35 1440,105 L 1440,240 Z",
       ease: "none",
       scrollTrigger: {
         trigger: "#hero",
