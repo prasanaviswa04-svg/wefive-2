@@ -182,7 +182,7 @@
     <!-- Solid Yellow Splash Fill + Permanent Organic Sinusoidal Wave Bottom Edge -->
     <div class="absolute inset-0 w-full h-full pointer-events-none">
       <svg class="w-full h-full" viewBox="0 0 1440 960" preserveAspectRatio="none" fill="none">
-        <path id="splash-bg-wave" fill="#fdd95a" d="M 0,0 L 1440,0 L 1440,750 C 1220,890 960,650 680,810 C 440,930 200,650 0,750 Z" />
+        <path id="splash-bg-wave" fill="#fdd95a" d="M 0,0 L 1440,0 L 1440,730 C 1240,850 1000,610 720,750 C 440,890 200,610 0,730 Z" />
       </svg>
     </div>
 
@@ -270,8 +270,8 @@
 
         <!-- Wavy Bottom Edge Transition trailing smoothly into Section 2 (#intro) -->
         <div class="absolute -bottom-px left-0 w-full overflow-hidden leading-none z-20 pointer-events-none">
-          <svg id="hero-wave-svg" class="relative block w-full h-[70px] sm:h-[110px] md:h-[150px] lg:h-[190px]" viewBox="0 0 1440 240" preserveAspectRatio="none" fill="none">
-            <path id="hero-wave-path" fill="#FCF6DD" d="M 0,240 L 0,100 C 200,180 440,20 720,100 C 1000,180 1240,20 1440,90 L 1440,240 Z"></path>
+          <svg id="hero-wave-svg" class="relative block w-full h-[50px] sm:h-[80px] md:h-[110px] lg:h-[140px]" viewBox="0 0 1440 240" preserveAspectRatio="none" fill="none">
+            <path id="hero-wave-path" fill="#FCF6DD" d="M 0,240 L 0,140 C 200,210 440,60 720,130 C 1000,200 1240,60 1440,130 L 1440,240 Z"></path>
           </svg>
         </div>
       </section>
@@ -804,7 +804,7 @@
 
     // Hero Wavy Bottom Edge Path Morph on Scroll
     gsap.to("#hero-wave-path", {
-      d: "M 0,240 L 0,115 C 200,195 440,35 720,115 C 1000,195 1240,35 1440,105 L 1440,240 Z",
+      d: "M 0,240 L 0,155 C 200,225 440,75 720,145 C 1000,225 1240,75 1440,145 L 1440,240 Z",
       ease: "none",
       scrollTrigger: {
         trigger: "#hero",
