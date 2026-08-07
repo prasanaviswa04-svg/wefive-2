@@ -209,6 +209,38 @@
   <div id="smooth-wrapper" class="w-full relative">
     <div id="smooth-content" class="w-full relative">
 
+      <!-- Navigation Header -->
+      <header class="absolute top-0 left-0 w-full z-30 px-8 py-8 md:px-12 md:py-10 flex justify-between items-center pointer-events-none bg-transparent">
+        <!-- Official We FIVE Logo Image -->
+        <a href="#" class="pointer-events-auto inline-block flex-shrink-0">
+          <img src="assets/we_five_logo.png" alt="We FIVE Logo" style="height: 65px; width: auto;" class="h-[60px] md:h-[65px] w-auto object-contain drop-shadow-md" />
+        </a>
+
+        <!-- Top-Right Desktop Navigation (Cormorant Garamond 500, 4 items) -->
+        <nav class="pointer-events-auto hidden md:flex items-center gap-7 lg:gap-9">
+          <a href="#intro" class="text-sm md:text-base lg:text-lg font-medium text-white hover:opacity-75 transition-opacity duration-300 tracking-[0.12em]" style="font-family: 'Cormorant Garamond', serif; font-weight: 500;">About Us</a>
+          <a href="#intro" class="text-sm md:text-base lg:text-lg font-medium text-white hover:opacity-75 transition-opacity duration-300 tracking-[0.12em]" style="font-family: 'Cormorant Garamond', serif; font-weight: 500;">Why Us</a>
+          <a href="#listen" class="text-sm md:text-base lg:text-lg font-medium text-white hover:opacity-75 transition-opacity duration-300 tracking-[0.12em]" style="font-family: 'Cormorant Garamond', serif; font-weight: 500;">Our Services</a>
+          <a href="#footer" class="text-sm md:text-base lg:text-lg font-medium text-white hover:opacity-75 transition-opacity duration-300 tracking-[0.12em]" style="font-family: 'Cormorant Garamond', serif; font-weight: 500;">Contact Us</a>
+        </nav>
+
+        <!-- Mobile Navigation Menu Toggle -->
+        <button id="mobile-menu-btn" class="pointer-events-auto md:hidden text-xs uppercase tracking-[0.2em] font-medium text-white px-3.5 py-2 border border-white/40 rounded bg-black/20 focus:outline-none" aria-label="Toggle Navigation Menu">
+          Menu
+        </button>
+      </header>
+
+      <!-- Mobile Navigation Drawer Overlay -->
+      <div id="mobile-menu" class="fixed inset-0 bg-black/95 z-[1001] flex flex-col items-center justify-center gap-8 opacity-0 pointer-events-none transition-opacity duration-300 md:hidden">
+        <button id="mobile-menu-close" class="absolute top-8 right-8 text-xs uppercase tracking-[0.2em] text-white/70 hover:text-white">
+          Close
+        </button>
+        <a href="#intro" class="mobile-nav-link text-2xl font-medium text-white hover:text-brand-accent transition-colors tracking-[0.15em]" style="font-family: 'Cormorant Garamond', serif; font-weight: 500;">About Us</a>
+        <a href="#intro" class="mobile-nav-link text-2xl font-medium text-white hover:text-brand-accent transition-colors tracking-[0.15em]" style="font-family: 'Cormorant Garamond', serif; font-weight: 500;">Why Us</a>
+        <a href="#listen" class="mobile-nav-link text-2xl font-medium text-white hover:text-brand-accent transition-colors tracking-[0.15em]" style="font-family: 'Cormorant Garamond', serif; font-weight: 500;">Our Services</a>
+        <a href="#footer" class="mobile-nav-link text-2xl font-medium text-white hover:text-brand-accent transition-colors tracking-[0.15em]" style="font-family: 'Cormorant Garamond', serif; font-weight: 500;">Contact Us</a>
+      </div>
+
       <!-- PHASE A: VERTICAL SCROLLING (TOP) -->
 
       <!-- Section 1: Full-Screen Wedding Hero Section -->
@@ -489,6 +521,27 @@
       }
 
       setInterval(nextSlide, 5000);
+    })();
+
+    // Mobile Navigation Menu Toggle Handler
+    (function initMobileMenu() {
+      const menuBtn = document.getElementById('mobile-menu-btn');
+      const menuClose = document.getElementById('mobile-menu-close');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+      if (menuBtn && mobileMenu) {
+        menuBtn.addEventListener('click', () => {
+          mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
+          mobileMenu.classList.add('opacity-100', 'pointer-events-auto');
+        });
+        const closeMenu = () => {
+          mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+          mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
+        };
+        if (menuClose) menuClose.addEventListener('click', closeMenu);
+        mobileLinks.forEach(link => link.addEventListener('click', closeMenu));
+      }
     })();
 
     // Lenis Smooth Scroll Configuration
