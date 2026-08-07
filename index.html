@@ -44,7 +44,7 @@
         extend: {
           colors: {
             brand: {
-              bg: '#FCF6DD',      // Zesty Lemon cream background
+              bg: '#FAEFB8',      // Zesty Lemon, richer cream/yellow
               accent: '#B32824',  // Deep Crimson Red
               accentMuted: '#9C2421',
               text: '#1C1917',    // Warm Charcoal
@@ -53,8 +53,8 @@
             }
           },
           fontFamily: {
-            serif: ['"Cormorant Garamond"', 'serif'],
-            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            serif: ['"Titan One"', 'sans-serif'],
+            sans: ['"Titan One"', 'sans-serif'],
             grotesque: ['"Space Grotesk"', 'sans-serif'],
             playwrite: ['"Playwrite ID"', 'cursive'],
             yuyu: ['"Yuyu"', 'sans-serif'],
@@ -172,7 +172,7 @@
     .fs-tiny  { font-size: clamp(6.5px, 0.55vw, 10.5px); font-weight: 900; -webkit-text-stroke: 0.35px currentColor; }
   </style>
 </head>
-<body class="bg-brand-bg text-brand-text font-sans selection:bg-brand-accent selection:text-brand-bg overflow-x-hidden antialiased" style="background-image: linear-gradient(160deg, #FFFEF5 0%, #FCF6DD 35%, #F5EFC9 70%, #EDE6A8 100%);">
+<body class="bg-brand-bg text-brand-text font-sans selection:bg-brand-accent selection:text-brand-bg overflow-x-hidden antialiased" style="background-image: linear-gradient(160deg, #FFF9E0 0%, #FAEFB8 35%, #F0E39A 70%, #E0D073 100%);">
 
   <!-- Grainy Paper Texture Overlay -->
   <div class="fixed inset-0 pointer-events-none z-50 opacity-[0.04] mix-blend-multiply" style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.8%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E');"></div>
@@ -208,38 +208,6 @@
   <!-- Page Wrapper structure -->
   <div id="smooth-wrapper" class="w-full relative">
     <div id="smooth-content" class="w-full relative">
-
-      <!-- Navigation Header -->
-      <header class="absolute top-0 left-0 w-full z-30 px-8 py-8 md:px-12 md:py-10 flex justify-between items-center pointer-events-none bg-transparent">
-        <!-- Official We FIVE Logo Image -->
-        <a href="#" class="pointer-events-auto inline-block flex-shrink-0">
-          <img src="assets/we_five_logo.png" alt="We FIVE Logo" style="height: 65px; width: auto;" class="h-[60px] md:h-[65px] w-auto object-contain drop-shadow-md" />
-        </a>
-
-        <!-- Top-Right Desktop Navigation (Cormorant Garamond 500, 4 items) -->
-        <nav class="pointer-events-auto hidden md:flex items-center gap-7 lg:gap-9">
-          <a href="#intro" class="text-sm md:text-base lg:text-lg font-medium text-white hover:opacity-75 transition-opacity duration-300 tracking-[0.12em]" style="font-family: 'Cormorant Garamond', serif; font-weight: 500;">About Us</a>
-          <a href="#intro" class="text-sm md:text-base lg:text-lg font-medium text-white hover:opacity-75 transition-opacity duration-300 tracking-[0.12em]" style="font-family: 'Cormorant Garamond', serif; font-weight: 500;">Why Us</a>
-          <a href="#listen" class="text-sm md:text-base lg:text-lg font-medium text-white hover:opacity-75 transition-opacity duration-300 tracking-[0.12em]" style="font-family: 'Cormorant Garamond', serif; font-weight: 500;">Our Services</a>
-          <a href="#footer" class="text-sm md:text-base lg:text-lg font-medium text-white hover:opacity-75 transition-opacity duration-300 tracking-[0.12em]" style="font-family: 'Cormorant Garamond', serif; font-weight: 500;">Contact Us</a>
-        </nav>
-
-        <!-- Mobile Navigation Menu Toggle -->
-        <button id="mobile-menu-btn" class="pointer-events-auto md:hidden text-xs uppercase tracking-[0.2em] font-medium text-white px-3.5 py-2 border border-white/40 rounded bg-black/20 focus:outline-none" aria-label="Toggle Navigation Menu">
-          Menu
-        </button>
-      </header>
-
-      <!-- Mobile Navigation Drawer Overlay -->
-      <div id="mobile-menu" class="fixed inset-0 bg-black/95 z-[1001] flex flex-col items-center justify-center gap-8 opacity-0 pointer-events-none transition-opacity duration-300 md:hidden">
-        <button id="mobile-menu-close" class="absolute top-8 right-8 text-xs uppercase tracking-[0.2em] text-white/70 hover:text-white">
-          Close
-        </button>
-        <a href="#intro" class="mobile-nav-link text-2xl font-medium text-white hover:text-brand-accent transition-colors tracking-[0.15em]" style="font-family: 'Cormorant Garamond', serif; font-weight: 500;">About Us</a>
-        <a href="#intro" class="mobile-nav-link text-2xl font-medium text-white hover:text-brand-accent transition-colors tracking-[0.15em]" style="font-family: 'Cormorant Garamond', serif; font-weight: 500;">Why Us</a>
-        <a href="#listen" class="mobile-nav-link text-2xl font-medium text-white hover:text-brand-accent transition-colors tracking-[0.15em]" style="font-family: 'Cormorant Garamond', serif; font-weight: 500;">Our Services</a>
-        <a href="#footer" class="mobile-nav-link text-2xl font-medium text-white hover:text-brand-accent transition-colors tracking-[0.15em]" style="font-family: 'Cormorant Garamond', serif; font-weight: 500;">Contact Us</a>
-      </div>
 
       <!-- PHASE A: VERTICAL SCROLLING (TOP) -->
 
@@ -390,12 +358,15 @@
       <!-- Section 4: Camera Screen Footer Section -->
       <footer id="footer" class="footer-sec w-full bg-brand-bg border-t border-brand-accent/25 relative z-10 overflow-hidden flex flex-col">
 
-        <!-- MOBILE/TABLET: plain stacked footer -->
-        <div class="w-full pt-24 pb-12 px-8 lg:hidden">
+        <!-- MOBILE/TABLET: plain stacked footer (camera screen needs real width to hold this content legibly) -->
+        <div class="w-full pt-40 pb-10 px-8 lg:hidden">
           <div class="flex flex-col gap-10">
             <div>
-              <div class="flex items-center gap-2 text-brand-accent mb-4">
-                <span class="font-serif text-2xl tracking-[0.4em] font-semibold">WE FIVE</span>
+              <div class="flex items-center gap-1 text-brand-accent mb-4">
+                <svg viewBox="0 0 160 80" class="w-16 h-8 stroke-current fill-none" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M 20 40 C 25 30, 28 25, 34 25 C 40 25, 42 55, 50 55 C 58 55, 62 25, 68 25 C 74 25, 76 55, 85 55 C 93 55, 96 40, 93 34 C 90 28, 83 28, 80 37 C 77 46, 88 55, 100 55 C 108 55, 115 46, 122 38" />
+                </svg>
+                <span class="font-serif text-lg tracking-[0.4em] font-semibold mt-1">FIVE</span>
               </div>
               <p class="text-xs text-brand-muted leading-relaxed font-light max-w-sm">
                 An independent design studio curating high-end digital identities, print typography systems, and architectural media frameworks. Operative since 2018.
@@ -439,12 +410,12 @@
           </div>
         </div>
 
-        <!-- DESKTOP: full footer content framed inside the camera's screen -->
+        <!-- DESKTOP: full footer content framed inside the camera's screen (fluid vw-scaled type so it always fits, no matter the window width) -->
         <div class="hidden lg:flex w-full flex-col items-center pt-32 pb-20 px-6 xl:px-10">
           <div class="relative w-full mx-auto">
-            <img src="assets/camera-lineart.jpeg" alt="Camera Display Footer" class="w-full h-auto block select-none pointer-events-none mix-blend-multiply">
+            <img src="assets/camera-lineart.jpeg" alt="" class="w-full h-auto block select-none pointer-events-none mix-blend-multiply">
 
-            <!-- Screen overlay: positioned to the camera's LCD rectangle -->
+            <!-- Screen overlay: positioned to the camera's LCD rectangle (measured from the artwork) -->
             <div class="footer-screen-scroll absolute overflow-y-auto flex flex-col font-mono text-brand-text"
                  style="left: 30.6%; top: 43.2%; width: 24.6%; height: 30.6%; padding: 0.8% 2%; gap: 0.05vh;">
 
@@ -476,16 +447,22 @@
               <!-- Inquiries -->
               <div class="flex flex-col gap-0.5">
                 <span class="fs-label tracking-[0.15em] text-brand-accent font-bold uppercase">Inquiries</span>
-                <p class="fs-body leading-tight text-brand-muted">
-                  We Five Labs S.r.l.<br>
-                  Via San Vittore 42, Milan<br>
-                  <a href="mailto:hello@wefive.design" class="text-brand-accent hover:underline">hello@wefive.design</a>
-                </p>
+                <span class="fs-body text-brand-muted">Via San Vittore, 42 — Milan</span>
+                <a href="mailto:hello@wefive.design" class="fs-body text-brand-accent hover:text-brand-accentMuted">hello@wefive.design</a>
               </div>
 
-              <div class="fs-tiny text-brand-muted tracking-widest mt-1">
-                © 2026 WE FIVE. ALL RIGHTS RESERVED.
+              <!-- Bottom row: copyright + back to top, combined -->
+              <div class="flex items-center justify-between gap-2 mt-auto">
+                <span class="fs-tiny text-brand-muted tracking-wide">© 2026 We Five</span>
+                <a href="#hero" class="inline-flex items-center gap-0.5 fs-tiny tracking-[0.15em] font-bold text-brand-accent uppercase hover:text-brand-accentMuted transition-colors flex-shrink-0">
+                  <svg viewBox="0 0 24 24" class="stroke-current fill-none stroke-[3]" style="width: 0.6vw; height: 0.6vw; min-width: 6px; min-height: 6px;" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="19" x2="12" y2="5" />
+                    <polyline points="5 12 12 5 19 12" />
+                  </svg>
+                  Top
+                </a>
               </div>
+
             </div>
           </div>
         </div>
@@ -512,27 +489,6 @@
       }
 
       setInterval(nextSlide, 5000);
-    })();
-
-    // Mobile Navigation Menu Toggle Handler
-    (function initMobileMenu() {
-      const menuBtn = document.getElementById('mobile-menu-btn');
-      const menuClose = document.getElementById('mobile-menu-close');
-      const mobileMenu = document.getElementById('mobile-menu');
-      const mobileLinks = document.querySelectorAll('.mobile-nav-link');
-
-      if (menuBtn && mobileMenu) {
-        menuBtn.addEventListener('click', () => {
-          mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
-          mobileMenu.classList.add('opacity-100', 'pointer-events-auto');
-        });
-        const closeMenu = () => {
-          mobileMenu.classList.add('opacity-0', 'pointer-events-none');
-          mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
-        };
-        if (menuClose) menuClose.addEventListener('click', closeMenu);
-        mobileLinks.forEach(link => link.addEventListener('click', closeMenu));
-      }
     })();
 
     // Lenis Smooth Scroll Configuration
@@ -770,7 +726,7 @@
 
     mm.add("(min-width: 768px)", () => {
       gsap.set(".horizontal-outer", { height: "100vh" });
-      gsap.set(".horizontal-inner", { width: "400vw", height: "100%" });
+      gsap.set(".horizontal-inner", { width: (panels.length * 100) + "vw", height: "100%" });
       gsap.set(".panel", { width: "100vw", height: "100vh" });
 
       let horizontalTween = gsap.to(".horizontal-inner", {
